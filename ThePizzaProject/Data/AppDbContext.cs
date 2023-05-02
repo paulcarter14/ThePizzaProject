@@ -4,13 +4,17 @@ using ThePizzaProject.Models;
 
 namespace ThePizzaProject.Data
 {
-	public class AppDbContext : DbContext
+	public class ThePizzaProjectContext : DbContext
 	{
 		public DbSet<Account> Accounts { get; set; }
+		public DbSet<Ingredient> Ingredients { get; set;}
+		public DbSet<Pizza> Pizzas { get; set; }
+		public DbSet<PizzaIngredient> pizzaIngredients { get; set; }
 
-		public AppDbContext(DbContextOptions<AppDbContext> options)
+		public ThePizzaProjectContext(DbContextOptions<ThePizzaProjectContext> options)
 			: base(options)
 		{
 		}
+
 	}
 }

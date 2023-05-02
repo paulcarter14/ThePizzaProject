@@ -6,9 +6,9 @@ namespace ThePizzaProject.Pages
 {
 	public class IndexModel : PageModel
 	{
-		private readonly AppDbContext database;
+		private readonly ThePizzaProjectContext database;
 
-		public IndexModel(AppDbContext database)
+		public IndexModel(ThePizzaProjectContext database)
 		{
 			this.database = database;
 		}

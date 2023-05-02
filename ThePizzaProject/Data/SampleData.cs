@@ -4,7 +4,7 @@ namespace ThePizzaProject.Data
 {
 	public class SampleData
 	{
-		public static void Create(AppDbContext database)
+		public static void Create(ThePizzaProjectContext database)
 		{
 			// If there are no fake accounts, add some.
 			string fakeIssuer = "https://example.com";
