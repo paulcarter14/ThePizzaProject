@@ -6,10 +6,10 @@ namespace ThePizzaProject.Pages.Shared.Components.LoginMenu
 {
 	public class FakeLoginMenu : ViewComponent
 	{
-		private readonly AppDbContext database;
+		private readonly ThePizzaProjectContext database;
 		private readonly AccessControl accessControl;
 
-		public FakeLoginMenu(AppDbContext database, AccessControl accessControl)
+		public FakeLoginMenu(ThePizzaProjectContext database, AccessControl accessControl)
 		{
 			this.database = database;
 			this.accessControl = accessControl;

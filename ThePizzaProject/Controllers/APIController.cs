@@ -9,9 +9,9 @@ namespace ThePizzaProject.Controllers
 	[ApiController]
 	public class APIController : ControllerBase
 	{
-		private readonly AppDbContext database;
+		private readonly ThePizzaProjectContext database;
 
-		public APIController(AppDbContext database)
+		public APIController(ThePizzaProjectContext database)
 		{
 			this.database = database;
 		}

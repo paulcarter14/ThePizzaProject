@@ -9,10 +9,10 @@ namespace ThePizzaProject.Pages
 {
 	public class FakeLoginModel : PageModel
 	{
-		private readonly AppDbContext database;
+		private readonly ThePizzaProjectContext database;
 		private readonly IWebHostEnvironment environment;
 
-		public FakeLoginModel(AppDbContext database, IWebHostEnvironment environment)
+		public FakeLoginModel(ThePizzaProjectContext database, IWebHostEnvironment environment)
 		{
 			this.database = database;
 			this.environment = environment;

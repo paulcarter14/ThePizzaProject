@@ -10,7 +10,7 @@ namespace ThePizzaProject.Data
 		public int LoggedInAccountID { get; set; }
 		public string LoggedInAccountName { get; set; }
 
-		public AccessControl(AppDbContext db, IHttpContextAccessor httpContextAccessor)
+		public AccessControl(ThePizzaProjectContext db, IHttpContextAccessor httpContextAccessor)
 		{
 			var user = httpContextAccessor.HttpContext.User;
 			string subject = user.FindFirst(ClaimTypes.NameIdentifier).Value;
