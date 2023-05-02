@@ -2,11 +2,11 @@
 @model ThePizzaProject.Pages.CreatePizza.IndexModel
 @{
 }
+
 <form action="">
-    <label for="ost">Ost</label>
-    <input type="checkbox" name="ost">
-
-    <label for="bröd">Bröd</label>
-    <input type="checkbox" name="bröd">
-
+    @foreach (var ingredient in Model.Ingredients)
+    {
+        <label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+        <input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientName">
+    }
 </form>
