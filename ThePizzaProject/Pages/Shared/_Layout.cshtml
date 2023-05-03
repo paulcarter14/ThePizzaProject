@@ -1,4 +1,5 @@
 ﻿@using ThePizzaProject.Pages.Shared.Components.LoginMenu;
+@inject ThePizzaProject.Data.AccessControl accessControl
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +17,18 @@
         <environment names="Development">
             @await Component.InvokeAsync(nameof(FakeLoginMenu))
         </environment>
+
+        <div class="menu-buttons">
+            <div class="top-buttons">
+                <button id="green" onclick="window.location.href='https://localhost:5000/CreatePizza'">Bake your Pizza</button>
+                <button id="white" onclick="window.location.href='https://localhost:5000/RandomePizza'">Feel Lucky</button>
+                <button id="red" onclick="window.location.href='https://localhost:5000/FindMyPizza'">Find me a pizza</button>
+            </div>
+            <h1 class="greeting">
+                Benvenuto, @accessControl.LoggedInAccountName!
+            </h1>
+        </div>
+
     </header>
     <main>
         @RenderBody()
