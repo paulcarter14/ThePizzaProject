@@ -5,25 +5,49 @@
 
 <form action="">
 
-    <h1>Create pizza</h1>
+	<h1>Create pizza</h1>
 
-    <ol>
+	<ol>
 
-    @foreach (var ingredient in Model.Ingredients)
-    {
-        @if (ingredient.IngredientID <= 3){
-        
-           <li><input type="radio" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-           <label for="@ingredient.IngredientID">@ingredient.IngredientName</label></li>
- 
-        }
-        else
-        {
-                <li><input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                <label for="@ingredient.IngredientID">@ingredient.IngredientName</label></li>                      
-        }
-        
-    }
+		@foreach (var ingredient in Model.Ingredients)
+		{
+			@if (ingredient.IngredientID <= 3)
+			{
 
-    </ol>
+				<h2>Pizza dough</h2>
+				<li>
+					<input type="radio" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+				</li>
+
+			}
+			else if (ingredient.IngredientID >= 4 & ingredient.IngredientID <= 10)
+			{
+				<h2>Chease</h2>
+				<li>
+					<input type="radio" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+				</li>
+			}
+
+			else if (ingredient.IngredientID >= 11 & ingredient.IngredientID <= 19)
+			{
+				<h2>Protien</h2>
+				<li>
+					<input type="radio" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+				</li>
+			}
+
+			else
+			{
+				<li>
+					<input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+				</li>
+			}
+
+		}
+
+	</ol>
 </form>
