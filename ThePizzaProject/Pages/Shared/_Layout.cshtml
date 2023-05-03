@@ -11,6 +11,7 @@
     @await RenderSectionAsync("Scripts", required: false)
 </head>
 <body>
+    @*Denna sida appliceras på alla sidor.*@
     <header>
         <environment names="Development">
             @await Component.InvokeAsync(nameof(FakeLoginMenu))
