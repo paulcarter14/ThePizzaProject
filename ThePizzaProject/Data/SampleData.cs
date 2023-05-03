@@ -61,11 +61,7 @@ namespace ThePizzaProject.Data
                     IngredientName = "Cheddar",
                     Amount = 100
                 });
-                database.Ingredients.Add(new Ingredient
-                {
-                    IngredientName = "Mozzarella",
-                    Amount = 100
-                });
+               
                 database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Brie",
