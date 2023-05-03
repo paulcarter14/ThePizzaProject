@@ -8,8 +8,7 @@ namespace ThePizzaProject.Models
         public int IngredientID { get; set; }
         public int Amount { get; set; }
         public string IngredientName { get; set; }
-
-        
+        public string Category { get; set; }
 
 
 
