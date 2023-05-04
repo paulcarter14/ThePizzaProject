@@ -9,25 +9,20 @@ namespace ThePizzaProject.Pages.FindMyPizza
 {
 	public class IndexModel : PageModel
 	{
-		private readonly ThePizzaProjectContext _dbContext;
+		private readonly ThePizzaProjectContext _context;
 
-		public IndexModel(ThePizzaProjectContext dbContext)
+		public IndexModel(ThePizzaProjectContext context)
 		{
-			_dbContext = dbContext;
+			_context = context;
 		}
 
-		public IList<Pizza> Pizzas { get; set; }
+		public List<Ingredient> Ingredients { get; set; }
+		public List<Pizza> Pizzas { get; set; }
 
-		public void OnGet(string ingredient)
+		public void OnGet()
 		{
-			var query = _dbContext.Pizzas.AsQueryable();
-
-			if (!string.IsNullOrEmpty(ingredient))
-			{
-				query = query.Where(p => p.PizzaIngredients.Any(i => i.Ingredients.IngredientName.Contains(ingredient)));
-			}
-
-			Pizzas = query.Include(p => p.PizzaIngredients).ToList();
+			Ingredients = _context.Ingredients.ToList();
+			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredient).ToList();
 		}
 	}
 }

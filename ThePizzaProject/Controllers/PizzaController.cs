@@ -17,12 +17,12 @@ namespace ThePizzaProject.Controllers
 
 		public IActionResult Index(string ingredient)
 		{
-			var pizzas = _dbContext.Pizzas.Include(p => p.PizzaIngredients).ToList();
+			var pizzas = _dbContext.Pizzas.ToList();
 
-			if (!string.IsNullOrEmpty(ingredient))
-			{
-				pizzas = pizzas.Where(p => p.PizzaIngredients.Any(i => i.Ingredients.IngredientName.Contains(ingredient))).ToList();
-			}
+			//if (!string.IsNullOrEmpty(ingredient))
+			//{
+			//	pizzas = pizzas.Where(p => p.PizzaIngredients.Any(i => i.Ingredients.IngredientName.Contains(ingredient))).ToList();
+			//}
 
 			return View(pizzas);
 		}
