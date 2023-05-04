@@ -4,7 +4,7 @@
 
 namespace ThePizzaProject.Migrations
 {
-    public partial class INIT : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,8 +16,7 @@ namespace ThePizzaProject.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OpenIDIssuer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OpenIDSubject = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PizzaID = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,8 +29,8 @@ namespace ThePizzaProject.Migrations
                 {
                     IngredientID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<int>(type: "int", nullable: false),
-                    IngredientName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    IngredientName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,7 +59,7 @@ namespace ThePizzaProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "pizzaIngredients",
+                name: "Toppings",
                 columns: table => new
                 {
                     PizzaIngredientID = table.Column<int>(type: "int", nullable: false)
@@ -70,15 +69,15 @@ namespace ThePizzaProject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_pizzaIngredients", x => x.PizzaIngredientID);
+                    table.PrimaryKey("PK_Toppings", x => x.PizzaIngredientID);
                     table.ForeignKey(
-                        name: "FK_pizzaIngredients_Ingredients_IngredientID",
+                        name: "FK_Toppings_Ingredients_IngredientID",
                         column: x => x.IngredientID,
                         principalTable: "Ingredients",
                         principalColumn: "IngredientID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_pizzaIngredients_Pizzas_PizzaID",
+                        name: "FK_Toppings_Pizzas_PizzaID",
                         column: x => x.PizzaID,
                         principalTable: "Pizzas",
                         principalColumn: "PizzaID",
@@ -86,26 +85,27 @@ namespace ThePizzaProject.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_pizzaIngredients_IngredientID",
-                table: "pizzaIngredients",
-                column: "IngredientID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_pizzaIngredients_PizzaID",
-                table: "pizzaIngredients",
-                column: "PizzaID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Pizzas_UserID",
                 table: "Pizzas",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Toppings_IngredientID",
+                table: "Toppings",
+                column: "IngredientID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Toppings_PizzaID",
+                table: "Toppings",
+                column: "PizzaID",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "pizzaIngredients");
+                name: "Toppings");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");
