@@ -8,10 +8,10 @@
 	<h1>Create pizza</h1>
 
 	<ol>
-
+		
 		@foreach (var ingredient in Model.Ingredients)
 		{
-			@if (ingredient.IngredientID <= 3)
+			@if (ingredient.Category == "dough")
 			{
 
 				<h2>Pizza dough</h2>
@@ -25,7 +25,7 @@
 			{
 				<h2>Chease</h2>
 				<li>
-					<input type="radio" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+					<input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
 					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
 				</li>
 			}
@@ -34,7 +34,7 @@
 			{
 				<h2>Protien</h2>
 				<li>
-					<input type="radio" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+					<input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
 					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
 				</li>
 			}
