@@ -10,7 +10,7 @@ namespace ThePizzaProject.Models
 
         public Account User { get; set; }
         public int AcountID { get; set; }
-        public PizzaIngredient PizzaIngredients { get; set; }
+        public ICollection<PizzaIngredient> PizzaIngredients { get; set; }
 
 
     }

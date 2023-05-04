@@ -1,0 +1,41 @@
+﻿@page
+@using ThePizzaProject.Models
+@using System.Linq;
+@model IndexModel
+@{
+	ViewData["Title"] = "Pizza Menu";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="get">
+	<div class="form-group">
+		<label for="ingredient">Filter by Ingredient:</label>
+		<select class="form-control" name="ingredient" id="ingredient">
+			<option value="">Select Ingredient</option>
+			@foreach (var ingredient in Model.Pizzas.SelectMany(p => p.PizzaIngredients).Select(pi => pi.Ingredients.IngredientName).Distinct())
+			{
+				<option value="@ingredient">@ingredient</option>
+			}
+		</select>
+	</div>
+	<button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Ingredients</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var pizza in Model.Pizzas)
+		{
+			<tr>
+				<td>@pizza.PizzaName</td>
+				<td>@string.Join(", ", pizza.PizzaIngredients)</td>
+			</tr>
+		}
+	</tbody>
+</table>
