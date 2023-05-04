@@ -8,9 +8,10 @@ namespace ThePizzaProject.Models
         public int PizzaID { get; set; }
         public string PizzaName { get; set; }
 
+		public PizzaIngredient PizzaIngredient { get; set; }
+
         public Account User { get; set; }
         public int AcountID { get; set; }
-        public ICollection<PizzaIngredient> PizzaIngredients { get; set; }
 
 
     }
