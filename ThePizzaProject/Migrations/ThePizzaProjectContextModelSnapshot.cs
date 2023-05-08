@@ -23,11 +23,11 @@ namespace ThePizzaProject.Migrations
 
             modelBuilder.Entity("ThePizzaProject.Models.Account", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("AccountID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountID"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -41,7 +41,7 @@ namespace ThePizzaProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("AccountID");
 
                     b.ToTable("Accounts");
                 });
@@ -75,19 +75,16 @@ namespace ThePizzaProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaID"), 1L, 1);
 
-                    b.Property<int>("AcountID")
+                    b.Property<int>("AccountID")
                         .HasColumnType("int");
 
                     b.Property<string>("PizzaName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
                     b.HasKey("PizzaID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("AccountID");
 
                     b.ToTable("Pizzas");
                 });
@@ -108,20 +105,18 @@ namespace ThePizzaProject.Migrations
 
                     b.HasKey("PizzaIngredientID");
 
-                    b.HasIndex("IngredientID")
-                        .IsUnique();
+                    b.HasIndex("IngredientID");
 
-                    b.HasIndex("PizzaID")
-                        .IsUnique();
+                    b.HasIndex("PizzaID");
 
-                    b.ToTable("Toppings");
+                    b.ToTable("PizzaIngredient");
                 });
 
             modelBuilder.Entity("ThePizzaProject.Models.Pizza", b =>
                 {
                     b.HasOne("ThePizzaProject.Models.Account", "User")
                         .WithMany("Pizzas")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("AccountID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -130,17 +125,21 @@ namespace ThePizzaProject.Migrations
 
             modelBuilder.Entity("ThePizzaProject.Models.PizzaIngredient", b =>
                 {
-                    b.HasOne("ThePizzaProject.Models.Ingredient", null)
-                        .WithOne("pizzaIngredients")
-                        .HasForeignKey("ThePizzaProject.Models.PizzaIngredient", "IngredientID")
+                    b.HasOne("ThePizzaProject.Models.Ingredient", "Ingredient")
+                        .WithMany("PizzaIngredients")
+                        .HasForeignKey("IngredientID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ThePizzaProject.Models.Pizza", null)
-                        .WithOne("PizzaIngredient")
-                        .HasForeignKey("ThePizzaProject.Models.PizzaIngredient", "PizzaID")
+                    b.HasOne("ThePizzaProject.Models.Pizza", "Pizza")
+                        .WithMany("PizzaIngredients")
+                        .HasForeignKey("PizzaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Ingredient");
+
+                    b.Navigation("Pizza");
                 });
 
             modelBuilder.Entity("ThePizzaProject.Models.Account", b =>
@@ -150,14 +149,12 @@ namespace ThePizzaProject.Migrations
 
             modelBuilder.Entity("ThePizzaProject.Models.Ingredient", b =>
                 {
-                    b.Navigation("pizzaIngredients")
-                        .IsRequired();
+                    b.Navigation("PizzaIngredients");
                 });
 
             modelBuilder.Entity("ThePizzaProject.Models.Pizza", b =>
                 {
-                    b.Navigation("PizzaIngredient")
-                        .IsRequired();
+                    b.Navigation("PizzaIngredients");
                 });
 #pragma warning restore 612, 618
         }

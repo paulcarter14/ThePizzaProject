@@ -10,7 +10,13 @@ namespace ThePizzaProject.Models
         public string IngredientName { get; set; }
         public string Category { get; set; }
 
-        public PizzaIngredient pizzaIngredients { get; set; }
+        //public PizzaIngredient pizzaIngredients { get; set; }
+
+		public List<PizzaIngredient> PizzaIngredients { get; set; }
+
+
+
+
 
 
 	}

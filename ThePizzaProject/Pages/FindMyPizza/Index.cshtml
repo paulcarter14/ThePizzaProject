@@ -79,10 +79,10 @@
 	<tbody>
 		@foreach (var pizza in Model.Pizzas)
 		{
-			<tr>
+			@*<tr>
 				<td>@pizza.PizzaName</td>
 				<td>@string.Join(", ", pizza.PizzaIngredient)</td>
-			</tr>
+			</tr>*@
 		}
 	</tbody>
 </table>

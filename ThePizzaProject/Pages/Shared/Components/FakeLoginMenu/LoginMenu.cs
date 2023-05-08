@@ -20,9 +20,9 @@ namespace ThePizzaProject.Pages.Shared.Components.LoginMenu
 			var accounts = database.Accounts.OrderBy(a => a.Name);
 			var selectList = accounts.Select(p => new SelectListItem
 			{
-				Value = p.ID.ToString(),
+				Value = p.AccountID.ToString(),
 				Text = p.Name,
-				Selected = p.ID == accessControl.LoggedInAccountID
+				Selected = p.AccountID == accessControl.LoggedInAccountID
 			});
 			return View(selectList);
 		}
