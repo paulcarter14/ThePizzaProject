@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Razor.Language.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,14 +40,42 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
 		private List<Pizza> GetFilteredPizzas(List<int> selectedIngredients)
 		{
-			var pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
+
+
+			List<Pizza> pizzasWithIngredients = (
+				from p in _context.Pizzas
+				where !p.PizzaIngredients.Any(pi => selectedIngredients.Contains(pi.Ingredient.IngredientID))
+
+				select new Pizza
+				{ 
+					PizzaID = p.PizzaID,
+					PizzaName = p.PizzaName,
+					PizzaIngredients = (
+						from pi in p.PizzaIngredients
+						select new PizzaIngredient
+						{
+							PizzaIngredientID = pi.PizzaIngredientID,
+							Pizza = null,
+							Ingredient = new Ingredient
+							{
+								IngredientID = pi.Ingredient.IngredientID,
+								IngredientName = pi.Ingredient.IngredientName,
+								Category = pi.Ingredient.Category,
+								PizzaIngredients = null
+							}
+						}
+						).ToList(),
+					User = p.User,
+					AccountID = p.AccountID
+				}
+).ToList();
 
 			// Filter the pizzas based on the selected ingredients
-			var filteredPizzas = pizzas.Where(pizza =>
-				!pizza.PizzaIngredients.Any(pi => selectedIngredients.Contains(pi.PizzaIngredientID)))
-				.ToList();
+			//var filteredPizzas = pizzas.Where(pizza =>
+			//	!pizza.PizzaIngredients.Any(pi => selectedIngredients.Contains(pi.PizzaIngredientID)))
+			//	.ToList();
 
-			return filteredPizzas;
+			return pizzasWithIngredients.ToList();
 		}
 	}
 }

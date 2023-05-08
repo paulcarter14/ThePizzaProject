@@ -52,11 +52,10 @@ namespace ThePizzaProject.Pages.CreatePizza
 					Ingredient = ingredientData
 				});
 
-				
-				
 			}
 			
 			_context.SaveChanges();
+			
 			return RedirectToAction("Index");
 		}
 	}
