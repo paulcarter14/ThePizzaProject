@@ -20,6 +20,44 @@ namespace ThePizzaProject.Pages.CreatePizza
         public void OnGet()
         {
             Ingredients = _context.Ingredients.ToList();
+
+            
         }
-    }
+
+		public IActionResult OnPost(int[] ingredients, string pizzaName)
+		{
+			
+
+			var newPizza = new Pizza
+			{
+				AccountID = 4,
+				PizzaName = pizzaName,
+				PizzaIngredients = new List<PizzaIngredient>()
+
+			};
+
+			_context.Pizzas.Add(newPizza);
+		
+
+			foreach (var i in ingredients)
+			{
+				var ingredientData = _context.Ingredients.Find(i);
+
+
+				//_context.Attach(ingredientData);
+
+				newPizza.PizzaIngredients.Add( new PizzaIngredient
+				{
+
+					Ingredient = ingredientData
+				});
+
+				
+				
+			}
+			
+			_context.SaveChanges();
+			return RedirectToAction("Index");
+		}
+	}
 }

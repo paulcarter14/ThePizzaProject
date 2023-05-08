@@ -4,7 +4,7 @@
 
 namespace ThePizzaProject.Migrations
 {
-    public partial class Initial : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace ThePizzaProject.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    AccountID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OpenIDIssuer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OpenIDSubject = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -20,7 +20,7 @@ namespace ThePizzaProject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.ID);
+                    table.PrimaryKey("PK_Accounts", x => x.AccountID);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,22 +44,21 @@ namespace ThePizzaProject.Migrations
                     PizzaID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PizzaName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    AcountID = table.Column<int>(type: "int", nullable: false)
+                    AccountID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pizzas", x => x.PizzaID);
                     table.ForeignKey(
-                        name: "FK_Pizzas_Accounts_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Pizzas_Accounts_AccountID",
+                        column: x => x.AccountID,
                         principalTable: "Accounts",
-                        principalColumn: "ID",
+                        principalColumn: "AccountID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Toppings",
+                name: "PizzaIngredient",
                 columns: table => new
                 {
                     PizzaIngredientID = table.Column<int>(type: "int", nullable: false)
@@ -69,15 +68,15 @@ namespace ThePizzaProject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Toppings", x => x.PizzaIngredientID);
+                    table.PrimaryKey("PK_PizzaIngredient", x => x.PizzaIngredientID);
                     table.ForeignKey(
-                        name: "FK_Toppings_Ingredients_IngredientID",
+                        name: "FK_PizzaIngredient_Ingredients_IngredientID",
                         column: x => x.IngredientID,
                         principalTable: "Ingredients",
                         principalColumn: "IngredientID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Toppings_Pizzas_PizzaID",
+                        name: "FK_PizzaIngredient_Pizzas_PizzaID",
                         column: x => x.PizzaID,
                         principalTable: "Pizzas",
                         principalColumn: "PizzaID",
@@ -85,27 +84,25 @@ namespace ThePizzaProject.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pizzas_UserID",
+                name: "IX_PizzaIngredient_IngredientID",
+                table: "PizzaIngredient",
+                column: "IngredientID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PizzaIngredient_PizzaID",
+                table: "PizzaIngredient",
+                column: "PizzaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pizzas_AccountID",
                 table: "Pizzas",
-                column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Toppings_IngredientID",
-                table: "Toppings",
-                column: "IngredientID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Toppings_PizzaID",
-                table: "Toppings",
-                column: "PizzaID",
-                unique: true);
+                column: "AccountID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Toppings");
+                name: "PizzaIngredient");
 
             migrationBuilder.DropTable(
                 name: "Ingredients");

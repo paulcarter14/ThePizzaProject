@@ -3,10 +3,10 @@
 @{
 }
 
-<form action="">
+<form method="post">
 
 	<h1>Create pizza</h1>
-
+	<input type="text" name="pizzaName" placeholder="Give a name to youre pizza" /> 
 	<h2>Pizza Dough</h2>
 	<ol class="dough">
 		@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
