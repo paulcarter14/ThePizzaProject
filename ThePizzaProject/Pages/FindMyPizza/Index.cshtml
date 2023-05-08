@@ -5,34 +5,28 @@
 @{
 	//ViewData["Title"] = "Filter Pizzas by Ingredients You DON'T Want";
 }
-
-
-<div class="filterbox">
-	@*här kommer massa inställningar som gör så att en användare kan ta bort de
-	ingredienser som användaren inte vill ha
-	*@
-
-</div>
-
+<form method="post">
+	<div class="filterbox">
+		@foreach (var ingredient in Model.Ingredients)
+		{
+			<input type="checkbox" id="@ingredient.IngredientID" name="ingredients" value="@ingredient.IngredientID">
+			<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+		}
+		<button type="submit">Apply Filter</button>
+	</div>
+</form>
 
 <div class="pizzabox">
-
-
-	@foreach (var pizza in Model.Pizzas)
+	@foreach (var pizza in Model.FilteredPizzas ?? Model.Pizzas)
 	{
 		<h2>@pizza.PizzaName</h2>
 		<ul>
 			@foreach (var pizzaIngredient in pizza.PizzaIngredients)
 			{
-				<li>
-					@pizzaIngredient.Ingredient.IngredientName
-				</li>
+				<li>@pizzaIngredient.Ingredient.IngredientName</li>
 			}
 		</ul>
 	}
-
-	@*Här visas namn på pizzan, skapare och bild.*@
-
 </div>
 
 @*<h1>@ViewData["Title"]</h1>
