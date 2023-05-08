@@ -18,11 +18,10 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
 		public List<Ingredient> Ingredients { get; set; }
 		public List<Pizza> Pizzas { get; set; }
-
-		//public void OnGet()
-		//{
-		//	Ingredients = _context.Ingredients.ToList();
-		//	Pizzas = _context.Pizzas.Include(p => p.PizzaIngredient).ToList();
-		//}
+        public void OnGet()
+		{
+			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
+			Ingredients = _context.Ingredients.ToList();
+		}
 	}
 }

@@ -3,10 +3,39 @@
 @using System.Linq;
 @model ThePizzaProject.Pages.FindMyPizza.IndexModel
 @{
-	ViewData["Title"] = "Filter Pizzas by Ingredients You DON'T Want";
+	//ViewData["Title"] = "Filter Pizzas by Ingredients You DON'T Want";
 }
 
-<h1>@ViewData["Title"]</h1>
+
+<div class="filterbox">
+	@*här kommer massa inställningar som gör så att en användare kan ta bort de
+	ingredienser som användaren inte vill ha
+	*@
+
+</div>
+
+
+<div class="pizzabox">
+
+
+	@foreach (var pizza in Model.Pizzas)
+	{
+		<h2>@pizza.PizzaName</h2>
+		<ul>
+			@foreach (var pizzaIngredient in pizza.PizzaIngredients)
+			{
+				<li>
+					@pizzaIngredient.Ingredient.IngredientName
+				</li>
+			}
+		</ul>
+	}
+
+	@*Här visas namn på pizzan, skapare och bild.*@
+
+</div>
+
+@*<h1>@ViewData["Title"]</h1>
 
 <form method="get">
 	<div class="filter-ingredients">
@@ -82,7 +111,8 @@
 			@*<tr>
 				<td>@pizza.PizzaName</td>
 				<td>@string.Join(", ", pizza.PizzaIngredient)</td>
-			</tr>*@
+			</tr>
 		}
 	</tbody>
 </table>
+*@
