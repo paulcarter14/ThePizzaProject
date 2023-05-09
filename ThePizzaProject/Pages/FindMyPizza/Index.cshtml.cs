@@ -47,7 +47,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
 				where !p.PizzaIngredients.Any(pi => selectedIngredients.Contains(pi.Ingredient.IngredientID))
 
 				select new Pizza
-				{ 
+				{
 					PizzaID = p.PizzaID,
 					PizzaName = p.PizzaName,
 					PizzaIngredients = (
@@ -67,8 +67,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
 						).ToList(),
 					User = p.User,
 					AccountID = p.AccountID
-				}
-).ToList();
+				}).ToList();
 
 			// Filter the pizzas based on the selected ingredients
 			//var filteredPizzas = pizzas.Where(pizza =>
