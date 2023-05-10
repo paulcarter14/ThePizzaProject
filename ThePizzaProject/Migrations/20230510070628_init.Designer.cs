@@ -11,7 +11,7 @@ using ThePizzaProject.Data;
 namespace ThePizzaProject.Migrations
 {
     [DbContext(typeof(ThePizzaProjectContext))]
-    [Migration("20230509080609_init")]
+    [Migration("20230510070628_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
