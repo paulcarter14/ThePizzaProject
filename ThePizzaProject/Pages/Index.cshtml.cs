@@ -11,11 +11,13 @@ namespace ThePizzaProject.Pages
 	public class IndexModel : PageModel
 	{
 		private readonly ThePizzaProjectContext _context;
+		private readonly IHttpContextAccessor _contextAccessor;
 
-		public IndexModel(ThePizzaProjectContext context)
+		public IndexModel(ThePizzaProjectContext context, IHttpContextAccessor httpContextAccessor)
 		{
 			_context = context;
 			Ingredients = new List<Ingredient>(); // Initialize the Ingredients property
+			this._contextAccessor = httpContextAccessor;
 		}
 
 		public List<Ingredient> Ingredients { get; set; }
@@ -25,17 +27,18 @@ namespace ThePizzaProject.Pages
 		public void OnGet()
 		{
 			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
-
 			MyPizzas = GetMyPizzas(); // Get only your pizzas
 			Ingredients = _context.Ingredients.ToList(); // Populate the Ingredients property
 		}
 
 		private List<Pizza> GetMyPizzas()
 		{
+			var accessControl = new AccessControl(_context, _contextAccessor);
+			int loggedUser = accessControl.LoggedInAccountID;
 			List<Pizza> myPizzas =
 				(
 					from p in _context.Pizzas
-					where p.AccountID == p.AccountID// Filter by the current user's account ID
+					where p.AccountID == loggedUser// Filter by the current user's account ID
 					select new Pizza
 					{
 						PizzaID = p.PizzaID,
