@@ -4,7 +4,11 @@
 
 namespace ThePizzaProject.Migrations
 {
+<<<<<<<< HEAD:ThePizzaProject/Migrations/20230510070627_first.cs
     public partial class first : Migration
+========
+    public partial class init : Migration
+>>>>>>>> 073c5728067aa65d9e537ee50bd46eb0117a0929:ThePizzaProject/Migrations/20230510070628_init.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

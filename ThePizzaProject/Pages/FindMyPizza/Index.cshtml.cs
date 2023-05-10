@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Razor.Language.Extensions;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using ThePizzaProject.Data;
 using ThePizzaProject.Models;
 
@@ -24,7 +23,6 @@ namespace ThePizzaProject.Pages.FindMyPizza
 		public List<int> UnwantedIngredients { get; set; }
 		public List<int> WantedIngredients { get; set; }
 		public List<Pizza> FilteredPizzas { get; set; }
-		//public bool FilteredNoMeat { get; set; }
 
 		public void OnGet()
 		{
@@ -34,28 +32,38 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
 		public IActionResult OnPost(List<int> unwantedIngredients, bool veggie, List<int> wantedIngredients)
 		{
-			//UnwantedIngredients = unwantedIngredients;
-			//WantedIngredients = wantedIngredients;
-			FilteredPizzas = GetFilteredPizzas(unwantedIngredients, veggie, wantedIngredients);
+			UnwantedIngredients = unwantedIngredients ?? new List<int>();
+			WantedIngredients = wantedIngredients ?? new List<int>();
+
+			try
+			{
+				// Check if any filters are applied
+				if (unwantedIngredients.Count == 0 && !veggie && (wantedIngredients == null || wantedIngredients.Count == 0))
+				{
+					throw new Exception("Please select at least one filter option.");
+				}
+				else
+				{
+					FilteredPizzas = GetFilteredPizzas(unwantedIngredients, veggie, wantedIngredients);
+				}
+			}
+			catch (Exception ex)
+			{
+				return RedirectToAction("Index");
+
+			}
+
 			return Page();
 		}
 
-		private List<Pizza> GetFilteredPizzas(List<int> unwantedIngredients, bool veggie, List<int> wantedIngredients)
-		{
-			List<int> filtered = new List<int>();
+		//Lägg till en tryCatch som återvänder till sidan.
 
-			if (wantedIngredients != null)
-			{
-				foreach( var i in wantedIngredients)
-				{
-					filtered.Add(i);
-				}
-			}
+		private List<Pizza> GetFilteredPizzas(List<int> ?unwantedIngredients, bool veggie, List<int> ?wantedIngredients)
+		{
 			List<Pizza> pizzasWithIngredients =
 				(
 					from p in _context.Pizzas
 					where !p.PizzaIngredients.Any(pi => unwantedIngredients.Contains(pi.Ingredient.IngredientID))
-
 					select new Pizza
 					{
 						PizzaID = p.PizzaID,
@@ -73,29 +81,28 @@ namespace ThePizzaProject.Pages.FindMyPizza
 									Category = pi.Ingredient.Category,
 									PizzaIngredients = null
 								}
-							}
-							).ToList(),
+							}).ToList(),
 						User = p.User,
 						AccountID = p.AccountID
-					}
-				).ToList();
+					}).ToList();
 
-			// Filter the pizzas based on the selected ingredients
-			//var filteredPizzas = pizzas.Where(pizza =>
-			//	!pizza.PizzaIngredients.Any(pi => selectedIngredients.Contains(pi.PizzaIngredientID)))
-			//	.ToList();
-
-			var withoutMeat = pizzasWithIngredients.Where(p => p.PizzaIngredients.Any(i => i.Ingredient.Category == "Protein")).ToList();
-
-			foreach (var p in withoutMeat)
+			// Veggie Warrior checkboxen står över de andra.
+			if (veggie)
 			{
-				if (veggie)
-				{
-					pizzasWithIngredients.Remove(p);
-				}
+				pizzasWithIngredients = pizzasWithIngredients
+					.Where(p => !p.PizzaIngredients.Any(i => i.Ingredient.Category == "Protein"))
+					.ToList();
 			}
 
-			return pizzasWithIngredients.ToList();
+			//Filtrerar pizzorna på de övre för att sedan retunera 
+			if (wantedIngredients != null && wantedIngredients.Count > 0)
+			{
+				pizzasWithIngredients = pizzasWithIngredients
+					.Where(p => wantedIngredients.All(wi => p.PizzaIngredients.Any(pi => pi.Ingredient.IngredientID == wi)))
+					.ToList();
+			}
+
+			return pizzasWithIngredients;
 		}
 	}
 }

@@ -48,11 +48,31 @@ namespace ThePizzaProject.Data
                     IngredientName = "Wheat",
                     Category = "Dough",
                 });
-
-
+                database.Ingredients.Add(new Ingredient
+                {
+                    IngredientName = "Corndough",
+                    Category = "Dough",
+                });
 
 
                 database.Ingredients.Add(new Ingredient
+				{
+					IngredientName = "Tomato Sauce",
+					Category = "Bottom-sauce",
+				});
+				database.Ingredients.Add(new Ingredient
+				{
+					IngredientName = "Crème fraiche",
+					Category = "Bottom-sauce",
+				});
+				database.Ingredients.Add(new Ingredient
+				{
+					IngredientName = "Hot Tomato Sauce",
+					Category = "Bottom-sauce",
+				});
+
+
+				database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Mozzarella",
                     Category = "Cheese",
@@ -80,7 +100,7 @@ namespace ThePizzaProject.Data
                 });
                 database.Ingredients.Add(new Ingredient
                 {
-                    IngredientName = "Gorgonzola cheese",
+                    IngredientName = "Chévre",
                     Category = "Cheese",
                 });
                 database.Ingredients.Add(new Ingredient
@@ -88,11 +108,16 @@ namespace ThePizzaProject.Data
                     IngredientName = "Ricotta cheese",
                     Category = "Cheese",
                 });
+				database.Ingredients.Add(new Ingredient
+				{
+					IngredientName = "Parmesan",
+					Category = "Cheese",
+				});
 
 
 
 
-                database.Ingredients.Add(new Ingredient
+				database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Chicken",
                     Category = "Protein",
@@ -138,11 +163,25 @@ namespace ThePizzaProject.Data
                     IngredientName = "Bacon",
                     Category = "Protein",
                 });
-
-
-
-
+				database.Ingredients.Add(new Ingredient
+				{
+					IngredientName = "Salami",
+					Category = "Protein",
+				});
                 database.Ingredients.Add(new Ingredient
+                {
+                    IngredientName = "Beef",
+                    Category = "Protein",
+                });
+				database.Ingredients.Add(new Ingredient
+				{
+					IngredientName = "Kebab",
+					Category = "Protein",
+				});
+
+
+
+				database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Black Olives",
                     Category = "Vegetables",
@@ -213,10 +252,20 @@ namespace ThePizzaProject.Data
                     IngredientName = "Broccoli",
                     Category = "Vegetables",
                 });
+				database.Ingredients.Add(new Ingredient
+				{
+					IngredientName = "Paprika",
+					Category = "Vegetables",
+				});
+				database.Ingredients.Add(new Ingredient
+				{
+					IngredientName = "Artichoke",
+					Category = "Vegetables",
+				});
+				
 
 
-
-                database.Ingredients.Add(new Ingredient
+				database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Kebab sauce",
                     Category = "Sauces",

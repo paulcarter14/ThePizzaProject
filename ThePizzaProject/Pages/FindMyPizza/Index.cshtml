@@ -1,20 +1,21 @@
 ﻿@page
-@using ThePizzaProject.Models
-@using System.Linq;
 @model ThePizzaProject.Pages.FindMyPizza.IndexModel
 @{
-	//ViewData["Title"] = "Filter Pizzas by Ingredients You DON'T Want";
+	ViewData["Title"] = "Find My Pizza";
 }
+
 <button class="open-sideBar">filter</button>
 <div class="sidebar">
+
+
+<h1>Find My Pizza</h1>
+
+<form method="post">
+
 	<div class="filterbox">
 		<form method="post" asp-page-handler="Update">
 			<h2 class="filter-title" >Ingredients we want</h2>
-		@*@foreach (var ingredient in Model.Ingredients)
-		{
-			<input type="checkbox" id="@ingredient.IngredientID" name="wantedIngredients" value="@ingredient.IngredientID">
-			<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-		}*@
+	
 		<h2 class="ingredient-title">Dough</h2>
 			<ol class="sidebar-list" style="clear: both;>
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
@@ -70,13 +71,15 @@
 				}
 			</ol>
 		<input type="checkbox" name="veggie" value="true" id="noMeat"/>
+
+			<input type="checkbox" id="wanted-@ingredient.IngredientID" name="wantedIngredients" value="@ingredient.IngredientID">
+			<label for="wanted-@ingredient.IngredientID">@ingredient.IngredientName</label>
+		}
+		<input type="checkbox" name="veggie" value="true" id="noMeat" />
+
 		<label for="noMeat">Veggie Warrior</label>
 		<h2 class="filter-title">Ingredients we don't want</h2>
-		@*@foreach (var ingredient in Model.Ingredients)
-		{
-			<input type="checkbox" id="@ingredient.IngredientID" name="unwantedIngredients" value="@ingredient.IngredientID">
-			<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-		}*@
+		
 
 		<h2 class="ingredient-title">Dough</h2>
 				<ol class="sidebar-list" style="clear: both;>
@@ -138,8 +141,6 @@
 </div>
 
 
-
-
 <div class="pizzaContent">
 	@foreach (var pizza in Model.FilteredPizzas ?? Model.Pizzas)
 	{
@@ -156,85 +157,4 @@
 	}
 </div>
 
-@*<h1>@ViewData["Title"]</h1>
-
-<form method="get">
-	<div class="filter-ingredients">
-		<h2>Pizza Dough</h2>
-		<ol class="dough">
-			@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
-			{
-				<li>
-					<input type="radio" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-				</li>
-			}
-		</ol>
-
-		<h2>Cheese</h2>
-		<ol class="cheese">
-			@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
-			{
-				<li>
-					<input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-				</li>
-			}
-		</ol>
-
-		<h2>Protein</h2>
-		<ol class="protien">
-			@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Protein"))
-			{
-				<li>
-					<input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-				</li>
-			}
-		</ol>
-
-		<h2>Vegetables</h2>
-		<ol class="vegetables">
-			@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
-			{
-				<li>
-					<input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-				</li>
-			}
-		</ol>
-
-		<h2>Sauces</h2>
-		<ol class="sauces">
-			@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
-			{
-				<li>
-					<input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-					<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-				</li>
-			}
-		</ol>
-	</div>
-	<button type="submit" class="btn btn-primary">Filter</button>
-</form>
-
-<table class="discusting-pizzas">
-	<h1>The Pizzas You DON'T Want To Order Are:</h1>
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Ingredient</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var pizza in Model.Pizzas)
-		{
-			@*<tr>
-				<td>@pizza.PizzaName</td>
-				<td>@string.Join(", ", pizza.PizzaIngredient)</td>
-			</tr>
-		}
-	</tbody>
-</table>
-*@
 
