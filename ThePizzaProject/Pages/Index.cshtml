@@ -8,7 +8,18 @@
     <source src="/sound/Osipov-Kamarinskaya.mp3" type="audio/mp3" />
 </audio>
 
-
+@foreach (var pizza in Model.MyPizzas ?? Model.Pizzas)
+{
+	<div class="pizzabox">
+		<h2>@pizza.PizzaName</h2>
+		<p>
+			@foreach (var ingredient in pizza.PizzaIngredients)
+			{
+				@ingredient.Ingredient.IngredientName @(ingredient != pizza.PizzaIngredients.Last() ? ", " : "")
+			}
+		</p>
+	</div>
+}
 
 <p> MpM Development </p>
 
