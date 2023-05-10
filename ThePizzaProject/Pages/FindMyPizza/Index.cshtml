@@ -10,8 +10,6 @@
 
 <h1>Find My Pizza</h1>
 
-<form method="post">
-
 	<div class="filterbox">
 		<form method="post" asp-page-handler="Update">
 			<h2 class="filter-title" >Ingredients we want</h2>
@@ -72,8 +70,8 @@
 			</ol>
 		<input type="checkbox" name="veggie" value="true" id="noMeat"/>
 
-			<input type="checkbox" id="wanted-@ingredient.IngredientID" name="wantedIngredients" value="@ingredient.IngredientID">
-			<label for="wanted-@ingredient.IngredientID">@ingredient.IngredientName</label>
+			<input type="checkbox" id="wanted-ingredient.IngredientID" name="wantedIngredients" value="ingredient.IngredientID">
+			<label for="wanted-ingredient.IngredientID">ingredient.IngredientName</label>
 		}
 		<input type="checkbox" name="veggie" value="true" id="noMeat" />
 
