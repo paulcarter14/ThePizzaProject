@@ -5,11 +5,21 @@
 @{
 	//ViewData["Title"] = "Filter Pizzas by Ingredients You DON'T Want";
 }
-<form method="post">
+
+<form method="post" asp-page-handler="Update">
 	<div class="filterbox">
+		<h2>Ingredients we want</h2>
 		@foreach (var ingredient in Model.Ingredients)
 		{
-			<input type="checkbox" id="@ingredient.IngredientID" name="ingredients" value="@ingredient.IngredientID">
+			<input type="checkbox" id="@ingredient.IngredientID" name="wantedIngredients" value="@ingredient.IngredientID">
+			<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+		}
+		<input type="checkbox" name="veggie" value="true" id="noMeat"/>
+		<label for="noMeat">Veggie Warrior</label>
+		<h2>Ingredients we don't want</h2>
+		@foreach (var ingredient in Model.Ingredients)
+		{
+			<input type="checkbox" id="@ingredient.IngredientID" name="unwantedIngredients" value="@ingredient.IngredientID">
 			<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
 		}
 		<button type="submit">Apply Filter</button>
@@ -110,3 +120,4 @@
 	</tbody>
 </table>
 *@
+

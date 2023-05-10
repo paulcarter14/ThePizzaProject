@@ -21,8 +21,10 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
 		public List<Ingredient> Ingredients { get; set; }
 		public List<Pizza> Pizzas { get; set; }
-		public List<int> SelectedIngredients { get; set; }
+		public List<int> UnwantedIngredients { get; set; }
+		public List<int> WantedIngredients { get; set; }
 		public List<Pizza> FilteredPizzas { get; set; }
+		//public bool FilteredNoMeat { get; set; }
 
 		public void OnGet()
 		{
@@ -30,49 +32,68 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			Ingredients = _context.Ingredients.ToList(); // Populate the Ingredients property
 		}
 
-		public IActionResult OnPost(List<int> ingredients)
+		public IActionResult OnPost(List<int> unwantedIngredients, bool veggie, List<int> wantedIngredients)
 		{
-			SelectedIngredients = ingredients;
-			FilteredPizzas = GetFilteredPizzas(SelectedIngredients);
-
+			//UnwantedIngredients = unwantedIngredients;
+			//WantedIngredients = wantedIngredients;
+			FilteredPizzas = GetFilteredPizzas(unwantedIngredients, veggie, wantedIngredients);
 			return Page();
 		}
 
-		private List<Pizza> GetFilteredPizzas(List<int> selectedIngredients)
+		private List<Pizza> GetFilteredPizzas(List<int> unwantedIngredients, bool veggie, List<int> wantedIngredients)
 		{
+			List<int> filtered = new List<int>();
 
-
-			List<Pizza> pizzasWithIngredients = (
-				from p in _context.Pizzas
-				where !p.PizzaIngredients.Any(pi => selectedIngredients.Contains(pi.Ingredient.IngredientID))
-
-				select new Pizza
+			if (wantedIngredients != null)
+			{
+				foreach( var i in wantedIngredients)
 				{
-					PizzaID = p.PizzaID,
-					PizzaName = p.PizzaName,
-					PizzaIngredients = (
-						from pi in p.PizzaIngredients
-						select new PizzaIngredient
-						{
-							PizzaIngredientID = pi.PizzaIngredientID,
-							Pizza = null,
-							Ingredient = new Ingredient
+					filtered.Add(i);
+				}
+			}
+			List<Pizza> pizzasWithIngredients =
+				(
+					from p in _context.Pizzas
+					where !p.PizzaIngredients.Any(pi => unwantedIngredients.Contains(pi.Ingredient.IngredientID))
+
+					select new Pizza
+					{
+						PizzaID = p.PizzaID,
+						PizzaName = p.PizzaName,
+						PizzaIngredients = (
+							from pi in p.PizzaIngredients
+							select new PizzaIngredient
 							{
-								IngredientID = pi.Ingredient.IngredientID,
-								IngredientName = pi.Ingredient.IngredientName,
-								Category = pi.Ingredient.Category,
-								PizzaIngredients = null
+								PizzaIngredientID = pi.PizzaIngredientID,
+								Pizza = null,
+								Ingredient = new Ingredient
+								{
+									IngredientID = pi.Ingredient.IngredientID,
+									IngredientName = pi.Ingredient.IngredientName,
+									Category = pi.Ingredient.Category,
+									PizzaIngredients = null
+								}
 							}
-						}
-						).ToList(),
-					User = p.User,
-					AccountID = p.AccountID
-				}).ToList();
+							).ToList(),
+						User = p.User,
+						AccountID = p.AccountID
+					}
+				).ToList();
 
 			// Filter the pizzas based on the selected ingredients
 			//var filteredPizzas = pizzas.Where(pizza =>
 			//	!pizza.PizzaIngredients.Any(pi => selectedIngredients.Contains(pi.PizzaIngredientID)))
 			//	.ToList();
+
+			var withoutMeat = pizzasWithIngredients.Where(p => p.PizzaIngredients.Any(i => i.Ingredient.Category == "Protein")).ToList();
+
+			foreach (var p in withoutMeat)
+			{
+				if (veggie)
+				{
+					pizzasWithIngredients.Remove(p);
+				}
+			}
 
 			return pizzasWithIngredients.ToList();
 		}
