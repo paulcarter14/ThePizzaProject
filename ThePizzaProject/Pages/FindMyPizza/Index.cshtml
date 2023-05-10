@@ -4,38 +4,157 @@
 	ViewData["Title"] = "Find My Pizza";
 }
 
+<button class="open-sideBar">filter</button>
+<div class="sidebar">
+
+
 <h1>Find My Pizza</h1>
 
 <form method="post">
+
 	<div class="filterbox">
-		<h2>Ingredients we want</h2>
-		@foreach (var ingredient in Model.Ingredients)
-		{
+		<form method="post" asp-page-handler="Update">
+			<h2 class="filter-title" >Ingredients we want</h2>
+	
+		<h2 class="ingredient-title">Dough</h2>
+			<ol class="sidebar-list" style="clear: both;>
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
+				{
+					<li class="sidebar-list-element">
+						<input type="radio" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+						<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title" >Cheese</h2>
+			<ol class="sidebar-list" style="clear: both;>
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+						<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title">Protein</h2>
+			<ol class="sidebar-list" >
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Protein"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+						<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title">Vegetables</h2>
+			<ol class="sidebar-list">
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+						<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title">Sauces</h2>
+			<ol class="sidebar-list" >
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+						<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+		<input type="checkbox" name="veggie" value="true" id="noMeat"/>
+
 			<input type="checkbox" id="wanted-@ingredient.IngredientID" name="wantedIngredients" value="@ingredient.IngredientID">
 			<label for="wanted-@ingredient.IngredientID">@ingredient.IngredientName</label>
 		}
 		<input type="checkbox" name="veggie" value="true" id="noMeat" />
+
 		<label for="noMeat">Veggie Warrior</label>
-		<h2>Ingredients we don't want</h2>
-		@foreach (var ingredient in Model.Ingredients)
-		{
-			<input type="checkbox" id="unwanted-@ingredient.IngredientID" name="unwantedIngredients" value="@ingredient.IngredientID">
-			<label for="unwanted-@ingredient.IngredientID">@ingredient.IngredientName</label>
-		}
+		<h2 class="filter-title">Ingredients we don't want</h2>
+		
+
+		<h2 class="ingredient-title">Dough</h2>
+				<ol class="sidebar-list" style="clear: both;>
+					@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
+				{
+					<li class="sidebar-list-element">
+					<input type="radio" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+						<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title" >Cheese</h2>
+			<ol class="sidebar-list" style="clear: both;>
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
+			{
+					<li class="sidebar-list-element">
+					<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+						<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+			</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title">Protein</h2>
+			<ol class="sidebar-list" >
+								@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Protein"))
+								{
+						<li class="sidebar-list-element">
+						<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+							<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+						</li>
+								}
+			</ol>
+
+			<h2 class="ingredient-title">Vegetables</h2>
+			<ol class="sidebar-list">
+								@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
+								{
+						<li class="sidebar-list-element">
+						<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+							<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+						</li>
+								}
+			</ol>
+
+			<h2 class="ingredient-title">Sauces</h2>
+			<ol class="sidebar-list" >
+								@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
+								{
+						<li class="sidebar-list-element">
+						<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+							<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+						</li>
+								}
+			</ol>
 		<button type="submit">Apply Filter</button>
+	</form>
 	</div>
-</form>
+</div>
 
 
-@foreach (var pizza in Model.FilteredPizzas ?? Model.Pizzas)
-{
+<div class="pizzaContent">
+	@foreach (var pizza in Model.FilteredPizzas ?? Model.Pizzas)
+	{
 	<div class="pizzabox">
 		<h2>@pizza.PizzaName</h2>
-		<p>
-			@foreach (var ingredient in pizza.PizzaIngredients)
+			<img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
+		<ul>
+			@foreach (var pizzaIngredient in pizza.PizzaIngredients)
 			{
-				@ingredient.Ingredient.IngredientName @(ingredient != pizza.PizzaIngredients.Last() ? ", " : "")
+					<text>@pizzaIngredient.Ingredient.IngredientName, </text>
 			}
-		</p>
+		</ul>
 	</div>
-}
+	}
+</div>
+
+
