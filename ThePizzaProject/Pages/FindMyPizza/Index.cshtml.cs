@@ -50,7 +50,6 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			catch (Exception ex)
 			{
 				return RedirectToAction("Index");
-
 			}
 
 			return Page();
@@ -103,6 +102,11 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			}
 
 			return pizzasWithIngredients;
+		}
+
+		public void SendToPizzaPage()
+		{
+			RedirectToAction("ThePizzaPage.cshtml");
 		}
 	}
 }
