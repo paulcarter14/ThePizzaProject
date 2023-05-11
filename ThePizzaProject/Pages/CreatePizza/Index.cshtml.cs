@@ -9,10 +9,12 @@ namespace ThePizzaProject.Pages.CreatePizza
     public class IndexModel : PageModel
     {
         private readonly ThePizzaProjectContext _context;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public IndexModel(ThePizzaProjectContext context)
+        public IndexModel(ThePizzaProjectContext context , IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+			this._contextAccessor = httpContextAccessor;
         }
 
         public List<Ingredient> Ingredients { get; set; }
@@ -26,11 +28,12 @@ namespace ThePizzaProject.Pages.CreatePizza
 
 		public IActionResult OnPost(int[] ingredients, string pizzaName)
 		{
-			
+            var accessControl = new AccessControl(_context, _contextAccessor);
+            int loggedUser = accessControl.LoggedInAccountID;
 
-			var newPizza = new Pizza
+            var newPizza = new Pizza
 			{
-				AccountID = 4,
+				AccountID = loggedUser,
 				PizzaName = pizzaName,
 				PizzaIngredients = new List<PizzaIngredient>()
 

@@ -9,7 +9,7 @@ namespace ThePizzaProject.Models
         public string PizzaName { get; set; }
 
         
-
+        public List<CommentPizza> CommentPizza { get; set; }
 		public List<PizzaIngredient> PizzaIngredients { get; set; }
 
 		public Account User { get; set; }
