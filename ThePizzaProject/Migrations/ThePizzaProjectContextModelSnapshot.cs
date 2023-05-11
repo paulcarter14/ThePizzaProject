@@ -46,6 +46,46 @@ namespace ThePizzaProject.Migrations
                     b.ToTable("Accounts");
                 });
 
+            modelBuilder.Entity("ThePizzaProject.Models.Comment", b =>
+                {
+                    b.Property<int>("CommentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentID"), 1L, 1);
+
+                    b.Property<string>("CommentText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CommentID");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("ThePizzaProject.Models.CommentPizza", b =>
+                {
+                    b.Property<int>("CommentPizzaID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentPizzaID"), 1L, 1);
+
+                    b.Property<int>("CommentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PizzaID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentPizzaID");
+
+                    b.HasIndex("CommentID");
+
+                    b.HasIndex("PizzaID");
+
+                    b.ToTable("CommentPizza");
+                });
+
             modelBuilder.Entity("ThePizzaProject.Models.Ingredient", b =>
                 {
                     b.Property<int>("IngredientID")
@@ -115,6 +155,25 @@ namespace ThePizzaProject.Migrations
                     b.ToTable("PizzaIngredient");
                 });
 
+            modelBuilder.Entity("ThePizzaProject.Models.CommentPizza", b =>
+                {
+                    b.HasOne("ThePizzaProject.Models.Comment", "Comment")
+                        .WithMany("CommentPizzas")
+                        .HasForeignKey("CommentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ThePizzaProject.Models.Pizza", "Pizza")
+                        .WithMany("CommentPizza")
+                        .HasForeignKey("PizzaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("Pizza");
+                });
+
             modelBuilder.Entity("ThePizzaProject.Models.Pizza", b =>
                 {
                     b.HasOne("ThePizzaProject.Models.Account", "User")
@@ -150,6 +209,11 @@ namespace ThePizzaProject.Migrations
                     b.Navigation("Pizzas");
                 });
 
+            modelBuilder.Entity("ThePizzaProject.Models.Comment", b =>
+                {
+                    b.Navigation("CommentPizzas");
+                });
+
             modelBuilder.Entity("ThePizzaProject.Models.Ingredient", b =>
                 {
                     b.Navigation("PizzaIngredients");
@@ -157,6 +221,8 @@ namespace ThePizzaProject.Migrations
 
             modelBuilder.Entity("ThePizzaProject.Models.Pizza", b =>
                 {
+                    b.Navigation("CommentPizza");
+
                     b.Navigation("PizzaIngredients");
                 });
 #pragma warning restore 612, 618

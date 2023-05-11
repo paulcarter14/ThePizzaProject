@@ -9,6 +9,8 @@ namespace ThePizzaProject.Data
 		public DbSet<Account> Accounts { get; set; }
 		public DbSet<Ingredient> Ingredients { get; set;}
 		public DbSet<Pizza> Pizzas { get; set; }
+
+		public DbSet<Comment> Comments { get; set; }
 		//public DbSet<PizzaIngredient> PizzaIngredients { get; set; }
 
 		public ThePizzaProjectContext(DbContextOptions<ThePizzaProjectContext> options)
