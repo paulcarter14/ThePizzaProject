@@ -56,9 +56,27 @@ namespace ThePizzaProject.Pages.ThePizzaPage
             }
         }
 
-        public void OnPost()
+        public void OnPost(string commentText, int id )
         {
-            // Post method code here
+            Comment newComment = new Comment();
+
+            
+            newComment.CommentText = commentText;
+
+           var pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == id);
+            CommentPizza newCommentPizza = new CommentPizza();
+
+            newCommentPizza.Pizza = pizza;
+
+            newCommentPizza.Comment = newComment;
+
+            // add the comment pizza to the comment's list of comment pizzas
+            newComment.CommentPizzas = new List<CommentPizza>();
+            newComment.CommentPizzas.Add(newCommentPizza);
+
+            _context.Add(newComment);
+            _context.SaveChanges();
+
         }
     }
 }
