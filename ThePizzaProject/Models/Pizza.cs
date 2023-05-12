@@ -8,7 +8,6 @@ namespace ThePizzaProject.Models
         public int PizzaID { get; set; }
         public string PizzaName { get; set; }
 
-        
         public List<CommentPizza> CommentPizza { get; set; }
 		public List<PizzaIngredient> PizzaIngredients { get; set; }
 

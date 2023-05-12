@@ -72,6 +72,32 @@ namespace ThePizzaProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CommentUser",
+                columns: table => new
+                {
+                    CommentUserID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    userAccountID = table.Column<int>(type: "int", nullable: false),
+                    CommentID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CommentUser", x => x.CommentUserID);
+                    table.ForeignKey(
+                        name: "FK_CommentUser_Accounts_userAccountID",
+                        column: x => x.userAccountID,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CommentUser_Comments_CommentID",
+                        column: x => x.CommentID,
+                        principalTable: "Comments",
+                        principalColumn: "CommentID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CommentPizza",
                 columns: table => new
                 {
@@ -134,6 +160,16 @@ namespace ThePizzaProject.Migrations
                 column: "PizzaID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CommentUser_CommentID",
+                table: "CommentUser",
+                column: "CommentID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CommentUser_userAccountID",
+                table: "CommentUser",
+                column: "userAccountID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PizzaIngredient_IngredientID",
                 table: "PizzaIngredient",
                 column: "IngredientID");
@@ -153,6 +189,9 @@ namespace ThePizzaProject.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CommentPizza");
+
+            migrationBuilder.DropTable(
+                name: "CommentUser");
 
             migrationBuilder.DropTable(
                 name: "PizzaIngredient");
