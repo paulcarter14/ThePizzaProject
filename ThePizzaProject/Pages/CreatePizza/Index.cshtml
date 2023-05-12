@@ -42,7 +42,7 @@
 
 	<h2>Protein</h2>
 	<ul class="protien">
-		@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Protein"))
+		@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Fish" || i.Category == "Chicken" || i.Category == "Meat"))
 		{
 			<li>
 				<input type="checkbox" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
