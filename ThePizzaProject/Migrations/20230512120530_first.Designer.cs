@@ -11,7 +11,7 @@ using ThePizzaProject.Data;
 namespace ThePizzaProject.Migrations
 {
     [DbContext(typeof(ThePizzaProjectContext))]
-    [Migration("20230511123540_first")]
+    [Migration("20230512120530_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,29 @@ namespace ThePizzaProject.Migrations
                     b.HasIndex("PizzaID");
 
                     b.ToTable("CommentPizza");
+                });
+
+            modelBuilder.Entity("ThePizzaProject.Models.CommentUser", b =>
+                {
+                    b.Property<int>("CommentUserID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentUserID"), 1L, 1);
+
+                    b.Property<int>("CommentID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userAccountID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentUserID");
+
+                    b.HasIndex("CommentID");
+
+                    b.HasIndex("userAccountID");
+
+                    b.ToTable("CommentUser");
                 });
 
             modelBuilder.Entity("ThePizzaProject.Models.Ingredient", b =>
@@ -176,6 +199,25 @@ namespace ThePizzaProject.Migrations
                     b.Navigation("Pizza");
                 });
 
+            modelBuilder.Entity("ThePizzaProject.Models.CommentUser", b =>
+                {
+                    b.HasOne("ThePizzaProject.Models.Comment", "Comment")
+                        .WithMany("CommentUser")
+                        .HasForeignKey("CommentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ThePizzaProject.Models.Account", "user")
+                        .WithMany("commentUsers")
+                        .HasForeignKey("userAccountID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("ThePizzaProject.Models.Pizza", b =>
                 {
                     b.HasOne("ThePizzaProject.Models.Account", "User")
@@ -209,11 +251,15 @@ namespace ThePizzaProject.Migrations
             modelBuilder.Entity("ThePizzaProject.Models.Account", b =>
                 {
                     b.Navigation("Pizzas");
+
+                    b.Navigation("commentUsers");
                 });
 
             modelBuilder.Entity("ThePizzaProject.Models.Comment", b =>
                 {
                     b.Navigation("CommentPizzas");
+
+                    b.Navigation("CommentUser");
                 });
 
             modelBuilder.Entity("ThePizzaProject.Models.Ingredient", b =>

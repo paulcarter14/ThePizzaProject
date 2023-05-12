@@ -51,14 +51,19 @@
     @foreach (var pizza in Model.FilteredPizzas ?? Model.Pizzas)
     {
         <div onclick="href=window.location.href ='/ThePizzaPage?id=@pizza.PizzaID'" class="pizzabox">
-            <h2>@pizza.PizzaName</h2>
+            <div class="pizza-title">
+            <h2 >@pizza.PizzaName</h2>
+            </div>
             <img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
-            <ul>
+           <span class="pizzaIngredients">
                 @foreach (var pizzaIngredient in pizza.PizzaIngredients)
                 {
-                    <text>@pizzaIngredient.Ingredient.IngredientName, </text>
+                    <span>@pizzaIngredient.Ingredient.IngredientName</span>
+
+                    <span>, </span>
                 }
-            </ul>
+          </span>
+           
 
         </div>
     }

@@ -8,18 +8,27 @@
     <source src="/sound/Osipov-Kamarinskaya.mp3" type="audio/mp3" />
 </audio>
 
+<div class="pizzaContent">
 @foreach (var pizza in Model.MyPizzas ?? Model.Pizzas)
 {
 	<div class="pizzabox">
+			 <div class="pizza-title">
 		<h2>@pizza.PizzaName</h2>
-		<p>
+		</div>
+			<img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
+			 <span class="pizzaIngredients">
 			@foreach (var ingredient in pizza.PizzaIngredients)
 			{
-				@ingredient.Ingredient.IngredientName @(ingredient != pizza.PizzaIngredients.Last() ? ", " : "")
+					<span>
+						@ingredient.Ingredient.IngredientName</span>
+
+								<span>, </span>
+				
 			}
-		</p>
+			</span>
 	</div>
 }
+</div>
 
 <p> MpM Development </p>
 
