@@ -6,6 +6,7 @@ using System.Security.Claims;
 using ThePizzaProject.Data;
 using ThePizzaProject.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -94,6 +95,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AccessControl>();
 
+// Steg 2 för att ladda upp bilder.
+builder.Services.AddSingleton<FileRepository>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -110,6 +114,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// Steg 1 för att ladda upp bilder.
+Directory.CreateDirectory(builder.Configuration["Uploads:FolderPath"]);
+app.UseStaticFiles(new StaticFileOptions
+{
+	FileProvider = new PhysicalFileProvider(
+		Path.Combine(builder.Environment.ContentRootPath, builder.Configuration["Uploads:FolderPath"])
+	),
+	RequestPath = builder.Configuration["Uploads:URLPath"]
+});
+
 app.UseRouting();
 
 app.UseAuthentication();
