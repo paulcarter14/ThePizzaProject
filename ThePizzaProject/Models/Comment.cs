@@ -7,5 +7,9 @@
         public string CommentText { get; set; }
 
         public List<CommentPizza> CommentPizzas { get; set; }
-    }
+
+        public List<CommentUser> CommentUser { get; set; }
+
+
+	}
 }
