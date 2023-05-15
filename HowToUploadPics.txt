@@ -1,4 +1,4 @@
-detta ska ligga över app.UseRouting(); i Program.cs:
+1. detta ska ligga över app.UseRouting(); i Program.cs:
 
 Directory.CreateDirectory(builder.Configuration["Uploads:FolderPath"]);
 app.UseStaticFiles(new StaticFileOptions
@@ -9,13 +9,13 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = builder.Configuration["Uploads:URLPath"]
 });
 -----------------------------------------------------------------------
-detta skall ligga under builder.Services.AddScoped<AccessControl>();:
+2. detta skall ligga under builder.Services.AddScoped<AccessControl>();:
 
 builder.Services.AddSingleton<FileRepository>();
 -----------------------------------------------------------------------
-Kolla filen Data\UploadRepository.cs:
+3. Kolla filen Data\UploadRepository.cs:
 -----------------------------------------------------------------------
-ska implementeras i appsettings.json (sätt rätt folderpath):
+4. ska implementeras i appsettings.json (sätt rätt folderpath):
 
 "Uploads": {
     "FolderPath": "..\\..\\UploadedFiles",
@@ -24,7 +24,7 @@ ska implementeras i appsettings.json (sätt rätt folderpath):
 
 C:\Users\larss\Desktop\OneDrive\Documents\GitHub\ThePizzaProject
 -----------------------------------------------------------------------
-Ex i index.cshtml:
+5. Ex i index.cshtml:
 
 ﻿@page
 @model IndexModel
@@ -52,7 +52,7 @@ Ex i index.cshtml:
 }
 
 ------------------------------------------------------------------------
-Tillhörande index.cshtml.cs fil:
+6. Tillhörande index.cshtml.cs fil:
 
 ﻿using ImageGallery.Data;
 using Microsoft.AspNetCore.Mvc;

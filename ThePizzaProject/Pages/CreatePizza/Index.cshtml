@@ -1,5 +1,6 @@
 ﻿@page
 @model ThePizzaProject.Pages.CreatePizza.IndexModel
+@inject ThePizzaProject.Data.AccessControl accessControl
 @{
 }
 
@@ -73,4 +74,11 @@
 		}
 	</ul>
 	<button>Bake</button>
+</form>
+
+<h2>Here you can uploads pictures @accessControl.LoggedInAccountName!</h2>
+
+<form method="post" enctype="multipart/form-data">
+	<input type="file" name="photo">
+	<button type="submit">Upload Photo</button>
 </form>
