@@ -29,10 +29,10 @@ namespace ThePizzaProject.Data
 		/// <summary>
 		/// Save the specified file in the uploads folder of the website. The path of this folder is defined in the configuration file.
 		/// </summary>
-		public async Task SaveFileAsync(IFormFile formFile, string path)
+		public async Task SaveFileAsync(IFormFile formFile, string path)    //  string fileName
 		{
 			// First get the absolute path of the uploaded file and make sure that it's in the uploads folder.
-			string relativeFilePath = Path.Combine(FolderPath, path);
+			string relativeFilePath = Path.Combine(FolderPath, path);       // fileName
 			string absoluteFilePath = Path.GetFullPath(relativeFilePath);
 			if (!absoluteFilePath.StartsWith(FolderPath))
 			{

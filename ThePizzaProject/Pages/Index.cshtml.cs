@@ -57,6 +57,7 @@ namespace ThePizzaProject.Pages
 				accessControl.LoggedInAccountID.ToString(),
 				Guid.NewGuid().ToString() + "-" + photo.FileName
 			);
+			//string fileName = photo +
 			await uploads.SaveFileAsync(photo, path);
 			return RedirectToPage();
 		}

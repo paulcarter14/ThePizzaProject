@@ -30,13 +30,6 @@
 }
 </div>
 
-<h2>Here you can uploads pictures @accessControl.LoggedInAccountName!</h2>
-
-<form method="post" enctype="multipart/form-data">
-	<input type="file" name="photo">
-	<button type="submit">Upload Photo</button>
-</form>
-
 <h2>Your Photos</h2>
 @foreach (var url in Model.PhotoURLs)
 {
