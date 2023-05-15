@@ -8,8 +8,10 @@
 
         public List<CommentPizza> CommentPizzas { get; set; }
 
-        public List<CommentUser> CommentUser { get; set; }
+        public Account User { get; set; }
+
+        public DateTime DateTime { get; set; }
 
 
-	}
+    }
 }

@@ -6,24 +6,24 @@
 @*Pizzan som klickades på antingen i FindMyPizza eller inne på en annan användares "Profil"
 
 *@
-<h1>@Model.Pizzas.User.Name</h1>
+<h1>@Model.Pizzas.UserName</h1>
 
 
 
 <div class="pizzaContent">
 	<div class="pizzabox">
 		<div class="pizza-title">
-		<h2 >@Model.Pizzas.PizzaName</h2>
+		<h2 >@Model.Pizzas.Name</h2>
 		</div>
 		<h3>Rating ⭐⭐⭐⭐⭐</h3>
 		<img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
 
 		<span class="pizzaIngredients">
-			@foreach (var pizzaIngredient in @Model.Pizzas.PizzaIngredients)
+			@foreach (var pizzaIngredient in @Model.Pizzas.Ingredients)
 			{
 
 				<span>
-					@pizzaIngredient.Ingredient.IngredientName</span>
+					@pizzaIngredient.Name</span>
 
 			<span>, </span>
 
@@ -41,12 +41,15 @@
 			<button class="submit-buttons" @*Skicka skiten till tränings API*@>Träna bort skiten</button>
 		</div>
 
-		@*@foreach(var comment in Model.Comments)
+		@foreach(var comment in Model.Pizzas.Comments)
 		{
-			<div class="comment-box">
-				<p>@comment.</p>
+
+			<div class="comment-display-box">
+				<h5 class="comment-username">@comment.UserName @comment.DateTime</h5>
+			
+				<spa class="comment-text"classn>@comment.Comment</spa>
 			</div>
-		}*@
+		}
 
 	</div>
 
