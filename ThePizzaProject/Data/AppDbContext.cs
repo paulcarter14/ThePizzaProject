@@ -10,6 +10,12 @@ namespace ThePizzaProject.Data
 		public DbSet<Ingredient> Ingredients { get; set;}
 		public DbSet<Pizza> Pizzas { get; set; }
 
+		
+
+		public DbSet<CommentPizza> CommentPizza { get; set; }
+
+		public DbSet<PizzaIngredient> PizzaIngredient { get; set; }
+
 		public DbSet<Comment> Comments { get; set; }
 		//public DbSet<PizzaIngredient> PizzaIngredients { get; set; }
 

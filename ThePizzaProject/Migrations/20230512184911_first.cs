@@ -24,19 +24,6 @@ namespace ThePizzaProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    CommentID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CommentText = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.CommentID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
                 {
@@ -49,6 +36,26 @@ namespace ThePizzaProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ingredients", x => x.IngredientID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    CommentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CommentText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserAccountID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.CommentID);
+                    table.ForeignKey(
+                        name: "FK_Comments_Accounts_UserAccountID",
+                        column: x => x.UserAccountID,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,39 +79,13 @@ namespace ThePizzaProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CommentUser",
-                columns: table => new
-                {
-                    CommentUserID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    userAccountID = table.Column<int>(type: "int", nullable: false),
-                    CommentID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CommentUser", x => x.CommentUserID);
-                    table.ForeignKey(
-                        name: "FK_CommentUser_Accounts_userAccountID",
-                        column: x => x.userAccountID,
-                        principalTable: "Accounts",
-                        principalColumn: "AccountID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CommentUser_Comments_CommentID",
-                        column: x => x.CommentID,
-                        principalTable: "Comments",
-                        principalColumn: "CommentID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CommentPizza",
                 columns: table => new
                 {
                     CommentPizzaID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PizzaID = table.Column<int>(type: "int", nullable: false),
-                    CommentID = table.Column<int>(type: "int", nullable: false)
+                    PizzaID = table.Column<int>(type: "int", nullable: true),
+                    CommentID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -113,14 +94,12 @@ namespace ThePizzaProject.Migrations
                         name: "FK_CommentPizza_Comments_CommentID",
                         column: x => x.CommentID,
                         principalTable: "Comments",
-                        principalColumn: "CommentID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CommentID");
                     table.ForeignKey(
                         name: "FK_CommentPizza_Pizzas_PizzaID",
                         column: x => x.PizzaID,
                         principalTable: "Pizzas",
-                        principalColumn: "PizzaID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PizzaID");
                 });
 
             migrationBuilder.CreateTable(
@@ -160,14 +139,9 @@ namespace ThePizzaProject.Migrations
                 column: "PizzaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommentUser_CommentID",
-                table: "CommentUser",
-                column: "CommentID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CommentUser_userAccountID",
-                table: "CommentUser",
-                column: "userAccountID");
+                name: "IX_Comments_UserAccountID",
+                table: "Comments",
+                column: "UserAccountID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PizzaIngredient_IngredientID",
@@ -189,9 +163,6 @@ namespace ThePizzaProject.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CommentPizza");
-
-            migrationBuilder.DropTable(
-                name: "CommentUser");
 
             migrationBuilder.DropTable(
                 name: "PizzaIngredient");
