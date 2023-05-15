@@ -25,6 +25,7 @@ namespace ThePizzaProject.Data
 		}
 
 		public string FolderPath { get; set; }
+		
 
 		/// <summary>
 		/// Save the specified file in the uploads folder of the website. The path of this folder is defined in the configuration file.

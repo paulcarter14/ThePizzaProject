@@ -4,10 +4,11 @@
 @{
 }
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
 
 	<h1>Create pizza</h1>
 	<input type="text" name="pizzaName" placeholder="Give a name to youre pizza" /> 
+	<input type="file" name="photo">
 	<h2>Pizza Dough</h2>
 	<ul class="dough">
 		@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
@@ -73,12 +74,12 @@
 			</li>
 		}
 	</ul>
-	<button>Bake</button>
+	<button>Bake and upload</button>
 </form>
 
-<h2>Here you can uploads pictures @accessControl.LoggedInAccountName!</h2>
+@*<h2>Here you can uploads pictures @accessControl.LoggedInAccountName!</h2>*@
 
-<form method="post" enctype="multipart/form-data">
+@*<form method="post" enctype="multipart/form-data">
 	<input type="file" name="photo">
 	<button type="submit">Upload Photo</button>
-</form>
+</form>*@

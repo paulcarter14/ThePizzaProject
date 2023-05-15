@@ -38,29 +38,10 @@ namespace ThePizzaProject.Pages
 			MyPizzas = GetMyPizzas(); // Get only your pizzas
 			Ingredients = _context.Ingredients.ToList(); // Populate the Ingredients property
 
-			string userFolderPath = Path.Combine(
-				uploads.FolderPath,
-				accessControl.LoggedInAccountID.ToString()
-			);
-			Directory.CreateDirectory(userFolderPath);
-			string[] files = Directory.GetFiles(userFolderPath);
-			foreach (string file in files)
-			{
-				string url = uploads.GetFileURL(file);
-				PhotoURLs.Add(url);
-			}
+			
 		}
 
-		public async Task<IActionResult> OnPost(IFormFile photo)
-		{
-			string path = Path.Combine(
-				accessControl.LoggedInAccountID.ToString(),
-				Guid.NewGuid().ToString() + "-" + photo.FileName
-			);
-			//string fileName = photo +
-			await uploads.SaveFileAsync(photo, path);
-			return RedirectToPage();
-		}
+		
 
 		private List<Pizza> GetMyPizzas()
 		{
