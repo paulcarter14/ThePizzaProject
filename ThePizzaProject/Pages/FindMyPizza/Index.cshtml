@@ -3,68 +3,220 @@
 @{
     ViewData["Title"] = "Find My Pizza";
 }
+<style>
+    /*byt ut detta mot css i css filen senare*/
+    /*byt ut detta mot css i css filen senare*/
+    /*byt ut detta mot css i css filen senare*/
+    /*byt ut detta mot css i css filen senare*/
+    /* Left Sliding Bar */
+    .left-bar {
+        position: fixed;
+        left: -300px;
+        top: 0;
+        width: 300px;
+        height: 100%;
+        background-color: #f2f2f2;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+    }
 
-<button class="open-sideBar">filter</button>
-<div class="sidebar">
+        .left-bar.open {
+            left: 0;
+        }
+
+    /* Right Sliding Bar */
+    .right-bar {
+        position: fixed;
+        right: -300px;
+        top: 0;
+        width: 300px;
+        height: 100%;
+        background-color: #f2f2f2;
+        transition: right 0.3s ease;
+        overflow-y: auto;
+    }
+
+        .right-bar.open {
+            right: 0;
+        }
+</style>
+
+    <button class="left-baropen" onclick="toggleLeftBar()">Toggle Left Bar</button>
+    <button class="right-baropen" onclick="toggleRightBar()">Toggle Right Bar</button>
 
     <h1>Find My Pizza</h1>
-
-    <div class="filterbox">
-        <form method="post" asp-page-handler="Update">
-            <h2 class="filter-title">Ingredients we want</h2>
-
-            <h2 class="ingredient-title">Dough</h2>
-            <ol class="sidebar-list" style="clear: both;">
-                @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
-                {
-                    <li class="sidebar-list-element">
-                        <input type="radio" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                        <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-                    </li>
-                }
-            </ol>
-
-            <!-- ... repeat for each ingredient category ... -->
-
-            <h2 class="filter-title">Ingredients we don't want</h2>
-
-            <h2 class="ingredient-title">Dough</h2>
-            <ol class="sidebar-list" style="clear: both;">
-                @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
-                {
-                    <li class="sidebar-list-element">
-                        <input type="radio" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                        <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-                    </li>
-                }
-            </ol>
-
-            <!-- ... repeat for each ingredient category ... -->
-
-            <button type="submit">Apply Filter</button>
-        </form>
-    </div>
-</div>
-
 
 <div class="pizzaContent">
     @foreach (var pizza in Model.FilteredPizzas ?? Model.Pizzas)
     {
-        <div onclick="href=window.location.href ='/ThePizzaPage?id=@pizza.PizzaID'" class="pizzabox">
+        <div onclick="window.location.href='/ThePizzaPage?id=@pizza.PizzaID'" class="pizzabox">
             <div class="pizza-title">
-            <h2 >@pizza.PizzaName</h2>
+                <h2>@pizza.PizzaName</h2>
             </div>
             <img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
-           <span class="pizzaIngredients">
+            <span class="pizzaIngredients">
                 @foreach (var pizzaIngredient in pizza.PizzaIngredients)
                 {
                     <span>@pizzaIngredient.Ingredient.IngredientName</span>
-
                     <span>, </span>
                 }
-          </span>
-           
-
+            </span>
         </div>
     }
 </div>
+
+
+    <div class="left-bar" id="leftBar">
+        <div class="filterbox">
+            <form method="post" asp-page-handler="Update">
+                <h2 class="filter-title">Ingredients we want</h2>
+
+                <h2 class="ingredient-title">Dough</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Bottom Sauce</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "bottom-sauce"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Cheese</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Protein</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Fish" || i.Category == "Chicken" || i.Category == "Meat"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Vegetables</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Sauces</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <button type="submit">Apply Filter</button>
+            </form>
+        </div>
+</div>
+
+
+
+<div class="right-bar" id="rightBar">
+        <div class="filterbox">
+            <form method="post" asp-page-handler="Update">
+                <h2 class="filter-title">Ingredients we don't want</h2>
+
+                <h2 class="ingredient-title">Dough</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Bottom Sauce</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Bottom-sauce"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Cheese</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Protein</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Fish" || i.Category == "Chicken" || i.Category == "Meat"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Vegetables</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <h2 class="ingredient-title">Sauces</h2>
+                <ol class="sidebar-list" style="clear: both;">
+                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
+                    {
+                        <li class="sidebar-list-element">
+                            <input type="radio" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                        </li>
+                    }
+                </ol>
+
+                <button type="submit">Apply Filter</button>
+            </form>
+        </div>
+</div>
+
