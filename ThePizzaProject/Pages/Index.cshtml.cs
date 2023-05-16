@@ -37,8 +37,6 @@ namespace ThePizzaProject.Pages
 			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
 			MyPizzas = GetMyPizzas(); // Get only your pizzas
 			Ingredients = _context.Ingredients.ToList(); // Populate the Ingredients property
-
-			
 		}
 
 		
