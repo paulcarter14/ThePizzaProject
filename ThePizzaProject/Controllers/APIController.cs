@@ -5,63 +5,117 @@ using ThePizzaProject.Data;
 using ThePizzaProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using NuGet.Protocol;
 
 namespace ThePizzaProject.Controllers
 {
-    [Route("/api")]
     [ApiController]
+    [Route("/api")]
     public class APIController : ControllerBase
     {
-        private readonly ThePizzaProjectContext database;
+        private readonly ThePizzaProjectContext _context;
 
-        public APIController(ThePizzaProjectContext database)
+        public APIController(ThePizzaProjectContext context)
         {
-            this.database = database;
+            _context = context;
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<Pizza>> GetPizzaByCategory(string categoryname)
-        //{
-        //    Pizza pizza = null;
+        [HttpGet]
+        public async Task<ActionResult<Pizza>> GetPizzaByCategory(string categoryname)
+        {
+            Pizza pizza = null;
+            RandomPizza returnPizza = new RandomPizza()
+            {
 
-        //    if (categoryname == "Chicken")
-        //    {
-        //        pizza = await database.Pizzas
-        //            .Include(p => p.PizzaIngredients)
-        //            .FirstOrDefaultAsync(p => p.PizzaIngredients.Any(i => i.Ingredient.Category == "Chicken"));
-        //    }
-        //    else if (categoryname == "Meat")
-        //    {
-        //        pizza = await database.Pizzas
-        //            .Include(p => p.PizzaIngredients)
-        //            .FirstOrDefaultAsync(p => p.PizzaIngredients.Any(i => i.Ingredient.Category == "Meat"));
-        //    }
-        //    else if (categoryname.ToLower() == "Fish")
-        //    {
-        //        pizza = await database.Pizzas
-        //            .Include(p => p.PizzaIngredients)
-        //            .FirstOrDefaultAsync(p => p.PizzaIngredients.Any(i => i.Ingredient.Category == "Fish"));
-        //    }
-        //    else if (categoryname.ToLower() == "Vegeterian")
-        //    {
-        //        pizza = await database.Pizzas
-        //            .Include(p => p.PizzaIngredients)
-        //            .FirstOrDefaultAsync(p => p.PizzaIngredients.All(i => i.Ingredient.Category != "Chicken" && i.Ingredient.Category != "Meat" && i.Ingredient.Category != "Fish"));
-        //    }
+            };
 
-        //    else if (categoryname.ToLower() == "Dessert")
-        //    {
-        //        //skapa en pizza
-        //    }
+            if (categoryname == "Chicken")
+            {
+                var matchingPizzas = _context.Pizzas
+                .Where(p => p.PizzaIngredients
+                    .Any(i => i.Ingredient.Category == categoryname))
+                .Select(p => new
+                {
+                    Name = p.PizzaName,
+                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList()
+                })
+                .ToList();
 
-        //    if (pizza == null)
-        //    {
-        //        return NotFound();
-        //    }
+                //Slumpar en pizza
+                var random = new Random();
+                var randomPizza = matchingPizzas[random.Next(matchingPizzas.Count)];
 
-        //    //Retunera Bild, Namn och LI med ingredienser.
-        //    return pizza;
-        //}
+
+                returnPizza.Name = randomPizza.Name;
+                returnPizza.Ingredients = randomPizza.Ingredients;
+
+            }
+            else if (categoryname == "Meat")
+            {
+                var matchingPizzas = _context.Pizzas
+                .Where(p => p.PizzaIngredients
+                    .Any(i => i.Ingredient.Category == categoryname))
+                .Select(p => new
+                {
+                    Name = p.PizzaName,
+                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList()
+                })
+                .ToList();
+
+                //Slumpar en pizza
+                var random = new Random();
+                var randomPizza = matchingPizzas[random.Next(matchingPizzas.Count)];
+
+
+                returnPizza.Name = randomPizza.Name;
+                returnPizza.Ingredients = randomPizza.Ingredients;
+            }
+
+            else if (categoryname == "Fish")
+            {
+                var matchingPizzas = _context.Pizzas
+                .Where(p => p.PizzaIngredients
+                    .Any(i => i.Ingredient.Category == categoryname))
+                .Select(p => new
+                {
+                    Name = p.PizzaName,
+                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList()
+                })
+                .ToList();
+
+                //Slumpar en pizza
+                var random = new Random();
+                var randomPizza = matchingPizzas[random.Next(matchingPizzas.Count)];
+
+                returnPizza.Name = randomPizza.Name;
+                returnPizza.Ingredients = randomPizza.Ingredients;
+            }
+
+
+            else if (categoryname == "Vegetarian")
+            {
+                var matchingPizzas = _context.Pizzas
+                .Where(p => p.PizzaIngredients
+                    .All(i => i.Ingredient.Category != "Chicken" && i.Ingredient.Category != "Meat" && i.Ingredient.Category != "Fish"))
+                .Select(p => new
+                {
+                    Name = p.PizzaName,
+                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList()
+                })
+                .ToList();
+
+                var random = new Random();
+                var randomPizza = matchingPizzas[random.Next(matchingPizzas.Count)];
+
+                returnPizza.Name = randomPizza.Name;
+                returnPizza.Ingredients = randomPizza.Ingredients;
+            }
+
+
+
+            //Retunera Bild, Namn och LI med ingredienser.
+            return Ok(returnPizza);
+        }
     }
 }
 
