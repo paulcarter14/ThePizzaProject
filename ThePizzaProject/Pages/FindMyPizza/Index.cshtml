@@ -3,50 +3,15 @@
 @{
     ViewData["Title"] = "Find My Pizza";
 }
-<style>
-    /*byt ut detta mot css i css filen senare*/
-    /*byt ut detta mot css i css filen senare*/
-    /*byt ut detta mot css i css filen senare*/
-    /*byt ut detta mot css i css filen senare*/
-    /* Left Sliding Bar */
-    .left-bar {
-        position: fixed;
-        left: -300px;
-        top: 0;
-        width: 300px;
-        height: 100%;
-        background-color: #f2f2f2;
-        transition: left 0.3s ease;
-        overflow-y: auto;
-    }
 
-        .left-bar.open {
-            left: 0;
-        }
-
-    /* Right Sliding Bar */
-    .right-bar {
-        position: fixed;
-        right: -300px;
-        top: 0;
-        width: 300px;
-        height: 100%;
-        background-color: #f2f2f2;
-        transition: right 0.3s ease;
-        overflow-y: auto;
-    }
-
-        .right-bar.open {
-            right: 0;
-        }
-</style>
-
-    <button class="left-baropen" onclick="toggleLeftBar()">Toggle Left Bar</button>
-    <button class="right-baropen" onclick="toggleRightBar()">Toggle Right Bar</button>
+<div class="filter-buttons">
+    <button class="left-baropen" onclick="toggleLeftBar()">Like 😍</button>
+    <button class="right-baropen" onclick="toggleRightBar()">Dont like🤢</button>
+</div>
 
     <h1>Find My Pizza</h1>
 
-<div class="pizzaContent">
+<div class="pizza-content">
     @foreach (var pizza in Model.FilteredPizzas ?? Model.Pizzas)
     {
         <div onclick="window.location.href='/ThePizzaPage?id=@pizza.PizzaID'" class="pizzabox">
@@ -54,7 +19,7 @@
                 <h2>@pizza.PizzaName</h2>
             </div>
             <img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
-            <span class="pizzaIngredients">
+            <span class="pizza-ingredients">
                 @foreach (var pizzaIngredient in pizza.PizzaIngredients)
                 {
                     <span>@pizzaIngredient.Ingredient.IngredientName</span>
@@ -67,7 +32,7 @@
 
 
     <div class="left-bar" id="leftBar">
-        <div class="filterbox">
+        <div class="filter-box">
             <form method="post" asp-page-handler="Update">
                 <h2 class="filter-title">Ingredients we want</h2>
 
