@@ -1,9 +1,3 @@
 {
-  "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:ThePizzaProjectContext",
-      "dynamicId": null
-    }
-  }
+  "dependencies": {}
 }
