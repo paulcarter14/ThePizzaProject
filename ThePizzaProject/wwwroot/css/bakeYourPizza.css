@@ -1,0 +1,19 @@
+﻿.container {
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ingredient {
+    flex-basis: calc(100% / 3 - 10px); /* Adjust as needed */
+    background-color: #ccc;
+    margin: 5px; /* Adjust as needed */
+    padding: 10px;
+    box-sizing: border-box; /* Include padding and margin within flex-basis calculation */
+}
+
+@media (max-width: 767px) {
+    .item {
+        flex-basis: calc(100% / 2 - 10px); /* Adjust as needed for smaller screens */
+    }
+}
