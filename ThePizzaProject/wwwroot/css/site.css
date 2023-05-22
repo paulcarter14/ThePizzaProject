@@ -10,7 +10,7 @@
 }
 
 body {
-    background-image: linear-gradient(rgb(22, 31, 64), rgb(91, 65, 78));
+    /*background-image: linear-gradient(rgb(22, 31, 64), rgb(91, 65, 78));*/
     /*   background: linear-gradient(90deg, rgba(0,140,69,1) 0%, rgba(244,249,255,1) 50%, rgba(205,33,42,0.6834383411567753) 100%);*/
     min-height: 100vh;
 }
