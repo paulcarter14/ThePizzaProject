@@ -9,9 +9,9 @@
 	<input type="text" name="pizzaName" placeholder="Give a name to youre pizza" /> 
 	<input type="file" name="photo">
 	<div class="container">
-		<div class="ingredient">
-			<h2>Pizza Dough</h2>
-			<ul @*class="dough"*@>
+		<div class="dough" id="ingredient">
+			<h2 id="ingredientCategory">Pizza Dough</h2>
+			<ul>
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
 				{
 					<li>
@@ -21,9 +21,9 @@
 				}
 			</ul>
 		</div>
-		<div class="ingredient">
-			<h2>Bottom Sauce</h2>
-			<ul @*class="cheese"*@>
+		<div class="bottomSauce" id="ingredient">
+			<h2 id="ingredientCategory">Bottom Sauce</h2>
+			<ul>
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Bottom-sauce"))
 				{
 					<li>
@@ -33,9 +33,9 @@
 				}
 			</ul>
 		</div>
-		<div class="ingredient">
-			<h2>Cheese</h2>
-			<ul @*class="cheese"*@>
+		<div class="cheese" id="ingredient">
+			<h2 id="ingredientCategory">Cheese</h2>
+			<ul>
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
 				{
 					<li>
@@ -45,9 +45,9 @@
 				}
 			</ul>
 		</div>
-		<div class="ingredient">
-			<h2>Protein</h2>
-			<ul @*class="protien"*@>
+		<div class="protein" id="ingredient">
+			<h2 id="ingredientCategory">Protein</h2>
+			<ul>
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Fish" || i.Category == "Chicken" || i.Category == "Meat"))
 				{
 					<li>
@@ -57,9 +57,9 @@
 				}
 			</ul>
 		</div>
-		<div class="ingredient">
-			<h2>Vegetables</h2>
-			<ul @*class="vegetables"*@>
+		<div class="vegetable" id="ingredient">
+			<h2 id="ingredientCategory">Vegetables</h2>
+			<ul>
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
 				{
 					<li>
@@ -69,9 +69,9 @@
 				}
 			</ul>
 		</div>
-		<div class="ingredient">
-			<h2>Sauces</h2>
-			<ul @*class="sauces"*@>
+		<div class="sauce" id="ingredient">
+			<h2 id="ingredientCategory">Sauces</h2>
+			<ul>
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
 				{
 					<li>
@@ -84,10 +84,3 @@
 	</div>
 	<button>Bake and upload</button>
 </form>
-
-@*<h2>Here you can uploads pictures @accessControl.LoggedInAccountName!</h2>*@
-
-@*<form method="post" enctype="multipart/form-data">
-	<input type="file" name="photo">
-	<button type="submit">Upload Photo</button>
-</form>*@
