@@ -26,11 +26,13 @@ namespace ThePizzaProject.Pages
 			this.uploads = uploads;
 		}
 
-		public List<string> PhotoURLs { get; set; } = new List<string>();
+	
 
 		public List<Ingredient> Ingredients { get; set; }
 		public List<Pizza> Pizzas { get; set; }
 		public List<Pizza> MyPizzas { get; set; }
+
+		public List<string> photoUrl = new List<string>();
 
 		public void OnGet()
 		{
@@ -73,7 +75,35 @@ namespace ThePizzaProject.Pages
 						AccountID = p.AccountID
 					}).ToList();
 
-			return myPizzas;
+			 GetPizzaPhoto();
+
+            return myPizzas ;
+		}
+
+		public List<string> GetPizzaPhoto()
+		{
+
+			string userFolderPath = Path.Combine(
+			uploads.FolderPath,
+			accessControl.LoggedInAccountID.ToString()
+			);
+			if (Directory.Exists(userFolderPath))
+			{
+                string[] files = Directory.GetFiles(userFolderPath);
+
+                foreach (string file in files)
+                {
+                    string url = uploads.GetFileURL(file);
+                    photoUrl.Add(url);
+                }
+            }
+			else
+			{
+                Directory.CreateDirectory(userFolderPath);
+            }
+            
+
+            return photoUrl;
 		}
 	}
 }

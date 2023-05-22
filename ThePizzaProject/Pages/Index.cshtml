@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
-<audio controls autoplay>
+<audio controls>
     <source src="/sound/Osipov-Kamarinskaya.mp3" type="audio/mp3" />
 </audio>
 
@@ -15,7 +15,20 @@
 			 <div class="pizza-title">
 		<h2>@pizza.PizzaName</h2>
 		</div>
-			<img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
+		@foreach(var url in Model.photoUrl){
+
+			
+
+				@if (url.Contains(pizza.PizzaID.ToString())){
+
+					<img src="@url" class="pizzaImg">
+				}
+				else{
+
+					@*<img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">*@
+				}
+		}
+			
 			 <span class="pizzaIngredients">
 			@foreach (var ingredient in pizza.PizzaIngredients)
 			{
@@ -39,8 +52,8 @@
 @if (Model.PhotoURLs.Count == 0)
 {
 	<p>You have not uploaded any photos yet.</p>
-}*@
+}
 
-<p> MpM Development </p>
+<p> MpM Development </p>*@
 
 
