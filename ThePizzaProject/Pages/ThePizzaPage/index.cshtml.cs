@@ -65,7 +65,7 @@ namespace ThePizzaProject.Pages.ThePizzaPage
             }
 
             Pizzas = new PizzaViewModel {
-                Id = myPizza.PizzaID,
+                ID = myPizza.PizzaID,
                 Name = myPizza.PizzaName,
                 UserName = myPizza.User.Name,
                 Comments = myPizza.CommentPizza.Select(c => new CommentViewModel
@@ -76,7 +76,7 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                 }).ToList(),
                 Ingredients = myPizza.PizzaIngredients.Select(i => new IngredientViewModel
                 {
-                    Id = i.Ingredient.IngredientID,
+                    ID = i.Ingredient.IngredientID,
                     Name = i.Ingredient.IngredientName,
                     Category = i.Ingredient.Category,
                     // TODO: Fixa kaloeriberäkning

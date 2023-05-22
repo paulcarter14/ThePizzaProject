@@ -11,11 +11,16 @@ namespace ThePizzaProject.Pages.FindMyPizza
 	public class IndexModel : PageModel
 	{
 		private readonly ThePizzaProjectContext _context;
+        private readonly FileRepository uploads;
+        private readonly AccessControl accessControl;
+		public string pizzaPhotoUrl { get; set; }
 
-		public IndexModel(ThePizzaProjectContext context)
+        public IndexModel(ThePizzaProjectContext context, FileRepository uploads, AccessControl accessControl)
 		{
 			_context = context;
 			Ingredients = new List<Ingredient>(); // Initialize the Ingredients property
+			this.uploads = uploads;
+			this.accessControl = accessControl;
 		}
 
 		public List<Ingredient> Ingredients { get; set; }
@@ -24,11 +29,15 @@ namespace ThePizzaProject.Pages.FindMyPizza
 		public List<int> WantedIngredients { get; set; }
 		public List<Pizza> FilteredPizzas { get; set; }
 
+		public List<string> photoUrl = new List<string>();
+
 		public void OnGet()
 		{
 			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
-			Ingredients = _context.Ingredients.ToList(); // Populate the Ingredients property
-		}
+			Ingredients = _context.Ingredients.ToList();
+
+            GetPhotos();// Populate the Ingredients property
+        }
 
 		public IActionResult OnPost(List<int> unwantedIngredients, bool veggie, List<int> wantedIngredients)
 		{
@@ -83,6 +92,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
 							}).ToList(),
 						User = p.User,
 						AccountID = p.AccountID
+
 					}).ToList();
 
 			// Veggie Warrior checkboxen står över de andra.
@@ -101,6 +111,8 @@ namespace ThePizzaProject.Pages.FindMyPizza
 					.ToList();
 			}
 
+			
+
 			return pizzasWithIngredients;
 		}
 
@@ -108,5 +120,59 @@ namespace ThePizzaProject.Pages.FindMyPizza
 		{
 			RedirectToAction("ThePizzaPage.cshtml");
 		}
-	}
+
+        public List<string> GetPhotos()
+        {
+
+			string userFolderPath = Path.Combine(
+			uploads.FolderPath,
+			accessControl.LoggedInAccountID.ToString()
+			);
+
+
+
+			//string uploadsFolderPath = uploads.FolderPath; // Assuming the base uploads folder path
+   //         string[] userDirectories = Directory.GetDirectories(uploadsFolderPath);
+
+			//foreach (string userDirectory in userDirectories)
+			//{
+
+			//	string userId = Path.GetFileName(userDirectory);
+
+			//	string[] files = Directory.GetFiles(userDirectory);
+
+			//	foreach(var file in files)
+			//	{
+   //                 string fileNameWithExtension = Path.GetFileName(file);
+			//		string filePath = Path.Combine(userId, fileNameWithExtension);
+   //                 photoUrl.Add(filePath);
+			//	}
+				
+   //         };
+
+			string[] files = Directory.GetFiles(userFolderPath);
+
+			foreach (string file in files)
+			{
+				string url = uploads.GetFileURL(file);
+				photoUrl.Add(url);
+			}
+
+			
+				//Directory.CreateDirectory(userFolderPath);
+			
+
+
+			return photoUrl;
+        }
+
+		public string GetPizzaPhoto(int pizzaID)
+		{
+			string photo = photoUrl.FirstOrDefault(p => p.EndsWith(pizzaID + ".jpeg"));
+
+			pizzaPhotoUrl = photo;
+
+			return pizzaPhotoUrl;
+		}
+    }
 }
