@@ -18,8 +18,43 @@
             <div class="pizza-title">
                 <h2>@pizza.PizzaName</h2>
             </div>
-            <img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
+
+            @{
+                int pizzaID = Convert.ToInt32(pizza.PizzaID);
+
+                Func<int, string> GetPizzaPhoto = (pizzaID) =>
+                {
+                    string formattedPizzaId = pizzaID.ToString();
+                    string photo = Model.photoUrl.FirstOrDefault(p => p.EndsWith( + pizzaID + ".jpeg"));
+                    return photo;
+                };
+               
+                string photoUrl = GetPizzaPhoto(pizzaID);
+            }
+
+            <img src="@photoUrl" class="pizzaImg">
+
+            @*@foreach (var url in Model.photoUrl)
+            {
+            	@if (url == ("/uploads/" + pizza.AccountID + "/" + pizza.PizzaID + ".jpeg")){
+
+					<img src="@url" class="pizzaImg">
+				}
+				else{
+
+					<img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
+				}
+
+            }*@
+
+
+            
+           
+           <span class="pizzaIngredients">
+
+            
             <span class="pizza-ingredients">
+
                 @foreach (var pizzaIngredient in pizza.PizzaIngredients)
                 {
                     <span>@pizzaIngredient.Ingredient.IngredientName</span>

@@ -4,7 +4,7 @@ namespace ThePizzaProject.ViewModels
 {
     public class PizzaViewModel
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
         public string UserName { get; set; }
         public List<CommentViewModel> Comments { get; set; }
@@ -22,8 +22,12 @@ namespace ThePizzaProject.ViewModels
     public class IngredientViewModel
     {
         public string Name { get; set; }
-        public int Id { get; set; }
+        public int ID { get; set; }
         public int Kcal { get; set; }
         public string Category { get; set; }
+
+        public Ingredient Ingredient { get; set; }
+
+       public PizzaViewModel PizzaViewModel { get; set; }
     }
 }

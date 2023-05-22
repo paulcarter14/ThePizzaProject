@@ -24,19 +24,13 @@ namespace ThePizzaProject.Pages.CreatePizza
 
         public List<Ingredient> Ingredients { get; set; }
 
+		public string photoUrl { get; set; }
+
+        public List<string> PhotoURLs { get; set; } = new List<string>();
+
         public void OnGet()
         {
             Ingredients = _context.Ingredients.ToList();
-
-
-			//Denna koden visar bilderna på sidan. 
-
-			//string[] files = Directory.GetFiles(userFolderPath);
-			//foreach (string file in files)
-			//{
-			//	string url = uploads.GetFileURL(file);
-			//	PhotoURLs.Add(url);
-			//}
 
 		}
 
@@ -84,21 +78,35 @@ namespace ThePizzaProject.Pages.CreatePizza
 
 		public async Task<IActionResult> UploadPhoto(IFormFile? photo, Pizza newPizza)
 		{
-		
-			string userFolderPath = Path.Combine(
+          
+
+            string userFolderPath = Path.Combine(
 			uploads.FolderPath,
 			accessControl.LoggedInAccountID.ToString()
 		);
+			
+
+			//Directory.CreateDirectory(userFolderPath);
 
 
-			Directory.CreateDirectory(userFolderPath);
-
+			string updatedFileName = newPizza.PizzaID.ToString();
 			string path = Path.Combine(
 				accessControl.LoggedInAccountID.ToString(),
-				Guid.NewGuid().ToString() + "-" + photo.FileName
+				  updatedFileName + ".jpeg"
 			);
-			//string fileName = photo +
-			await uploads.SaveFileAsync(photo, path);
+
+            await uploads.SaveFileAsync(photo, path);
+
+            string[] files = Directory.GetFiles(userFolderPath);
+            foreach (string file in files)
+            {
+                string url = uploads.GetFileURL(file);
+                PhotoURLs.Add(url);
+            }
+
+
+            //string fileName = photo +
+           
 			return RedirectToPage();
 		}
 	}
