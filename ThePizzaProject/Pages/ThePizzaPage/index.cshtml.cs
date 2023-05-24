@@ -29,8 +29,9 @@ namespace ThePizzaProject.Pages.ThePizzaPage
         public PizzaViewModel Pizzas { get; set; }
         public CommentPizza commentPizza { get; set; }
         public List<Ingredient> Ingredients { get; set; }
+		public int TotalCalories { get; set; }
 
-        public string Text { get; set; }
+		public string Text { get; set; }
 
         public List<string> photoUrl = new List<string>();
 
@@ -58,6 +59,7 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                                 IngredientID = pi.Ingredient.IngredientID,
                                 IngredientName = pi.Ingredient.IngredientName,
                                 Category = pi.Ingredient.Category,
+                                Calories = pi.Ingredient.Calories
                             }
                         }).ToList(),
                     CommentPizza = p.CommentPizza.ToList(),
@@ -88,17 +90,24 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                     Name = i.Ingredient.IngredientName,
                     Category = i.Ingredient.Category,
                     // TODO: Fixa kaloeriberäkning
-                    Kcal = 0
+                    Kcal = i.Ingredient.Calories
                 }).ToList()
             };
 
             GetPhotos();
+			// Debugging: Print the calories for each ingredient
+			foreach (var ingredient in Pizzas.Ingredients)
+			{
+				Console.WriteLine("Ingredient: " + ingredient.Name + ", Calories: " + ingredient.Kcal);
+			}
 
-            int totalKcal = Pizzas.Ingredients.Sum(i => i.Kcal);
 
-        }
 
-        public IActionResult OnPost(string commentText, int id)
+			TotalCalories = Pizzas.Ingredients.Sum(i => i.Kcal);
+
+		}
+
+		public IActionResult OnPost(string commentText, int id)
         {
             var accessControl = new AccessControl(_context, _contextAccessor);
             int loggedUser = accessControl.LoggedInAccountID;
