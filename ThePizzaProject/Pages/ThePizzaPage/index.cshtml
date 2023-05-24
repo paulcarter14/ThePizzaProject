@@ -13,7 +13,7 @@
 <div class="pizzaContent">
 	<div class="pizzabox">
 		<div class="pizza-title">
-		<h2 >@Model.Pizzas.Name</h2>
+			<h2>@Model.Pizzas.Name</h2>
 		</div>
 		<h3>Rating ⭐⭐⭐⭐⭐</h3>
 		@{
@@ -35,39 +35,85 @@
 			{
 
 				<span>
-					@pizzaIngredient.Name</span>
+					@pizzaIngredient.Name
+				</span>
 
-			<span>, </span>
+				<span>, </span>
 
-			
+
 			}
 		</span>
 
-		
+
 		<div class="comment-box">
 			<h4>Leave a comment</h4>
-		<form method="post">
+			<form method="post">
 				<span class="text-danger">@Html.ValidationMessageFor(m => m.Text)</span>
 				<textarea class="comment-text-area" name="commentText"></textarea>
-				
-			<button  class="submit-buttons" type="submit">Submit</button>
-				
-		</form>
-			<button class="submit-buttons" @*Skicka skiten till tränings API*@>Träna bort skiten</button>
+
+				<button class="submit-buttons" type="submit">Submit</button>
+
+			</form>
 		</div>
 
-		@foreach(var comment in Model.Pizzas.Comments)
+		@foreach (var comment in Model.Pizzas.Comments)
 		{
 
 			<div class="comment-display-box">
 				<h5 class="comment-username">@comment.UserName @comment.DateTime</h5>
-			
-				<spa class="comment-text"classn>@comment.Comment</spa>
+
+				<spa class="comment-text" classn>@comment.Comment</spa>
 			</div>
 		}
 
+		<button class="training" onclick="TrainingTips()">Training tips</button>
 	</div>
 
+
+	<script type="text/javascript">
+		function TrainingTips() {
+			var calories = @Model.TotalCalories; // Use the TotalCalories property from the model
+			var apiUrl = "https://workoutproject.azurewebsites.net/api?calories=" + calories;
+			fetch(apiUrl)
+				.then(response => response.json())
+				.then(data => {
+					var workoutList = document.getElementById('workoutList');
+					// Clear any previous children from the list
+					while (workoutList.firstChild) {
+						workoutList.removeChild(workoutList.firstChild);
+					}
+
+					data.forEach(item => {
+						var parts = item.split(": ");
+						var h2 = document.createElement('h2');
+						h2.textContent = parts[0];
+						var li = document.createElement('li');
+						li.textContent = parts[1];
+						var ul = document.createElement('ul');
+						ul.appendChild(li);
+
+						workoutList.appendChild(h2);
+						workoutList.appendChild(ul);
+					});
+				})
+				.catch((error) => {
+					console.error('Error:', error);
+				});
+		}
+	</script>
+</div>
+
+@foreach (var comment in Model.Pizzas.Comments)
+{
+	<div class="comment-display-box">
+		<h5 class="comment-username">@comment.UserName @comment.DateTime</h5>
+		<span class="comment-text">@comment.Comment</span>
+	</div>
+}
+
+</div>
+
+<div id="workoutList"></div>
 
 
 
