@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ThePizzaProject.Models; // assuming your Ingredient model is in this namespace
 using ThePizzaProject.Data; // assuming your database context is in this namespace
+using System.Xml.Linq;
 
 namespace ThePizzaProject.Pages.CreatePizza
 {
@@ -14,12 +15,18 @@ namespace ThePizzaProject.Pages.CreatePizza
 		private readonly AccessControl accessControl;
 		public readonly FileRepository uploads;
 
-		public IndexModel(ThePizzaProjectContext context , IHttpContextAccessor httpContextAccessor, AccessControl accessControl, FileRepository uploads)
+		
+
+
+
+
+        public IndexModel(ThePizzaProjectContext context , IHttpContextAccessor httpContextAccessor, AccessControl accessControl, FileRepository uploads)
         {
             _context = context;
 			this._contextAccessor = httpContextAccessor;
 			this.accessControl = accessControl;
 			this.uploads = uploads;
+			
 		}
 
         public List<Ingredient> Ingredients { get; set; }
@@ -27,6 +34,8 @@ namespace ThePizzaProject.Pages.CreatePizza
 		public string photoUrl { get; set; }
 
         public List<string> PhotoURLs { get; set; } = new List<string>();
+
+        public string Name { get; set; }
 
         public void OnGet()
         {
@@ -38,6 +47,17 @@ namespace ThePizzaProject.Pages.CreatePizza
 		{
             var accessControl = new AccessControl(_context, _contextAccessor);
             int loggedUser = accessControl.LoggedInAccountID;
+
+            if (string.IsNullOrEmpty(pizzaName))
+            {
+                ModelState.AddModelError("Name", "Name is required.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+				OnGet();
+				return Page();
+            }
 
             var newPizza = new Pizza
 			{
@@ -72,8 +92,8 @@ namespace ThePizzaProject.Pages.CreatePizza
 				UploadPhoto(photo, newPizza);
 
 			}
-			
-			return RedirectToAction("Index");
+
+			return RedirectToPage();
 		}
 
 		public async Task<IActionResult> UploadPhoto(IFormFile? photo, Pizza newPizza)
