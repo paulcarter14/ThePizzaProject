@@ -83,6 +83,16 @@ ul {
     padding: 20px;
 }
 
+.bakeButton {
+    text-align: center;
+    padding: 20px;
+}
+
+.bakeButton button {
+    height: 50px;
+    width: 160px;
+}
+
 @media (max-width: 767px) {
     .item {
         flex-basis: calc(100% / 2 - 10px); /* Adjust as needed for smaller screens */
