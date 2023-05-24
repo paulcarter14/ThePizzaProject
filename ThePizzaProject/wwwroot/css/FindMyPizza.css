@@ -31,9 +31,9 @@
     justify-content: center;
 }
 
-.left-bar.open {
-    left: 0;
-}
+    .left-bar.open {
+        left: 0;
+    }
 
 /* Right Filter Bar */
 .right-bar {
@@ -45,14 +45,12 @@
     background-color: #f2f2f2;
     transition: right 0.3s ease;
     overflow-y: auto;
-    justify-content:center;
-    
+    justify-content: center;
 }
 
-.right-bar.open {
-    right: 0;
-    
-}
+    .right-bar.open {
+        right: 0;
+    }
 
 .pizza-content {
     display: grid;
@@ -85,13 +83,13 @@
     transition: transform 0.3s ease-out;
 }
 
-.sidebar.open {
+    .sidebar.open {
         transform: translateX(-1050px);
-}
+    }
 
-.sidebar.open .filterbox {
+        .sidebar.open .filterbox {
             transform: translateX(0);
-}
+        }
 
 .open-sideBar {
     position: fixed;
