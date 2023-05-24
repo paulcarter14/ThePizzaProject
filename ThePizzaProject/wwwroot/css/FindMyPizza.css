@@ -31,9 +31,9 @@
     background: linear-gradient(90deg, rgba(17,120,9,1) 33%, rgba(255,255,255,1) 97%);
 }
 
-.left-bar.open {
-    left: 0;
-}
+    .left-bar.open {
+        left: 0;
+    }
 
 /* Right Filter Bar */
 .right-bar {
@@ -48,10 +48,9 @@
     justify-content: center;
 }
 
-.right-bar.open {
-    right: 0;
-    
-}
+    .right-bar.open {
+        right: 0;
+    }
 
 .pizza-content {
     display: grid;
@@ -84,13 +83,13 @@
     transition: transform 0.3s ease-out;
 }
 
-.sidebar.open {
+    .sidebar.open {
         transform: translateX(-1050px);
-}
+    }
 
-.sidebar.open .filterbox {
+        .sidebar.open .filterbox {
             transform: translateX(0);
-}
+        }
 
 .open-sideBar {
     position: fixed;

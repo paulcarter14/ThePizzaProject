@@ -2,19 +2,19 @@
 @model IndexModel
 @inject ThePizzaProject.Data.AccessControl accessControl
 @{
-    ViewData["Title"] = "Home page";
+	ViewData["Title"] = "Home page";
 }
 <audio controls>
-    <source src="/sound/Osipov-Kamarinskaya.mp3" type="audio/mp3" />
+	<source src="/sound/Osipov-Kamarinskaya.mp3" type="audio/mp3" />
 </audio>
 
 <div class="pizza-Content">
-@foreach (var pizza in Model.MyPizzas ?? Model.Pizzas)
-{
-	<div class="pizzabox">
-			 <div class="pizza-title">
-		<h2>@pizza.PizzaName</h2>
-		</div>
+	@foreach (var pizza in Model.MyPizzas ?? Model.Pizzas)
+	{
+		<div class="pizzabox">
+			<div class="pizza-title">
+				<h2>@pizza.PizzaName</h2>
+			</div>
 			@{
 				int pizzaID = Convert.ToInt32(pizza.PizzaID);
 
@@ -29,19 +29,20 @@
 			}
 
 			<img src="@photoUrl" class="pizzaImg">
-			
-			 <span class="pizzaIngredients">
-			@foreach (var ingredient in pizza.PizzaIngredients)
-			{
-					<span>
-						@ingredient.Ingredient.IngredientName</span>
 
-								<span>, </span>
-				
-			}
+			<span>
+				@for (int i = 0; i < pizza.PizzaIngredients.Count; i ++)
+				{
+					@pizza.PizzaIngredients[i].Ingredient.IngredientName
+
+					@if (i < pizza.PizzaIngredients.Count - 1)
+					{
+						<text>,&nbsp;</text>
+					}
+				}
 			</span>
-	</div>
-}
+		</div>
+	}
 </div>
 
 @*<h2>Your Photos</h2>
