@@ -157,8 +157,42 @@ h4 {
     display:grid;
     align-content:center;
     justify-content:center;
-    width: 200px;
-    height: 300px;
+    width: 50%;
+    height: 100%;
     background: rgba(255,255,255,0.7);
+    border-radius: 30px;
     
 }
+#input-pizzaName {
+   
+    height: 30px;
+    width: 300px;
+    border: solid black 2px;
+    border-radius: 50px
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.file-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-file-input {
+    display: inline-block;
+    padding: 8px 16px;
+    background: linear-gradient(90deg, rgba(17,120,9,1) 0%, rgba(255,254,254,1) 50%, rgba(169,16,16,1) 100%);
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+
+
+
