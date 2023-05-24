@@ -20,6 +20,7 @@ namespace ThePizzaProject.Controllers
             _context = context;
         }
 
+
         [HttpGet]
         public async Task<ActionResult<Pizza>> GetPizzaByCategory(string categoryname)
         {
@@ -115,6 +116,16 @@ namespace ThePizzaProject.Controllers
 
             //Retunera Bild, Namn och LI med ingredienser.
             return Ok(returnPizza);
+        }
+
+        [HttpGet("pizza-count")]
+        public async Task<ActionResult<int>> GetPizzaCount()
+        {
+            // Retrieve the count of all Pizza records in the database
+            int count = await _context.Pizzas.CountAsync();
+
+            // Return the count
+            return Ok(count);
         }
     }
 }
