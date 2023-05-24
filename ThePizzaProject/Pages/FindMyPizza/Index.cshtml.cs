@@ -39,9 +39,12 @@ namespace ThePizzaProject.Pages.FindMyPizza
             GetPhotos();// Populate the Ingredients property
         }
 
-		public IActionResult OnPost(List<int> unwantedIngredients, bool veggie, List<int> wantedIngredients)
-		{
-			UnwantedIngredients = unwantedIngredients ?? new List<int>();
+        public IActionResult OnPost(List<int> unwantedIngredients, bool veggie, List<int> wantedIngredients)
+        {
+            Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
+            Ingredients = _context.Ingredients.ToList();
+
+            UnwantedIngredients = unwantedIngredients ?? new List<int>();
 			WantedIngredients = wantedIngredients ?? new List<int>();
 
 			try
