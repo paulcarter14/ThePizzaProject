@@ -6,21 +6,25 @@
 
 <form method="post" enctype="multipart/form-data">
 	<h1>Create pizza</h1>
-	<input type="text" name="pizzaName" placeholder="Give a name to youre pizza" /> 
+	<input asp-for="Name" type="text" name="pizzaName" placeholder="Give a name to youre pizza" />
+	<span class="text-danger">@Html.ValidationMessageFor(m => m.Name)</span>
 	<input type="file" name="photo">
 	<div class="container">
 		<div class="dough" id="ingredient">
-			<h2 id="ingredientCategory">Pizza Dough</h2>
-			<ul>
-				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
-				{
-					<li>
-						<input type="radio" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-						<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-					</li>
-				}
-			</ul>
+			<div class="list-container">
+				<h2 id="ingredientCategory">Pizza Dough</h2>
+				<ul>
+					@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
+					{
+						<li>
+							<input type="radio" name="ingredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+							<label for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+						</li>
+					}
+				</ul>
+			</div>
 		</div>
+
 		<div class="bottomSauce" id="ingredient">
 			<h2 id="ingredientCategory">Bottom Sauce</h2>
 			<ul>

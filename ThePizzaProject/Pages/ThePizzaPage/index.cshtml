@@ -16,8 +16,20 @@
 		<h2 >@Model.Pizzas.Name</h2>
 		</div>
 		<h3>Rating ⭐⭐⭐⭐⭐</h3>
-		<img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
+		@{
+			int pizzaID = Convert.ToInt32(Model.Pizzas.ID);
 
+			Func<int, string> GetPizzaPhoto = (pizzaID) =>
+			{
+				string formattedPizzaId = pizzaID.ToString();
+				string photo = Model.photoUrl.FirstOrDefault(p => p.EndsWith(+pizzaID + ".jpeg"));
+				return photo;
+			};
+
+			string photoUrl = GetPizzaPhoto(pizzaID);
+		}
+
+		<img src="@photoUrl" class="pizzaImg">
 		<span class="pizzaIngredients">
 			@foreach (var pizzaIngredient in @Model.Pizzas.Ingredients)
 			{
@@ -35,8 +47,11 @@
 		<div class="comment-box">
 			<h4>Leave a comment</h4>
 		<form method="post">
-			<textarea class="comment-text-area" name="commentText"></textarea>
+				<span class="text-danger">@Html.ValidationMessageFor(m => m.Text)</span>
+				<textarea class="comment-text-area" name="commentText"></textarea>
+				
 			<button  class="submit-buttons" type="submit">Submit</button>
+				
 		</form>
 			<button class="submit-buttons" @*Skicka skiten till tränings API*@>Träna bort skiten</button>
 		</div>

@@ -39,7 +39,8 @@ namespace ThePizzaProject.Pages
 			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
 			MyPizzas = GetMyPizzas(); // Get only your pizzas
 			Ingredients = _context.Ingredients.ToList(); // Populate the Ingredients property
-		}
+            GetPhotos();
+        }
 
 		
 
@@ -78,7 +79,29 @@ namespace ThePizzaProject.Pages
             return myPizzas ;
 		}
 
-		public List<string> GetPizzaPhoto()
+        public List<string> GetPhotos()
+        {
+
+            string userFolderPath = Path.Combine(
+            uploads.FolderPath,
+            accessControl.LoggedInAccountID.ToString()
+            );
+
+
+            string[] files = Directory.GetFiles(userFolderPath);
+
+            foreach (string file in files)
+            {
+                string url = uploads.GetFileURL(file);
+                photoUrl.Add(url);
+            }
+
+
+
+            return photoUrl;
+        }
+
+        public List<string> GetPizzaPhoto()
 		{
 
 			string userFolderPath = Path.Combine(

@@ -14,19 +14,27 @@ namespace ThePizzaProject.Pages.ThePizzaPage
     {
         private readonly ThePizzaProjectContext _context;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly AccessControl accessControl;
+        private readonly FileRepository uploads;
 
-        public IndexModel(ThePizzaProjectContext context, IHttpContextAccessor httpContextAccessor)
+        public IndexModel(ThePizzaProjectContext context, IHttpContextAccessor httpContextAccessor, AccessControl accessControl, FileRepository uploads)
         {
             _context = context;
             Ingredients = new List<Ingredient>(); // Initialize the Ingredients property
             this._contextAccessor = httpContextAccessor;
+            this.accessControl = accessControl;
+            this.uploads = uploads;
         }
 
         public PizzaViewModel Pizzas { get; set; }
         public CommentPizza commentPizza { get; set; }
         public List<Ingredient> Ingredients { get; set; }
 
-        
+        public string Text { get; set; }
+
+        public List<string> photoUrl = new List<string>();
+
+
 
 
         public void OnGet(int id)
@@ -84,15 +92,27 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                 }).ToList()
             };
 
+            GetPhotos();
+
             int totalKcal = Pizzas.Ingredients.Sum(i => i.Kcal);
 
         }
 
-        public void OnPost(string commentText, int id)
+        public IActionResult OnPost(string commentText, int id)
         {
             var accessControl = new AccessControl(_context, _contextAccessor);
             int loggedUser = accessControl.LoggedInAccountID;
 
+            if (string.IsNullOrEmpty(commentText))
+            {
+                ModelState.AddModelError("Text", "This field can not be empty");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                OnGet(id);
+                return Page();
+            }
 
             Comment newComment = new Comment
             {
@@ -118,7 +138,33 @@ namespace ThePizzaProject.Pages.ThePizzaPage
             _context.SaveChanges();
 
             OnGet(id);
+            return Page();
 
+        }
+
+        public List<string> GetPhotos()
+        {
+
+            string userFolderPath = Path.Combine(
+            uploads.FolderPath,
+            accessControl.LoggedInAccountID.ToString()
+            );
+
+
+            string[] files = Directory.GetFiles(userFolderPath);
+
+            foreach (string file in files)
+            {
+                string url = uploads.GetFileURL(file);
+                photoUrl.Add(url);
+            }
+
+
+            //Directory.CreateDirectory(userFolderPath);
+
+
+
+            return photoUrl;
         }
     }
 }

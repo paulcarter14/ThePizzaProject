@@ -130,26 +130,6 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			);
 
 
-
-			//string uploadsFolderPath = uploads.FolderPath; // Assuming the base uploads folder path
-   //         string[] userDirectories = Directory.GetDirectories(uploadsFolderPath);
-
-			//foreach (string userDirectory in userDirectories)
-			//{
-
-			//	string userId = Path.GetFileName(userDirectory);
-
-			//	string[] files = Directory.GetFiles(userDirectory);
-
-			//	foreach(var file in files)
-			//	{
-   //                 string fileNameWithExtension = Path.GetFileName(file);
-			//		string filePath = Path.Combine(userId, fileNameWithExtension);
-   //                 photoUrl.Add(filePath);
-			//	}
-				
-   //         };
-
 			string[] files = Directory.GetFiles(userFolderPath);
 
 			foreach (string file in files)
