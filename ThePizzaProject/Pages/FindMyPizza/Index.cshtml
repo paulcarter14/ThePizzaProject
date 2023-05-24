@@ -5,8 +5,7 @@
 }
 
 <div class="filter-buttons">
-    <button class="left-baropen" onclick="toggleLeftBar()">Like 😍</button>
-    <button class="right-baropen" onclick="toggleRightBar()">Dont like🤢</button>
+    <button class="toggle-filter" onclick="toggleFilter()">Chose your ingredients</button>
 </div>
 
     <h1>Find My Pizza</h1>
@@ -34,22 +33,6 @@
 
             <img src="@photoUrl" class="pizzaImg">
 
-            @*@foreach (var url in Model.photoUrl)
-            {
-            	@if (url == ("/uploads/" + pizza.AccountID + "/" + pizza.PizzaID + ".jpeg")){
-
-					<img src="@url" class="pizzaImg">
-				}
-				else{
-
-					<img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
-				}
-
-            }*@
-
-
-            
-           
            <span class="pizzaIngredients">
 
             
@@ -65,21 +48,24 @@
     }
 </div>
 
+<div class="top-bar" id="topbar">
+    <button id="submitForms">Apply Filters</button>
+</div>
 
-    <div class="left-bar" id="leftBar">
-        <div class="positiv-filter-box">
-            <form method="post" asp-page-handler="Update">
-                <h2 class="filter-title">Ingredients we want</h2>
+<div class="left-bar" id="leftBar">
+    <div class="positiv-filter-box">
+        <form method="post" id="positiveForm" asp-page-handler="Update">
+            <h2 class="filter-title">Ingredients we want</h2>
 
-                <h2 class="ingredient-title">Dough</h2>
-                <ol class="sidebar-list" style="clear: both;">
-                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
-                    {
-                        <li class="sidebar-list-element">
+            <h2 class="ingredient-title">Dough</h2>
+             <ol class="sidebar-list" style="clear: both;">
+                @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
+                {
+                   <li class="sidebar-list-element">
                             <input type="checkbox" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
                             <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-                        </li>
-                    }
+                   </li>
+                }
                 </ol>
 
                 <h2 class="ingredient-title">Bottom Sauce</h2>
@@ -148,7 +134,7 @@
 
 <div class="right-bar" id="rightBar">
         <div class="negativ-filter-box">
-            <form method="post" asp-page-handler="Update">
+            <form method="post" id="negativeForm" asp-page-handler="Update">
                 <h2 class="filter-title">Ingredients we don't want</h2>
 
                 <h2 class="ingredient-title">Dough</h2>
@@ -156,8 +142,8 @@
                     @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
                     {
                         <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
                         </li>
                     }
                 </ol>
@@ -167,8 +153,8 @@
                     @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Bottom-sauce"))
                     {
                         <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
                         </li>
                     }
                 </ol>
@@ -178,8 +164,8 @@
                     @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
                     {
                         <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
                         </li>
                     }
                 </ol>
@@ -189,8 +175,8 @@
                     @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Fish" || i.Category == "Chicken" || i.Category == "Meat"))
                     {
                         <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
                         </li>
                     }
                 </ol>
@@ -200,8 +186,8 @@
                     @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
                     {
                         <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
                         </li>
                     }
                 </ol>
@@ -211,8 +197,8 @@
                     @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
                     {
                         <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
                         </li>
                     }
                 </ol>
