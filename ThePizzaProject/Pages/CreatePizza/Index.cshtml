@@ -6,14 +6,18 @@
 
 <form method="post" enctype="multipart/form-data">
 	<h1>Create pizza</h1>
-	<input asp-for="Name" type="text" name="pizzaName" placeholder="Give a name to youre pizza" />
+	<input id="input-pizzaName" asp-for="Name" type="text" name="pizzaName" placeholder="Give a name to youre pizza" />
 	<span class="text-danger">@Html.ValidationMessageFor(m => m.Name)</span>
-	<input type="file" name="photo">
+	
+	<div class="file-input-wrapper">
+        <input type="file" name="photo" id="file-input" class="file-input">
+        <label for="file-input" class="custom-file-input">Choose File</label>
+    </div>
 	<div class="container">
 		<div class="dough" id="ingredient">
 			<div class="list-container">
 				<h2 id="ingredientCategory">Pizza Dough</h2>
-				<ul>
+				<ul class="ingredient-list">
 					@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
 					{
 						<li>
@@ -26,8 +30,9 @@
 		</div>
 
 		<div class="bottomSauce" id="ingredient">
+			<div class="list-container">
 			<h2 id="ingredientCategory">Bottom Sauce</h2>
-			<ul>
+				<ul class="ingredient-list">
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Bottom-sauce"))
 				{
 					<li>
@@ -36,10 +41,12 @@
 					</li>
 				}
 			</ul>
+			</div>
 		</div>
 		<div class="cheese" id="ingredient">
+			<div class="list-container">
 			<h2 id="ingredientCategory">Cheese</h2>
-			<ul>
+				<ul class="ingredient-list">
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
 				{
 					<li>
@@ -48,10 +55,12 @@
 					</li>
 				}
 			</ul>
+			</div>
 		</div>
 		<div class="protein" id="ingredient">
+			<div class="list-container">
 			<h2 id="ingredientCategory">Protein</h2>
-			<ul>
+				<ul class="ingredient-list">
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Fish" || i.Category == "Chicken" || i.Category == "Meat"))
 				{
 					<li>
@@ -60,10 +69,12 @@
 					</li>
 				}
 			</ul>
+			</div>
 		</div>
 		<div class="vegetable" id="ingredient">
+						<div class="list-container">
 			<h2 id="ingredientCategory">Vegetables</h2>
-			<ul>
+				<ul class="ingredient-list">
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
 				{
 					<li>
@@ -72,10 +83,12 @@
 					</li>
 				}
 			</ul>
+			</div>
 		</div>
 		<div class="sauce" id="ingredient">
+							<div class="list-container">
 			<h2 id="ingredientCategory">Sauces</h2>
-			<ul>
+				<ul class="ingredient-list">
 				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
 				{
 					<li>
@@ -84,9 +97,10 @@
 					</li>
 				}
 			</ul>
+			</div>
 		</div>
 	</div>
 	<div class="bakeButton">
-		<button>Bake and upload</button>
+		<button id="bake-button">Bake and upload</button>
 	</div>
 </form>

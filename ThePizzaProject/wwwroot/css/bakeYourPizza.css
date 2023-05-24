@@ -2,28 +2,31 @@
     background-color: white;
     display: flex;
     flex-wrap: wrap;
+   
 }
 
 ul {
     list-style-type: none;
     font-size: 18px;
     font-weight: bold;
-    text-align: center;
+    
 }
 
 #ingredientCategory {
     text-align: center;
+    margin: 0px;
 }
 
 #ingredient {
-    flex-basis: calc(100% / 3 - 10px);
-    background-color: #ccc;
-    margin: 5px;
+   /* flex-basis: calc(100% / 3 - 10px);*/
+
+    /*margin: 5px;
     padding: 10px;
-    box-sizing: border-box;
+    box-sizing: border-box;*/
 }
 
 .dough {
+    flex-basis: calc(100% / 3 - 10px);
     position: relative;
     background-image: url('/PizzaIngredientPics/PizzaDough.jpg');
     background-size: cover;
@@ -31,29 +34,41 @@ ul {
     background-repeat: no-repeat;
     color: black;
     padding: 20px;
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .bottomSauce {
+    flex-basis: calc(100% / 3 - 10px);
     position: relative;
     background-image: url('/PizzaIngredientPics/PizzaSauce.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    color: white;
+    color: black;
     padding: 20px;
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .cheese {
+    flex-basis: calc(100% / 3 - 10px);
     position: relative;
     background-image: url('/PizzaIngredientPics/Cheese.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    color: white;
+    color: black;
     padding: 20px;
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .protein {
+    flex-basis: calc(100% / 3 - 10px);
     position: relative;
     background-image: url('/PizzaIngredientPics/Meat.jpg');
     background-size: cover;
@@ -61,40 +76,77 @@ ul {
     background-repeat: no-repeat;
     color: black;
     padding: 20px;
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .vegetable {
+    flex-basis: calc(100% / 3 - 10px);
     position: relative;
     background-image: url('/PizzaIngredientPics/Vegetable.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    color: white;
+    color: black;
     padding: 20px;
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .sauce {
+    flex-basis: calc(100% / 3 - 10px);
     position: relative;
     background-image: url('/PizzaIngredientPics/PizzaToppingSauce.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    color: white;
+    color: black;
     padding: 20px;
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.ingredient-list{
+
+    margin: 0px;
+}
+
+.bottomSauce, .sauce, .cheese, .dough, .protein, .vegetable {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 300px;
+    height: 400px;
 }
 
 .bakeButton {
     text-align: center;
     padding: 20px;
+    
 }
 
-.bakeButton button {
-    height: 50px;
-    width: 160px;
-}
+    .bakeButton button {
+        transition: transform 0.2s ease-in-out;
+        height: 50px;
+        width: 160px;
+        background: linear-gradient(90deg, rgba(17,120,9,1) 0%, rgba(255,254,254,1) 50%, rgba(169,16,16,1) 100%);
+        border-radius: 50px;
+        border: none;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+   
+
+        #bake-button:hover {
+
+            transform: scale(135%);
+        }
 
 @media (max-width: 767px) {
     .item {
-        flex-basis: calc(100% / 2 - 10px); /* Adjust as needed for smaller screens */
+        flex-basis: calc(100% / 2 - 10px); 
     }
 }
