@@ -12,10 +12,6 @@ namespace ThePizzaProject.Models
 		public List<PizzaIngredient> PizzaIngredients { get; set; }
 
 		public Account User { get; set; }
-        public int AccountID { get; set; }
-
-   
-
-
+        public int AccountID { get; set; } 
     }
 }
