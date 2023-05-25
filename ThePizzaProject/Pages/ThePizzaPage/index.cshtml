@@ -10,7 +10,7 @@
 
 
 
-<div class="pizzaContent">
+<div class="pizza-Content">
 	<div class="pizzabox">
 		<div class="pizza-title">
 			<h2>@Model.Pizzas.Name</h2>
@@ -30,17 +30,15 @@
 		}
 
 		<img src="@photoUrl" class="pizzaImg">
-		<span class="pizzaIngredients">
-			@foreach (var pizzaIngredient in @Model.Pizzas.Ingredients)
+		<span>
+			@for (int i = 0; i < Model.Pizzas.Ingredients.Count; i++)
 			{
+				@Model.Pizzas.Ingredients[i].Name
 
-				<span>
-					@pizzaIngredient.Name
-				</span>
-
-				<span>, </span>
-
-
+				@if (i < Model.Pizzas.Ingredients.Count - 1)
+				{
+					<text>,&nbsp;</text>
+				}
 			}
 		</span>
 
