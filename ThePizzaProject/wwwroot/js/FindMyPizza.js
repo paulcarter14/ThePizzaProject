@@ -57,16 +57,6 @@ function toggleRightBar() {
     }
 }
 
-//applicera båda formsen på samma submit knapp.
-var positiveForm = document.getElementById('positiveForm');
-var negativeForm = document.getElementById('negativeForm');
-
-var submitFormsButton = document.getElementById('submitForms');
-
-submitFormsButton.addEventListener('click', function (e) {
-    e.preventDefault(); // Preventing default form submission
-
-    // Submit both forms
-    positiveForm.submit();
-    negativeForm.submit();
-});
+function submitForm() {
+    document.getElementById('positiveForm').submit();
+}
