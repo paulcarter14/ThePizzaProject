@@ -2,9 +2,9 @@
   "dependencies": {
     "mssql1": {
       "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/pizzaproject2/databases/pizzadb",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/pizzaproject2/databases/Pizzaproject2",
       "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:ThePizzaProjectContext",
+      "connectionId": "ConnectionStrings:DefaultConnection",
       "dynamicId": null
     }
   }
