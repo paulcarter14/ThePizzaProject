@@ -189,8 +189,9 @@
     }
 
     .pizza-content {
-        grid-template-columns: repeat(2, minmax(0, 1fr)); /* adjust the number of columns */
-        grid-gap: 10px; /* adjust the gap */
+        display: grid !important;
+        grid-template-columns: repeat(1, 1fr) !important;
+        grid-gap: 20px;
     }
 
     .pizza-title {

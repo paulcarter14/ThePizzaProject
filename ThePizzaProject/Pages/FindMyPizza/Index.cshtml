@@ -5,7 +5,7 @@
 }
 
 <div class="filter-buttons">
-    <button class="toggle-filter" onclick="toggleFilter()">Chose your ingredients</button>
+	<button class="toggle-filter" onclick="toggleFilter()">Chose your ingredients</button>
 </div>
 
 <h1>Find My Pizza</h1>
@@ -62,24 +62,34 @@
 </div>
 
 <div class="top-bar" id="topbar">
-    <button id="submitForms">Apply Filters</button>
+	<button id="submitForms" onclick="submitForm()">Apply Filters</button>
 </div>
 
-<div class="left-bar" id="leftBar">
-    <div class="positiv-filter-box">
-        <form method="post" id="positiveForm" asp-page-handler="Update">
-            <h2 class="filter-title">Ingredients i want</h2>
+<form method="post" id="positiveForm" asp-page-handler="Update">
+	<div class="left-bar" id="leftBar">
+		<div class="positiv-filter-box">
+			<h2 class="filter-title">Ingredients i want</h2>
 
-            <h2 class="ingredient-title">Dough</h2>
-             <ol class="sidebar-list" style="clear: both;">
-                @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
-                {
-                   <li class="sidebar-list-element">
-                            <input type="checkbox" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
-                            <label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
-                   </li>
-                }
-                </ol>
+			<h2 class="ingredient-title">Go Veggie!</h2>
+			<ol class="sidebar-list" style="clear: both;">
+				<li class="sidebar-list-element">
+					<input type="checkbox" value="true" name="veggie" id="veggie">
+					<label class="sidebar-lable" for="veggie">Vegetarian</label>
+				</li>
+			</ol>
+
+
+
+			<h2 class="ingredient-title">Dough</h2>
+			<ol class="sidebar-list" style="clear: both;">
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="wantedIngredients" value="@ingredient.IngredientID" id="@ingredient.IngredientID">
+						<label class="sidebar-lable" for="@ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
 
 			<h2 class="ingredient-title">Bottom Sauce</h2>
 			<ol class="sidebar-list" style="clear: both;">
@@ -136,92 +146,89 @@
 				}
 			</ol>
 
-                
-            </form>
-        </div>
 
-    <button class="left-baropen" onclick="toggleLeftBar()">close</button>
+		</div>
 
-</div>
+		<button class="left-baropen" onclick="toggleLeftBar()">close</button>
+
+	</div>
+	<div class="right-bar" id="rightBar">
+		<div class="negativ-filter-box">
+			<h2 class="filter-title">Ingredients i don't want</h2>
+
+			<h2 class="ingredient-title">Dough</h2>
+			<ol class="sidebar-list" style="clear: both;">
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+						<label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title">Bottom Sauce</h2>
+			<ol class="sidebar-list" style="clear: both;">
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Bottom-sauce"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+						<label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title">Cheese</h2>
+			<ol class="sidebar-list" style="clear: both;">
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+						<label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title">Protein</h2>
+			<ol class="sidebar-list" style="clear: both;">
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Fish" || i.Category == "Chicken" || i.Category == "Meat"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+						<label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title">Vegetables</h2>
+			<ol class="sidebar-list" style="clear: both;">
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+						<label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
+
+			<h2 class="ingredient-title">Sauces</h2>
+			<ol class="sidebar-list" style="clear: both;">
+				@foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
+				{
+					<li class="sidebar-list-element">
+						<input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
+						<label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
+					</li>
+				}
+			</ol>
 
 
+		</div>
+<button class="right-baropen" onclick="toggleRightBar()">Close</button>
+</form>
 
-<div class="right-bar" id="rightBar">
-        <div class="negativ-filter-box">
-            <form method="post" id="negativeForm" asp-page-handler="Update">
-                <h2 class="filter-title">Ingredients i don't want</h2>
-
-                <h2 class="ingredient-title">Dough</h2>
-                <ol class="sidebar-list" style="clear: both;">
-                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Dough"))
-                    {
-                        <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
-                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
-                        </li>
-                    }
-                </ol>
-
-                <h2 class="ingredient-title">Bottom Sauce</h2>
-                <ol class="sidebar-list" style="clear: both;">
-                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Bottom-sauce"))
-                    {
-                        <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
-                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
-                        </li>
-                    }
-                </ol>
-
-                <h2 class="ingredient-title">Cheese</h2>
-                <ol class="sidebar-list" style="clear: both;">
-                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Cheese"))
-                    {
-                        <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
-                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
-                        </li>
-                    }
-                </ol>
-
-                <h2 class="ingredient-title">Protein</h2>
-                <ol class="sidebar-list" style="clear: both;">
-                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Fish" || i.Category == "Chicken" || i.Category == "Meat"))
-                    {
-                        <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
-                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
-                        </li>
-                    }
-                </ol>
-
-                <h2 class="ingredient-title">Vegetables</h2>
-                <ol class="sidebar-list" style="clear: both;">
-                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Vegetables"))
-                    {
-                        <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
-                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
-                        </li>
-                    }
-                </ol>
-
-                <h2 class="ingredient-title">Sauces</h2>
-                <ol class="sidebar-list" style="clear: both;">
-                    @foreach (var ingredient in Model.Ingredients.Where(i => i.Category == "Sauces"))
-                    {
-                        <li class="sidebar-list-element">
-                            <input type="checkbox" name="unwantedIngredients" value="@ingredient.IngredientID" id="1 @ingredient.IngredientID">
-                            <label class="sidebar-lable" for="1 @ingredient.IngredientID">@ingredient.IngredientName</label>
-                        </li>
-                    }
-                </ol>
-
-               
-            </form>
-        </div>
-
-    <button class="right-baropen" onclick="toggleRightBar()">Close</button>
 
 </div>
+
+
 

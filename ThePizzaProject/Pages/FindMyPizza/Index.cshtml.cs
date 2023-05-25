@@ -39,7 +39,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
             GetPhotos();// Populate the Ingredients property
         }
 
-        public IActionResult OnPost(List<int> unwantedIngredients, bool veggie, List<int> wantedIngredients)
+        public IActionResult OnPost(List<int> wantedIngredients , bool veggie, List<int>unwantedIngredients )
         {
             Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
             Ingredients = _context.Ingredients.ToList();
@@ -66,6 +66,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
 			return Page();
 		}
+
 
 		//Lägg till en tryCatch som återvänder till sidan.
 
@@ -102,7 +103,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			if (veggie)
 			{
 				pizzasWithIngredients = pizzasWithIngredients
-					.Where(p => !p.PizzaIngredients.Any(i => i.Ingredient.Category == "Protein"))
+					.Where(p => !p.PizzaIngredients.Any(i => i.Ingredient.Category == "Chicken" || i.Ingredient.Category == "Fish" || i.Ingredient.Category == "Meat"))
 					.ToList();
 			}
 
