@@ -35,8 +35,8 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 
         public List<string> photoUrl = new List<string>();
 
-
-
+        public Pizza PizzaObject { get; set; }
+        public Pizza Rating { get; set; }
 
         public void OnGet(int id)
         {
@@ -107,7 +107,36 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 
 		}
 
-		public IActionResult OnPost(string commentText, int id)
+		public IActionResult UpdateRatingPizza(int pizzaId, int rating)
+		{
+			var accessControl = new AccessControl(_context, _contextAccessor);
+			int loggedUser = accessControl.LoggedInAccountID;
+			var pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == pizzaId);
+
+			//if (pizza != null)
+			//{
+			//    pizza.RatingPizzas.Add(Rating);
+			//    _context.SaveChangesAsync();
+			//}
+
+			Rating newRating = new Rating
+			{
+				ratingValue = rating,
+				RatingPizzas = new List<RatingPizza>
+				{
+					new RatingPizza
+
+					{
+						Pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == pizzaId)
+					}
+				},
+				User = _context.Accounts.FirstOrDefault(p => p.AccountID == loggedUser)
+			};
+			_context.Add(newRating);
+			return Page();
+		}
+
+		public IActionResult OnPost(string commentText, int id, int rating)
         {
             var accessControl = new AccessControl(_context, _contextAccessor);
             int loggedUser = accessControl.LoggedInAccountID;
@@ -139,8 +168,9 @@ namespace ThePizzaProject.Pages.ThePizzaPage
              
 
             };
-
+            UpdateRatingPizza(id, rating);
             _context.Add(newComment);
+
 
 
             //_context.Add(commentUser);

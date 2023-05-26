@@ -15,7 +15,13 @@
 		<div class="pizza-title">
 			<h2>@Model.Pizzas.Name</h2>
 		</div>
-		<h3>Rating ⭐⭐⭐⭐⭐</h3>
+		@*<h3>Rating</h3>
+		<form method="post">
+			<input type="hidden" name="_method" value="put" />
+			<input type="hidden" name="pizzaId" value="@Model.PizzaId" />
+			<input type="number" name="rating" min="1" max="5" required />
+			<button type="submit">Set Rating</button>
+		</form>*@
 		@{
 			int pizzaID = Convert.ToInt32(Model.Pizzas.ID);
 
@@ -69,6 +75,11 @@
 			<form method="post">
 				<span class="text-danger">@Html.ValidationMessageFor(m => m.Text)</span>
 				<textarea class="comment-text-area" name="commentText"></textarea>
+
+
+				<h4>Rating</h4>
+				@*<input type="hidden" name="pizzaObject" value="@Model.PizzaObject" />*@
+				<input type="number" name="rating" min="1" max="5" required />
 
 				<button class="submit-buttons" type="submit">Submit</button>
 

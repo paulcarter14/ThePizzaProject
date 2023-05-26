@@ -10,12 +10,9 @@ namespace ThePizzaProject.Models
 
         public List<CommentPizza> CommentPizza { get; set; }
 		public List<PizzaIngredient> PizzaIngredients { get; set; }
+        public List<RatingPizza> RatingPizzas { get; set; }
 
 		public Account User { get; set; }
-        public int AccountID { get; set; }
-
-   
-
-
+        public int AccountID { get; set; } 
     }
 }
