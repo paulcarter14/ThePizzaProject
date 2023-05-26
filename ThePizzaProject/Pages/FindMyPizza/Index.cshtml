@@ -41,12 +41,14 @@
 				
 					@for (int i = 0; i < pizza.PizzaIngredients.Count; i++)
 					{
-						<span class="span">@pizza.PizzaIngredients[i].Ingredient.IngredientName</span>
+					var extraText = "";
+					@if (i < pizza.PizzaIngredients.Count - 1)
+					{
+						extraText = ",";
+					}
+					<span class="span">@(pizza.PizzaIngredients[i].Ingredient.IngredientName + extraText)</span>
 
-						@if (i < pizza.PizzaIngredients.Count - 1)
-						{
-						<text>,&nbsp;</text>
-						}
+						
 					}
 				
 
