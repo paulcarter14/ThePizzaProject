@@ -19,6 +19,9 @@ namespace ThePizzaProject.Data
 		public DbSet<Comment> Comments { get; set; }
 		//public DbSet<PizzaIngredient> PizzaIngredients { get; set; }
 
+		public DbSet<Rating> Rating { get; set; }
+		public DbSet<RatingPizza> RatingPizza { get; set; }
+
 		public ThePizzaProjectContext(DbContextOptions<ThePizzaProjectContext> options)
 			: base(options)
 		{

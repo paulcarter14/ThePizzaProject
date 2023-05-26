@@ -109,16 +109,30 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 
 		public IActionResult UpdateRatingPizza(int pizzaId, int rating)
 		{
-            //var pizza = _context.Pizzas.Where(p => p.PizzaID == pizzaId);
-            //var value = _context.Pizzas.FindAsync(rating);
+			var accessControl = new AccessControl(_context, _contextAccessor);
+			int loggedUser = accessControl.LoggedInAccountID;
+			var pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == pizzaId);
 
-            //if(rating == 0)
-            //{
-            //    pizza.Rating = rating;
+			//if (pizza != null)
+			//{
+			//    pizza.RatingPizzas.Add(Rating);
+			//    _context.SaveChangesAsync();
+			//}
 
-            //    _context.SaveChangesAsync();
-            //}
+			Rating newRating = new Rating
+			{
+				ratingValue = rating,
+				RatingPizzas = new List<RatingPizza>
+				{
+					new RatingPizza
 
+					{
+						Pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == pizzaId)
+					}
+				},
+				User = _context.Accounts.FirstOrDefault(p => p.AccountID == loggedUser)
+			};
+			_context.Add(newRating);
 			return Page();
 		}
 
