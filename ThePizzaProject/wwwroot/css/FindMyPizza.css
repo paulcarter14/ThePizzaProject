@@ -156,6 +156,10 @@
         cursor: pointer;
     }
 
+.top-bar button:hover {
+    transform: scale(135%);
+}
+
 @media only screen and (max-width: 767px) and (-webkit-min-device-pixel-ratio: 2) {
     .top-bar {
         position: fixed;

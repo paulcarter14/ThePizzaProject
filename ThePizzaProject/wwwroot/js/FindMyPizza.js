@@ -31,6 +31,7 @@ function toggleFilter() {
 
 //orkade inte skriva om dessa så de säger att man kan toggla men egentligen stänger man dem bara.
 function toggleLeftBar() {
+    event.preventDefault();
     var leftBar = document.getElementById('leftBar');
     var rightBar = document.getElementById('rightBar');
     var topbar = document.getElementById('topbar');
@@ -45,6 +46,7 @@ function toggleLeftBar() {
 
 
 function toggleRightBar() {
+    event.preventDefault();
     var leftBar = document.getElementById('leftBar');
     var rightBar = document.getElementById('rightBar');
     var topbar = document.getElementById('topbar');
