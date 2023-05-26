@@ -11,11 +11,11 @@ namespace ThePizzaProject.Pages.FindMyPizza
 	public class IndexModel : PageModel
 	{
 		private readonly ThePizzaProjectContext _context;
-        private readonly FileRepository uploads;
-        private readonly AccessControl accessControl;
+		private readonly FileRepository uploads;
+		private readonly AccessControl accessControl;
 		public string pizzaPhotoUrl { get; set; }
 
-        public IndexModel(ThePizzaProjectContext context, FileRepository uploads, AccessControl accessControl)
+		public IndexModel(ThePizzaProjectContext context, FileRepository uploads, AccessControl accessControl)
 		{
 			_context = context;
 			Ingredients = new List<Ingredient>(); // Initialize the Ingredients property
@@ -36,33 +36,29 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
 			Ingredients = _context.Ingredients.ToList();
 
-            GetPhotos();// Populate the Ingredients property
-        }
+			GetPhotos();// Populate the Ingredients property
+		}
 
-        public IActionResult OnPost(List<int> wantedIngredients , bool veggie, List<int>unwantedIngredients )
-        {
-            Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
-            Ingredients = _context.Ingredients.ToList();
+		public IActionResult OnPost(List<int> wantedIngredients, bool veggie, List<int> unwantedIngredients)
+		{
+			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
+			Ingredients = _context.Ingredients.ToList();
 
-            UnwantedIngredients = unwantedIngredients ?? new List<int>();
+			UnwantedIngredients = unwantedIngredients ?? new List<int>();
 			WantedIngredients = wantedIngredients ?? new List<int>();
 
-			try
+			// Check if any filters are applied
+			if (unwantedIngredients.Count == 0 && !veggie && (wantedIngredients == null || wantedIngredients.Count == 0))
 			{
-				// Check if any filters are applied
-				if (unwantedIngredients.Count == 0 && !veggie && (wantedIngredients == null || wantedIngredients.Count == 0))
-				{
-					throw new Exception("Please select at least one filter option.");
-				}
-				else
-				{
-					FilteredPizzas = GetFilteredPizzas(unwantedIngredients, veggie, wantedIngredients);
-				}
+				//Vill man ha meddelande så lägger man det här etc
+				return Page();
 			}
-			catch (Exception ex)
+			else
 			{
-				return RedirectToAction("Index");
+				FilteredPizzas = GetFilteredPizzas(unwantedIngredients, veggie, wantedIngredients);
 			}
+
+
 
 			return Page();
 		}
@@ -70,7 +66,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
 		//Lägg till en tryCatch som återvänder till sidan.
 
-		private List<Pizza> GetFilteredPizzas(List<int> ?unwantedIngredients, bool veggie, List<int> ?wantedIngredients)
+		private List<Pizza> GetFilteredPizzas(List<int>? unwantedIngredients, bool veggie, List<int>? wantedIngredients)
 		{
 			List<Pizza> pizzasWithIngredients =
 				(
@@ -115,7 +111,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
 					.ToList();
 			}
 
-			
+
 
 			return pizzasWithIngredients;
 		}
@@ -125,8 +121,8 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			RedirectToAction("ThePizzaPage.cshtml");
 		}
 
-        public List<string> GetPhotos()
-        {
+		public List<string> GetPhotos()
+		{
 
 			string userFolderPath = Path.Combine(
 			uploads.FolderPath,
@@ -142,13 +138,13 @@ namespace ThePizzaProject.Pages.FindMyPizza
 				photoUrl.Add(url);
 			}
 
-			
-				//Directory.CreateDirectory(userFolderPath);
-			
+
+			//Directory.CreateDirectory(userFolderPath);
+
 
 
 			return photoUrl;
-        }
+		}
 
 		public string GetPizzaPhoto(int pizzaID)
 		{
@@ -158,5 +154,5 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
 			return pizzaPhotoUrl;
 		}
-    }
+	}
 }
