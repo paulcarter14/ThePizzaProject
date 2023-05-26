@@ -36,7 +36,7 @@ namespace ThePizzaProject.Pages.ThePizzaPage
         public List<string> photoUrl = new List<string>();
 
         public Pizza PizzaObject { get; set; }
-        public Pizza Rating { get; set; }
+        public int Rating { get; set; }
 
         public void OnGet(int id)
         {
@@ -45,7 +45,8 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                 .Include(p => p.CommentPizza.Where(cp => cp.Pizza.PizzaID == id))
                 .ThenInclude(cp => cp.Comment)
                 .ThenInclude(c => c.User)
-               
+                .Include(r => r.RatingPizzas.Where(rp => rp.Pizza.PizzaID == id))
+
                 .Select(p => new Pizza
                 {
                     PizzaID = p.PizzaID,
@@ -64,8 +65,23 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                         }).ToList(),
                     CommentPizza = p.CommentPizza.ToList(),
 
+
                     User = p.User,
-                    AccountID = p.AccountID
+                    AccountID = p.AccountID,
+                    RatingPizzas = p.RatingPizzas
+                    .Select(rp => new RatingPizza
+                    {
+                        ratingPizzaId = rp.ratingPizzaId,
+                        Rating = new Rating
+                        {
+                            ratingId = rp.Rating.ratingId,
+                            ratingValue = rp.Rating.ratingValue,
+                        }
+                    }).ToList()
+
+
+
+
                 })
                 .FirstOrDefault();
 
@@ -104,6 +120,13 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 
 
 			TotalCalories = Pizzas.Ingredients.Sum(i => i.Kcal);
+            var x = myPizza.RatingPizzas.Select(rp => rp.Rating.ratingValue).Average();
+
+            Math.Round(x);
+
+            int roundedValue = Convert.ToInt32(x);
+
+            Rating = roundedValue;
 
 		}
 
