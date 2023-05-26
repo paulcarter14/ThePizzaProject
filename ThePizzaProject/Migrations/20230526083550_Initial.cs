@@ -81,6 +81,26 @@ namespace ThePizzaProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Rating",
+                columns: table => new
+                {
+                    ratingId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ratingValue = table.Column<int>(type: "int", nullable: false),
+                    UserAccountID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rating", x => x.ratingId);
+                    table.ForeignKey(
+                        name: "FK_Rating_Accounts_UserAccountID",
+                        column: x => x.UserAccountID,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CommentPizza",
                 columns: table => new
                 {
@@ -130,6 +150,30 @@ namespace ThePizzaProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RatingPizza",
+                columns: table => new
+                {
+                    ratingPizzaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PizzaID = table.Column<int>(type: "int", nullable: true),
+                    ratingId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RatingPizza", x => x.ratingPizzaId);
+                    table.ForeignKey(
+                        name: "FK_RatingPizza_Pizzas_PizzaID",
+                        column: x => x.PizzaID,
+                        principalTable: "Pizzas",
+                        principalColumn: "PizzaID");
+                    table.ForeignKey(
+                        name: "FK_RatingPizza_Rating_ratingId",
+                        column: x => x.ratingId,
+                        principalTable: "Rating",
+                        principalColumn: "ratingId");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CommentPizza_CommentID",
                 table: "CommentPizza",
@@ -159,6 +203,21 @@ namespace ThePizzaProject.Migrations
                 name: "IX_Pizzas_AccountID",
                 table: "Pizzas",
                 column: "AccountID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rating_UserAccountID",
+                table: "Rating",
+                column: "UserAccountID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RatingPizza_PizzaID",
+                table: "RatingPizza",
+                column: "PizzaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RatingPizza_ratingId",
+                table: "RatingPizza",
+                column: "ratingId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -170,6 +229,9 @@ namespace ThePizzaProject.Migrations
                 name: "PizzaIngredient");
 
             migrationBuilder.DropTable(
+                name: "RatingPizza");
+
+            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
@@ -177,6 +239,9 @@ namespace ThePizzaProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Pizzas");
+
+            migrationBuilder.DropTable(
+                name: "Rating");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
