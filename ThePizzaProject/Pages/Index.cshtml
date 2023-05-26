@@ -30,7 +30,29 @@
 
 			<img src="@photoUrl" class="pizzaImg">
 
-			<span>
+
+			<div class="ingredient-span">
+
+
+				@for (int i = 0; i < pizza.PizzaIngredients.Count; i++)
+				{
+					<span class="span">@pizza.PizzaIngredients[i].Ingredient.IngredientName</span>
+
+					@if (i < pizza.PizzaIngredients.Count - 1)
+					{
+						<text>,&nbsp;</text>
+					}
+				}
+
+
+
+			</div>
+
+
+
+
+
+			@*<span>
 				@for (int i = 0; i < pizza.PizzaIngredients.Count; i ++)
 				{
 					@pizza.PizzaIngredients[i].Ingredient.IngredientName
@@ -40,7 +62,7 @@
 						<text>,&nbsp;</text>
 					}
 				}
-			</span>
+			</span>*@
 		</div>
 	}
 </div>

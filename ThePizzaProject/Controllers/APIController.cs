@@ -6,11 +6,13 @@ using ThePizzaProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using NuGet.Protocol;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ThePizzaProject.Controllers
 {
     [ApiController]
-    [Route("/api")]
+	[AllowAnonymous]
+	[Route("/api")]
     public class APIController : ControllerBase
     {
         private readonly ThePizzaProjectContext _context;

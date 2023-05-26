@@ -46,7 +46,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
             UnwantedIngredients = unwantedIngredients ?? new List<int>();
 			WantedIngredients = wantedIngredients ?? new List<int>();
-
+			GetPhotos();
 			try
 			{
 				// Check if any filters are applied
