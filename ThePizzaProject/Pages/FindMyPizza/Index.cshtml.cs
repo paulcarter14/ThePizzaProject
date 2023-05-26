@@ -61,7 +61,8 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			}
 			catch (Exception ex)
 			{
-				return RedirectToAction("Index");
+				//Vill man ha meddelande så lägger man det här etc
+				return Page();
 			}
 
 			return Page();
