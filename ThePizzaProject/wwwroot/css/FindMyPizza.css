@@ -146,6 +146,15 @@
     top: calc(50% - 10px);
 }
 
+.ingredient-span {
+   max-width: 400px;
+}
+
+.span{
+
+    width: 100%;
+}
+
     .top-bar.open button {
         background: linear-gradient(90deg, rgba(17,120,9,1) 0%, rgba(255,254,254,1) 50%, rgba(169,16,16,1) 100%);
         height: 100px;
@@ -198,6 +207,8 @@
         width: 51%;
         height: 95%
     }
+
+   
 
     .pizza-content {
         display: grid !important;

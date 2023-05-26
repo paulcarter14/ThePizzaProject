@@ -21,42 +21,38 @@
 			@{
 				int pizzaID = Convert.ToInt32(pizza.PizzaID);
 
-				Func<int, string> GetPizzaPhoto = (pizzaID) =>
-				{
-					string formattedPizzaId = pizzaID.ToString();
-					string photo = Model.photoUrl.FirstOrDefault(p => p.EndsWith(+pizzaID + ".jpeg"));
-					return photo;
-				};
+				//Func<int, string> GetPizzaPhoto = (pizzaID) =>
+				//{
+				//	string formattedPizzaId = pizzaID.ToString();
+				//	string photo = Model.photoUrl.FirstOrDefault(p => p.EndsWith(+pizzaID + ".jpeg"));
+				//	return photo;
+				//};
 
-				string photoUrl = GetPizzaPhoto(pizzaID);
+				string photoUrl = "/uploads/" + pizza.AccountID + "/" + pizza.PizzaID + ".jpeg";
+
+				//string photoUrl = GetPizzaPhoto(pizzaID);
 			}
 
 			<img src="@photoUrl" class="pizzaImg">
 
-			@*@foreach (var url in Model.photoUrl)
-		{
-		@if (url == ("/uploads/" + pizza.AccountID + "/" + pizza.PizzaID + ".jpeg")){
+		
+			<div class="ingredient-span">
 
-		<img src="@url" class="pizzaImg">
-		}
-		else{
-
-		<img src="https://shared.cdn.smp.schibsted.com/v2/images/1ef1386d-8ad2-4efc-8bc5-3c66feac6bb8?fit=crop&h=442&w=600&s=a3fff248ecfb772e3e3e7705e09761377a96fd2d" class="pizzaImg">
-		}
-
-		}*@
-
-			<span>
-				@for (int i = 0; i < pizza.PizzaIngredients.Count; i++)
-				{
-					@pizza.PizzaIngredients[i].Ingredient.IngredientName
-
-					@if (i < pizza.PizzaIngredients.Count - 1)
+				
+					@for (int i = 0; i < pizza.PizzaIngredients.Count; i++)
 					{
+						<span class="span">@pizza.PizzaIngredients[i].Ingredient.IngredientName</span>
+
+						@if (i < pizza.PizzaIngredients.Count - 1)
+						{
 						<text>,&nbsp;</text>
+						}
 					}
-				}
-			</span>
+				
+
+
+			</div>
+
 		</div>
 	}
 </div>
@@ -224,7 +220,7 @@
 
 
 		</div>
-<button class="right-baropen" onclick="toggleRightBar()">Close</button>
+		<button class="right-baropen" onclick="toggleRightBar()">Close</button>
 </form>
 
 

@@ -10,11 +10,19 @@
 
 
 
-<div class="pizza-Content">
+<div class="The-pizzapage-Content">
 	<div class="pizzabox">
 		<div class="pizza-title">
 			<h2>@Model.Pizzas.Name</h2>
+			
 		</div>
+		<h3>
+			Rating: @for (var i = 0; i < Model.Rating; i++)
+			{
+
+				<span>🍕</span>
+			}
+		</h3>
 		@*<h3>Rating</h3>
 		<form method="post">
 			<input type="hidden" name="_method" value="put" />
@@ -36,7 +44,28 @@
 		}
 
 		<img src="@photoUrl" class="pizzaImg">
-		<span>
+
+
+		<div class="ingredient-span">
+
+
+			@for (int i = 0; i < Model.Pizzas.Ingredients.Count; i++)
+			{
+				<span class="span"> @Model.Pizzas.Ingredients[i].Name</span>
+
+				@if (i < Model.Pizzas.Ingredients.Count - 1)
+				{
+					<text>,&nbsp;</text>
+				}
+			}
+
+
+
+		</div>
+
+
+
+		@*<span>
 			@for (int i = 0; i < Model.Pizzas.Ingredients.Count; i++)
 			{
 				@Model.Pizzas.Ingredients[i].Name
@@ -46,7 +75,7 @@
 					<text>,&nbsp;</text>
 				}
 			}
-		</span>
+		</span>*@
 
 
 		<div class="comment-box">
