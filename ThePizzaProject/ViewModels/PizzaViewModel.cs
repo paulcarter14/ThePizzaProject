@@ -10,7 +10,9 @@ namespace ThePizzaProject.ViewModels
         public List<CommentViewModel> Comments { get; set; }
         public List<IngredientViewModel> Ingredients { get; set; }
         public int UserID { get; set; }
-    }
+
+        public List<RatingPizza> RatingPizza { get; set; }
+	}
 
     public class CommentViewModel
     {
