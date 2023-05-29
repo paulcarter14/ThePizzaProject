@@ -16,14 +16,17 @@
 			<h2>@Model.Pizzas.Name</h2>
 			
 		</div>
-		<h3>
+		
 			@if(Model.Rating == 0 ){
 
 				
 			}
 			else{
 
-				Rating: for(var i = 0; i < Model.Rating; i++)
+			<h3>
+				Rating:
+			</h3>
+			for (var i = 0; i < Model.Rating; i++)
 			{
 
 				<span>🍕</span>
@@ -31,7 +34,7 @@
 
 			}
 			
-		</h3>
+		
 		@*<h3>Rating</h3>
 		<form method="post">
 			<input type="hidden" name="_method" value="put" />
