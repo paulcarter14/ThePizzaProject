@@ -30,6 +30,8 @@ namespace ThePizzaProject.Pages.ThePizzaPage
         public CommentPizza commentPizza { get; set; }
         public List<Ingredient> Ingredients { get; set; }
 		public int TotalCalories { get; set; }
+        public bool UserRatingCheck { get; set; }
+
 		public string Text { get; set; }
         public List<string> photoUrl = new List<string>();
         public Pizza PizzaObject { get; set; }
@@ -37,6 +39,9 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 
         public void OnGet(int id)
         {
+            var accessControl = new AccessControl(_context, _contextAccessor);
+            int loggedUser = accessControl.LoggedInAccountID;
+
             var myPizza = _context.Pizzas
                 .Where(p => p.PizzaID == id)
                 .Include(p => p.CommentPizza.Where(cp => cp.Pizza.PizzaID == id))
@@ -68,10 +73,14 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                     .Select(rp => new RatingPizza
                     {
                         ratingPizzaId = rp.ratingPizzaId,
+                        Pizza = rp.Pizza,
                         Rating = new Rating
                         {
+
                             ratingId = rp.Rating.ratingId,
                             ratingValue = rp.Rating.ratingValue,
+                            User = rp.Rating.User
+
                         }
                     }).ToList()
                 })
@@ -82,12 +91,18 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                 //Error handling i framtiden.
             }
 
-            Pizzas = new PizzaViewModel {
+            Pizzas = new PizzaViewModel
+            {
                 ID = myPizza.PizzaID,
                 Name = myPizza.PizzaName,
                 UserName = myPizza.User.Name,
+
 				UserID = myPizza.AccountID,
 				Comments = myPizza.CommentPizza.Select(c => new CommentViewModel
+
+                UserID = myPizza.AccountID,
+
+                Comments = myPizza.CommentPizza.Select(c => new CommentViewModel
                 {
                     DateTime = c.Comment.DateTime,
                     Comment = c.Comment.CommentText,
@@ -99,10 +114,12 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                     Name = i.Ingredient.IngredientName,
                     Category = i.Ingredient.Category,
                     Kcal = i.Ingredient.Calories
+                    
                 }).ToList()
             };
 
             GetPhotos();
+
 			foreach (var ingredient in Pizzas.Ingredients)
 			{
 				Console.WriteLine("Ingredient: " + ingredient.Name + ", Calories: " + ingredient.Kcal);
@@ -111,20 +128,54 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 			TotalCalories = Pizzas.Ingredients.Sum(i => i.Kcal);
 
             if(myPizza.RatingPizzas.Count == 0)
+
+            // Debugging: Print the calories for each ingredient
+            foreach (var ingredient in Pizzas.Ingredients)
+            {
+                Console.WriteLine("Ingredient: " + ingredient.Name + ", Calories: " + ingredient.Kcal);
+            }
+
+
+            TotalCalories = Pizzas.Ingredients.Sum(i => i.Kcal);
+
+
+            if (myPizza.RatingPizzas.Count == 0)
+
             {
                 RedirectToPage();
             }
             else
             {
-				var x = myPizza.RatingPizzas.Select(rp => rp.Rating.ratingValue).Average();
+                var x = myPizza.RatingPizzas.Select(rp => rp.Rating.ratingValue).Average();
 
-				Math.Round(x);
+                Math.Round(x);
+
 
 				int roundedValue = Convert.ToInt32(x);
 
 				Rating = roundedValue;
 			}	
 		}
+            if (myPizza.RatingPizzas.Count == 0)
+            {
+                RedirectToPage();
+            }
+            else
+            {
+                List<RatingPizza>? checkRating = myPizza.RatingPizzas.Where(rp => rp.Pizza.PizzaID == myPizza.PizzaID).ToList();
+
+                bool userRating = checkRating.Any(cr => cr.Rating.User.AccountID == loggedUser);
+
+                if (userRating)
+                {
+                    UserRatingCheck = userRating;
+                }
+                else
+                {
+                    UserRatingCheck = userRating;
+                }
+            }
+        }
 
 		public IActionResult UpdateRatingPizza(int pizzaId, int rating)
 		{
@@ -132,19 +183,26 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 			int loggedUser = accessControl.LoggedInAccountID;
 			var pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == pizzaId);
 
-			Rating newRating = new Rating
-			{
-				ratingValue = rating,
-				RatingPizzas = new List<RatingPizza>
+            if(rating == 0)
+            {
+                //Återgå till metoden
+            }
+            else
+            {
+				Rating newRating = new Rating
+				{
+					ratingValue = rating,
+					RatingPizzas = new List<RatingPizza>
 				{
 					new RatingPizza
 					{
 						Pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == pizzaId)
 					}
 				},
-				User = _context.Accounts.FirstOrDefault(p => p.AccountID == loggedUser)
-			};
-			_context.Add(newRating);
+					User = _context.Accounts.FirstOrDefault(p => p.AccountID == loggedUser)
+				};
+				_context.Add(newRating);
+			}
 			return Page();
 		}
 
