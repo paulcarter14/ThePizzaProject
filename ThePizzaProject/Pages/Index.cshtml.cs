@@ -20,29 +20,24 @@ namespace ThePizzaProject.Pages
 		public IndexModel(ThePizzaProjectContext context, IHttpContextAccessor httpContextAccessor, AccessControl accessControl, FileRepository uploads)
 		{
 			_context = context;
-			Ingredients = new List<Ingredient>(); // Initialize the Ingredients property
+			Ingredients = new List<Ingredient>();
 			this._contextAccessor = httpContextAccessor;
 			this.accessControl = accessControl;
 			this.uploads = uploads;
 		}
 
-	
-
 		public List<Ingredient> Ingredients { get; set; }
 		public List<Pizza> Pizzas { get; set; }
 		public List<Pizza> MyPizzas { get; set; }
-
 		public List<string> photoUrl = new List<string>();
 
 		public void OnGet()
 		{
 			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
-			MyPizzas = GetMyPizzas(); // Get only your pizzas
-			Ingredients = _context.Ingredients.ToList(); // Populate the Ingredients property
+			MyPizzas = GetMyPizzas();
+			Ingredients = _context.Ingredients.ToList();
             GetPhotos();
         }
-
-		
 
 		private List<Pizza> GetMyPizzas()
 		{
@@ -51,7 +46,7 @@ namespace ThePizzaProject.Pages
 			List<Pizza> myPizzas =
 				(
 					from p in _context.Pizzas
-					where p.AccountID == loggedUser// Filter by the current user's account ID
+					where p.AccountID == loggedUser
 					select new Pizza
 					{
 						PizzaID = p.PizzaID,
@@ -81,12 +76,10 @@ namespace ThePizzaProject.Pages
 
         public List<string> GetPhotos()
         {
-
             string userFolderPath = Path.Combine(
             uploads.FolderPath,
             accessControl.LoggedInAccountID.ToString()
             );
-
 
             string[] files = Directory.GetFiles(userFolderPath);
 
@@ -95,15 +88,11 @@ namespace ThePizzaProject.Pages
                 string url = uploads.GetFileURL(file);
                 photoUrl.Add(url);
             }
-
-
-
             return photoUrl;
         }
 
         public List<string> GetPizzaPhoto()
 		{
-
 			string userFolderPath = Path.Combine(
 			uploads.FolderPath,
 			accessControl.LoggedInAccountID.ToString()
@@ -122,8 +111,6 @@ namespace ThePizzaProject.Pages
 			{
                 Directory.CreateDirectory(userFolderPath);
             }
-            
-
             return photoUrl;
 		}
 	}

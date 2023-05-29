@@ -30,11 +30,8 @@ namespace ThePizzaProject.Pages.ThePizzaPage
         public CommentPizza commentPizza { get; set; }
         public List<Ingredient> Ingredients { get; set; }
 		public int TotalCalories { get; set; }
-
 		public string Text { get; set; }
-
         public List<string> photoUrl = new List<string>();
-
         public Pizza PizzaObject { get; set; }
         public int Rating { get; set; }
 
@@ -65,7 +62,6 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                         }).ToList(),
                     CommentPizza = p.CommentPizza.ToList(),
 
-
                     User = p.User,
                     AccountID = p.AccountID,
                     RatingPizzas = p.RatingPizzas
@@ -78,10 +74,6 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                             ratingValue = rp.Rating.ratingValue,
                         }
                     }).ToList()
-
-
-
-
                 })
                 .FirstOrDefault();
 
@@ -94,32 +86,29 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                 ID = myPizza.PizzaID,
                 Name = myPizza.PizzaName,
                 UserName = myPizza.User.Name,
-                Comments = myPizza.CommentPizza.Select(c => new CommentViewModel
+				UserID = myPizza.AccountID,
+				Comments = myPizza.CommentPizza.Select(c => new CommentViewModel
                 {
                     DateTime = c.Comment.DateTime,
                     Comment = c.Comment.CommentText,
-                    UserName = c.Comment.User.Name,
+                    UserName = c.Comment.User.Name
                 }).ToList(),
                 Ingredients = myPizza.PizzaIngredients.Select(i => new IngredientViewModel
                 {
                     ID = i.Ingredient.IngredientID,
                     Name = i.Ingredient.IngredientName,
                     Category = i.Ingredient.Category,
-                    // TODO: Fixa kaloeriberäkning
                     Kcal = i.Ingredient.Calories
                 }).ToList()
             };
 
             GetPhotos();
-			// Debugging: Print the calories for each ingredient
 			foreach (var ingredient in Pizzas.Ingredients)
 			{
 				Console.WriteLine("Ingredient: " + ingredient.Name + ", Calories: " + ingredient.Kcal);
 			}
 
-
 			TotalCalories = Pizzas.Ingredients.Sum(i => i.Kcal);
-
 
             if(myPizza.RatingPizzas.Count == 0)
             {
@@ -134,14 +123,7 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 				int roundedValue = Convert.ToInt32(x);
 
 				Rating = roundedValue;
-			}
-          
-
-           
-
-
-				Rating = roundedValue;
-			}
+			}	
 		}
 
 		public IActionResult UpdateRatingPizza(int pizzaId, int rating)
@@ -150,19 +132,12 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 			int loggedUser = accessControl.LoggedInAccountID;
 			var pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == pizzaId);
 
-			//if (pizza != null)
-			//{
-			//    pizza.RatingPizzas.Add(Rating);
-			//    _context.SaveChangesAsync();
-			//}
-
 			Rating newRating = new Rating
 			{
 				ratingValue = rating,
 				RatingPizzas = new List<RatingPizza>
 				{
 					new RatingPizza
-
 					{
 						Pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == pizzaId)
 					}
@@ -196,7 +171,6 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                 CommentPizzas = new List<CommentPizza>
                 {
                     new CommentPizza
-
                     {
                         Pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == id)
                     }
@@ -208,24 +182,17 @@ namespace ThePizzaProject.Pages.ThePizzaPage
             UpdateRatingPizza(id, rating);
             _context.Add(newComment);
 
-
-
-            //_context.Add(commentUser);
             _context.SaveChanges();
 
             OnGet(id);
             return Page();
-
         }
-
         public List<string> GetPhotos()
         {
-
             string userFolderPath = Path.Combine(
             uploads.FolderPath,
             accessControl.LoggedInAccountID.ToString()
             );
-
 
             string[] files = Directory.GetFiles(userFolderPath);
 
@@ -234,12 +201,6 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                 string url = uploads.GetFileURL(file);
                 photoUrl.Add(url);
             }
-
-
-            //Directory.CreateDirectory(userFolderPath);
-
-
-
             return photoUrl;
         }
     }
