@@ -26,10 +26,9 @@ namespace ThePizzaProject.Controllers
         [HttpGet]
         public async Task<ActionResult<Pizza>> GetPizzaByCategory(string categoryname)
         {
-            Pizza pizza = null;
             RandomPizza returnPizza = new RandomPizza()
             {
-
+                
             };
 
             if (categoryname == "Chicken")
@@ -40,7 +39,9 @@ namespace ThePizzaProject.Controllers
                 .Select(p => new
                 {
                     Name = p.PizzaName,
-                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList()
+                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList(),
+                    pizzaID = p.PizzaID,
+                    accountID = p.AccountID,
                 })
                 .ToList();
 
@@ -51,9 +52,10 @@ namespace ThePizzaProject.Controllers
 
                 returnPizza.Name = randomPizza.Name;
                 returnPizza.Ingredients = randomPizza.Ingredients;
+                returnPizza.photo = "https://pizzaproject3.azurewebsites.net/uploads/" + randomPizza.accountID + "/" + randomPizza.pizzaID + ".jpeg";
 
             }
-            else if (categoryname == "Meat")
+			else if (categoryname == "Meat")
             {
                 var matchingPizzas = _context.Pizzas
                 .Where(p => p.PizzaIngredients
@@ -61,7 +63,9 @@ namespace ThePizzaProject.Controllers
                 .Select(p => new
                 {
                     Name = p.PizzaName,
-                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList()
+                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList(),
+                    pizzaID = p.PizzaID,
+                    accountID = p.AccountID,
                 })
                 .ToList();
 
@@ -72,9 +76,11 @@ namespace ThePizzaProject.Controllers
 
                 returnPizza.Name = randomPizza.Name;
                 returnPizza.Ingredients = randomPizza.Ingredients;
-            }
+				returnPizza.photo = "https://pizzaproject3.azurewebsites.net/uploads/" + randomPizza.accountID + "/" + randomPizza.pizzaID + ".jpeg";
 
-            else if (categoryname == "Fish")
+			}
+
+			else if (categoryname == "Fish")
             {
                 var matchingPizzas = _context.Pizzas
                 .Where(p => p.PizzaIngredients
@@ -82,8 +88,10 @@ namespace ThePizzaProject.Controllers
                 .Select(p => new
                 {
                     Name = p.PizzaName,
-                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList()
-                })
+                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList(),
+					pizzaID = p.PizzaID,
+					accountID = p.AccountID,
+				})
                 .ToList();
 
                 //Slumpar en pizza
@@ -92,10 +100,12 @@ namespace ThePizzaProject.Controllers
 
                 returnPizza.Name = randomPizza.Name;
                 returnPizza.Ingredients = randomPizza.Ingredients;
-            }
+				returnPizza.photo = "https://pizzaproject3.azurewebsites.net/uploads/" + randomPizza.accountID + "/" + randomPizza.pizzaID + ".jpeg";
+
+			}
 
 
-            else if (categoryname == "Vegetarian")
+			else if (categoryname == "Vegetarian")
             {
                 var matchingPizzas = _context.Pizzas
                 .Where(p => p.PizzaIngredients
@@ -103,8 +113,10 @@ namespace ThePizzaProject.Controllers
                 .Select(p => new
                 {
                     Name = p.PizzaName,
-                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList()
-                })
+                    Ingredients = p.PizzaIngredients.Select(i => i.Ingredient.IngredientName).ToList(),
+					pizzaID = p.PizzaID,
+					accountID = p.AccountID,
+				})
                 .ToList();
 
                 var random = new Random();
@@ -112,21 +124,35 @@ namespace ThePizzaProject.Controllers
 
                 returnPizza.Name = randomPizza.Name;
                 returnPizza.Ingredients = randomPizza.Ingredients;
-            }
+				returnPizza.photo = "https://pizzaproject3.azurewebsites.net/uploads/" + randomPizza.accountID + "/" + randomPizza.pizzaID + ".jpeg";
 
+			}
 
+			else if (categoryname == "Desert")
+            {
+                List<string> list = new List<string>()
+                {
+					"Sourdough",
+                    "Nutella",
+                    "Banana",
+                    "Strawberry",
+                    "Blueberry"
 
-            //Retunera Bild, Namn och LI med ingredienser.
+                };
+                returnPizza.Name = "Nutella Pizza";
+                returnPizza.Ingredients = list;
+                returnPizza.photo = "https://res.cloudinary.com/coopsverige/image/upload/h_1200,w_1200/v1674023395/cloud/271734.jpg";
+
+			}
+
             return Ok(returnPizza);
         }
 
         [HttpGet("pizza-count")]
         public async Task<ActionResult<int>> GetPizzaCount()
         {
-            // Retrieve the count of all Pizza records in the database
             int count = await _context.Pizzas.CountAsync();
 
-            // Return the count
             return Ok(count);
         }
     }

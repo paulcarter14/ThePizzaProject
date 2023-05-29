@@ -4,5 +4,6 @@
     {
         public string Name { get; set; }
         public List<string> Ingredients { get; set; }
+        public string photo { get; set; }
     }
 }

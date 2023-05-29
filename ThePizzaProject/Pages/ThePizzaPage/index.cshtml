@@ -43,17 +43,19 @@
 			<button type="submit">Set Rating</button>
 		</form>*@
 		@{
-			int pizzaID = Convert.ToInt32(Model.Pizzas.ID);
+				int pizzaID = Convert.ToInt32(Model.Pizzas.ID);
 
-			Func<int, string> GetPizzaPhoto = (pizzaID) =>
-			{
-				string formattedPizzaId = pizzaID.ToString();
-				string photo = Model.photoUrl.FirstOrDefault(p => p.EndsWith(+pizzaID + ".jpeg"));
-				return photo;
-			};
+				//Func<int, string> GetPizzaPhoto = (pizzaID) =>
+				//{
+				//	string formattedPizzaId = pizzaID.ToString();
+				//	string photo = Model.photoUrl.FirstOrDefault(p => p.EndsWith(+pizzaID + ".jpeg"));
+				//	return photo;
+				//};
 
-			string photoUrl = GetPizzaPhoto(pizzaID);
-		}
+			string photoUrl = "/uploads/" + Model.Pizzas.UserID + "/" + Model.Pizzas.ID + ".jpeg";
+
+				//string photoUrl = GetPizzaPhoto(pizzaID);
+			}
 
 		<img src="@photoUrl" class="pizzaImg">
 
@@ -153,12 +155,8 @@
 	</script>
 </div>
 
-
-
 </div>
 
 <div id="workoutList"></div>
-
-
 
 </div>
