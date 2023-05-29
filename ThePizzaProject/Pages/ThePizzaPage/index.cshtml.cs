@@ -119,6 +119,7 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                     Category = i.Ingredient.Category,
                     // TODO: Fixa kaloeriberäkning
                     Kcal = i.Ingredient.Calories
+                    
                 }).ToList()
             };
 
@@ -144,6 +145,7 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                 Math.Round(x);
 
                 int roundedValue = Convert.ToInt32(x);
+
 
                 Rating = roundedValue;
             }
@@ -283,11 +285,7 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                 string url = uploads.GetFileURL(file);
                 photoUrl.Add(url);
             }
-
-
             //Directory.CreateDirectory(userFolderPath);
-
-
 
             return photoUrl;
         }
