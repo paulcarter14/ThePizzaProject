@@ -20,39 +20,24 @@
 
 			@{
 				int pizzaID = Convert.ToInt32(pizza.PizzaID);
-
-				//Func<int, string> GetPizzaPhoto = (pizzaID) =>
-				//{
-				//	string formattedPizzaId = pizzaID.ToString();
-				//	string photo = Model.photoUrl.FirstOrDefault(p => p.EndsWith(+pizzaID + ".jpeg"));
-				//	return photo;
-				//};
-
 				string photoUrl = "/uploads/" + pizza.AccountID + "/" + pizza.PizzaID + ".jpeg";
-
-				//string photoUrl = GetPizzaPhoto(pizzaID);
 			}
 
 			<img src="@photoUrl" class="pizzaImg">
 
-		
 			<div class="ingredient-span">
-
-				
-					@for (int i = 0; i < pizza.PizzaIngredients.Count; i++)
+				@for (int i = 0; i < pizza.PizzaIngredients.Count; i++)
+				{
+					var extraText = "";
+					@if (i < pizza.PizzaIngredients.Count - 1)
 					{
-						<span class="span">@pizza.PizzaIngredients[i].Ingredient.IngredientName</span>
-
-						@if (i < pizza.PizzaIngredients.Count - 1)
-						{
-						<text>,&nbsp;</text>
-						}
+						extraText = ",";
 					}
-				
+					<span class="span">@(pizza.PizzaIngredients[i].Ingredient.IngredientName + extraText)</span>
 
 
+				}
 			</div>
-
 		</div>
 	}
 </div>
@@ -73,8 +58,6 @@
 					<label class="sidebar-lable" for="veggie">Vegetarian</label>
 				</li>
 			</ol>
-
-
 
 			<h2 class="ingredient-title">Dough</h2>
 			<ol class="sidebar-list" style="clear: both;">
@@ -141,8 +124,6 @@
 					</li>
 				}
 			</ol>
-
-
 		</div>
 
 		<button class="left-baropen" onclick="toggleLeftBar()">close</button>
@@ -217,14 +198,8 @@
 					</li>
 				}
 			</ol>
-
-
 		</div>
 		<button class="right-baropen" onclick="toggleRightBar()">Close</button>
 </form>
 
-
 </div>
-
-
-

@@ -11,14 +11,14 @@ namespace ThePizzaProject.Pages.FindMyPizza
 	public class IndexModel : PageModel
 	{
 		private readonly ThePizzaProjectContext _context;
-        private readonly FileRepository uploads;
-        private readonly AccessControl accessControl;
+		private readonly FileRepository uploads;
+		private readonly AccessControl accessControl;
 		public string pizzaPhotoUrl { get; set; }
 
-        public IndexModel(ThePizzaProjectContext context, FileRepository uploads, AccessControl accessControl)
+		public IndexModel(ThePizzaProjectContext context, FileRepository uploads, AccessControl accessControl)
 		{
 			_context = context;
-			Ingredients = new List<Ingredient>(); // Initialize the Ingredients property
+			Ingredients = new List<Ingredient>();
 			this.uploads = uploads;
 			this.accessControl = accessControl;
 		}
@@ -28,7 +28,6 @@ namespace ThePizzaProject.Pages.FindMyPizza
 		public List<int> UnwantedIngredients { get; set; }
 		public List<int> WantedIngredients { get; set; }
 		public List<Pizza> FilteredPizzas { get; set; }
-
 		public List<string> photoUrl = new List<string>();
 
 		public void OnGet()
@@ -36,15 +35,15 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
 			Ingredients = _context.Ingredients.ToList();
 
-            GetPhotos();// Populate the Ingredients property
-        }
+			GetPhotos();
+		}
 
-        public IActionResult OnPost(List<int> wantedIngredients , bool veggie, List<int>unwantedIngredients )
-        {
-            Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
-            Ingredients = _context.Ingredients.ToList();
+		public IActionResult OnPost(List<int> wantedIngredients, bool veggie, List<int> unwantedIngredients)
+		{
+			Pizzas = _context.Pizzas.Include(p => p.PizzaIngredients).ToList();
+			Ingredients = _context.Ingredients.ToList();
 
-            UnwantedIngredients = unwantedIngredients ?? new List<int>();
+			UnwantedIngredients = unwantedIngredients ?? new List<int>();
 			WantedIngredients = wantedIngredients ?? new List<int>();
 			GetPhotos();
 			try
@@ -68,10 +67,7 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			return Page();
 		}
 
-
-		//Lägg till en tryCatch som återvänder till sidan.
-
-		private List<Pizza> GetFilteredPizzas(List<int> ?unwantedIngredients, bool veggie, List<int> ?wantedIngredients)
+		private List<Pizza> GetFilteredPizzas(List<int>? unwantedIngredients, bool veggie, List<int>? wantedIngredients)
 		{
 			List<Pizza> pizzasWithIngredients =
 				(
@@ -100,7 +96,6 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
 					}).ToList();
 
-			// Veggie Warrior checkboxen står över de andra.
 			if (veggie)
 			{
 				pizzasWithIngredients = pizzasWithIngredients
@@ -115,9 +110,6 @@ namespace ThePizzaProject.Pages.FindMyPizza
 					.Where(p => wantedIngredients.All(wi => p.PizzaIngredients.Any(pi => pi.Ingredient.IngredientID == wi)))
 					.ToList();
 			}
-
-			
-
 			return pizzasWithIngredients;
 		}
 
@@ -126,14 +118,12 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			RedirectToAction("ThePizzaPage.cshtml");
 		}
 
-        public List<string> GetPhotos()
-        {
-
+		public List<string> GetPhotos()
+		{
 			string userFolderPath = Path.Combine(
 			uploads.FolderPath,
 			accessControl.LoggedInAccountID.ToString()
 			);
-
 
 			string[] files = Directory.GetFiles(userFolderPath);
 
@@ -142,14 +132,8 @@ namespace ThePizzaProject.Pages.FindMyPizza
 				string url = uploads.GetFileURL(file);
 				photoUrl.Add(url);
 			}
-
-			
-				//Directory.CreateDirectory(userFolderPath);
-			
-
-
 			return photoUrl;
-        }
+		}
 
 		public string GetPizzaPhoto(int pizzaID)
 		{
@@ -159,5 +143,5 @@ namespace ThePizzaProject.Pages.FindMyPizza
 
 			return pizzaPhotoUrl;
 		}
-    }
+	}
 }

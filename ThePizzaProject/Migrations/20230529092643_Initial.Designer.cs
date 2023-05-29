@@ -12,7 +12,7 @@ using ThePizzaProject.Data;
 namespace ThePizzaProject.Migrations
 {
     [DbContext(typeof(ThePizzaProjectContext))]
-    [Migration("20230526083550_Initial")]
+    [Migration("20230529092643_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -280,7 +280,7 @@ namespace ThePizzaProject.Migrations
             modelBuilder.Entity("ThePizzaProject.Models.RatingPizza", b =>
                 {
                     b.HasOne("ThePizzaProject.Models.Pizza", "Pizza")
-                        .WithMany()
+                        .WithMany("RatingPizzas")
                         .HasForeignKey("PizzaID");
 
                     b.HasOne("ThePizzaProject.Models.Rating", "Rating")
@@ -314,6 +314,8 @@ namespace ThePizzaProject.Migrations
                     b.Navigation("CommentPizza");
 
                     b.Navigation("PizzaIngredients");
+
+                    b.Navigation("RatingPizzas");
                 });
 
             modelBuilder.Entity("ThePizzaProject.Models.Rating", b =>

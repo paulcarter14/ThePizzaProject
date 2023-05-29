@@ -30,54 +30,17 @@
 
 			<img src="@photoUrl" class="pizzaImg">
 
-
 			<div class="ingredient-span">
-
-
 				@for (int i = 0; i < pizza.PizzaIngredients.Count; i++)
 				{
-					<span class="span">@pizza.PizzaIngredients[i].Ingredient.IngredientName</span>
-
+					var extraText = "";
 					@if (i < pizza.PizzaIngredients.Count - 1)
 					{
-						<text>,&nbsp;</text>
+						extraText = ",";
 					}
+					<span class="span">@(pizza.PizzaIngredients[i].Ingredient.IngredientName + extraText)</span>
 				}
-
-
-
 			</div>
-
-
-
-
-
-			@*<span>
-				@for (int i = 0; i < pizza.PizzaIngredients.Count; i ++)
-				{
-					@pizza.PizzaIngredients[i].Ingredient.IngredientName
-
-					@if (i < pizza.PizzaIngredients.Count - 1)
-					{
-						<text>,&nbsp;</text>
-					}
-				}
-			</span>*@
 		</div>
 	}
 </div>
-
-@*<h2>Your Photos</h2>
-@foreach (var url in Model.PhotoURLs)
-{
-	<img src="@url" style="width: 250px">
-}
-
-@if (Model.PhotoURLs.Count == 0)
-{
-	<p>You have not uploaded any photos yet.</p>
-}
-
-<p> MpM Development </p>*@
-
-
