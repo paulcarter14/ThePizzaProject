@@ -105,7 +105,7 @@ namespace ThePizzaProject.Pages.ThePizzaPage
                     ID = i.Ingredient.IngredientID,
                     Name = i.Ingredient.IngredientName,
                     Category = i.Ingredient.Category,
-                    // TODO: Fixa kaloeriberäkning
+                    // TODO: Fixa kaloeriberÃ¤kning
                     Kcal = i.Ingredient.Calories
                 }).ToList()
             };
@@ -120,17 +120,25 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 
 			TotalCalories = Pizzas.Ingredients.Sum(i => i.Kcal);
 
-			if (myPizza.RatingPizzas.Count == 0)
-			{
-				RedirectToPage();
-			}
-			else
-			{
+
+            if(myPizza.RatingPizzas.Count == 0)
+            {
+                RedirectToPage();
+            }
+            else
+            {
 				var x = myPizza.RatingPizzas.Select(rp => rp.Rating.ratingValue).Average();
 
 				Math.Round(x);
 
 				int roundedValue = Convert.ToInt32(x);
+
+				Rating = roundedValue;
+			}
+          
+
+           
+
 
 				Rating = roundedValue;
 			}
