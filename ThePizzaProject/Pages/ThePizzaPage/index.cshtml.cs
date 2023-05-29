@@ -118,16 +118,22 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 			}
 
 
-
 			TotalCalories = Pizzas.Ingredients.Sum(i => i.Kcal);
-            var x = myPizza.RatingPizzas.Select(rp => rp.Rating.ratingValue).Average();
 
-            Math.Round(x);
+			if (myPizza.RatingPizzas.Count == 0)
+			{
+				RedirectToPage();
+			}
+			else
+			{
+				var x = myPizza.RatingPizzas.Select(rp => rp.Rating.ratingValue).Average();
 
-            int roundedValue = Convert.ToInt32(x);
+				Math.Round(x);
 
-            Rating = roundedValue;
+				int roundedValue = Convert.ToInt32(x);
 
+				Rating = roundedValue;
+			}
 		}
 
 		public IActionResult UpdateRatingPizza(int pizzaId, int rating)
