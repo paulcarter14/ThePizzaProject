@@ -105,3 +105,13 @@
 #slice5.clicked + label {
     transform: translateX(100px) rotate(-144deg) translateY(-30px);
 }
+
+#workoutList{
+
+    width: 100%;
+}
+
+#workoutList p {
+    
+    font-weight: bold;
+}

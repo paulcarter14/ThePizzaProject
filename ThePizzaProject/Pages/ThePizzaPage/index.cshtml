@@ -95,6 +95,8 @@
 		}
 
 		<button class="training" onclick="TrainingTips()">Training tips</button>
+
+		<div id="workoutList"></div>
 	</div>
 
 	<script type="text/javascript">
@@ -111,16 +113,15 @@
 					}
 
 					data.forEach(item => {
-						var parts = item.split(": ");
-						var h2 = document.createElement('h2');
-						h2.textContent = parts[0];
-						var li = document.createElement('li');
-						li.textContent = parts[1];
-						var ul = document.createElement('ul');
-						ul.appendChild(li);
+						var parts = item.split(", ");
+						var p = document.createElement('p');
+						p.textContent = parts;
 
-						workoutList.appendChild(h2);
-						workoutList.appendChild(ul);
+
+						
+
+						workoutList.appendChild(p);
+						
 					});
 				})
 				.catch((error) => {
@@ -130,8 +131,8 @@
 	</script>
 </div>
 
-</div>
+@*</div>
 
-<div id="workoutList"></div>
 
-</div>
+
+</div>*@
