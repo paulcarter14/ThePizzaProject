@@ -17,6 +17,7 @@
     width: 80px;
     border-radius: 50%;
     display: block;
+    background: linear-gradient(90deg, rgba(17,120,9,1) 0%, rgba(255,254,254,1) 50%, rgba(169,16,16,1) 100%);
 }
 
 .rating-line-container {
