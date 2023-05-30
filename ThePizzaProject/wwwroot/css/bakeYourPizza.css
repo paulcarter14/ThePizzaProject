@@ -138,12 +138,37 @@ ul {
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     }
 
-   
+.comment-box button {
+    transition: transform 0.2s ease-in-out;
+}
 
-        #bake-button:hover {
+.pizza-box #training-button {
+    transition: transform 0.2s ease-in-out;
+}
 
-            transform: scale(135%);
-        }
+.submit-buttons {
+    background: linear-gradient(90deg, rgba(17,120,9,1) 0%, rgba(255,254,254,1) 50%, rgba(169,16,16,1) 100%);
+    border-radius: 50px;
+    border: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#rating-button:hover {
+    transform: scale(120%);
+}
+
+#comment-button:hover {
+    transform: scale(120%);
+}
+
+#training-button:hover {
+    transform: scale(120%);
+}
+
+
+#bake-button:hover {
+    transform: scale(135%);
+}
 
 @media (max-width: 767px) {
     .item {
