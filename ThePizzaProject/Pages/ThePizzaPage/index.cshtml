@@ -74,7 +74,7 @@
 					</div>
 
 					<div class="rating-button">
-						<button class="pizza-submit" type="submit">Rate</button>
+						<button id="rating-button" class="submit-buttons" type="submit">Rate</button>
 					</div>
 				</form>
 			}
@@ -82,7 +82,7 @@
 			<form method="post">
 				<span class="text-danger">@Html.ValidationMessageFor(m => m.Text)</span>
 				<textarea class="comment-text-area" name="commentText"></textarea>
-				<button class="submit-buttons" type="submit">Submit</button>
+				<button id="comment-button" class="submit-buttons" type="submit">Submit</button>
 			</form>
 		</div>
 
@@ -90,11 +90,11 @@
 		{
 			<div class="comment-display-box">
 				<h5 class="comment-username">@comment.UserName @comment.DateTime</h5>
-				<spa class="comment-text" classn>@comment.Comment</spa>
+				<span class="comment-text" >@comment.Comment</span>
 			</div>
 		}
 
-		<button class="training" onclick="TrainingTips()">Training tips</button>
+		<button id="training-button" class="submit-buttons" onclick="TrainingTips()">Training tips</button>
 		<div id="workoutList"></div>
 
 	</div>

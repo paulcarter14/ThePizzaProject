@@ -19,7 +19,9 @@ namespace ThePizzaProject.ViewModels
         public string UserName { get; set; }
         public string Comment { get; set; }
 
-        public DateTime DateTime { get; set; }
+        public List<RatingPizza> RatingPizzas { get; set; }
+
+		public DateTime DateTime { get; set; }
     }
 
     public class IngredientViewModel
