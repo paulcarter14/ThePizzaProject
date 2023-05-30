@@ -5,31 +5,28 @@
 
 <h1>@Model.Pizzas.UserName</h1>
 
-
-
 <div class="The-pizzapage-Content">
 	<div class="pizzabox">
 		<div class="pizza-title">
 			<h2>@Model.Pizzas.Name</h2>
-			
 		</div>
-		
-			@if(Model.Rating == 0 ){
 
-				
-			}
-			else{
+		@if (Model.Rating == 0)
+		{
 
+		}
+		else
+		{
 			<h3>
 				Rating:
 			</h3>
 			for (var i = 0; i < Model.Rating; i++)
 			{
-
 				<span>🍕</span>
 			}
+		}
 
-			}
+			
 		@{
 				int pizzaID = Convert.ToInt32(Model.Pizzas.ID);
 			string photoUrl = "/uploads/" + Model.Pizzas.UserID + "/" + Model.Pizzas.ID + ".jpeg";
@@ -37,22 +34,16 @@
 
 		<img src="@photoUrl" class="pizzaImg">
 
-
 		<div class="ingredient-span">
-
-
 			@for (int i = 0; i < Model.Pizzas.Ingredients.Count; i++)
 			{
-				<span class="span"> @Model.Pizzas.Ingredients[i].Name</span>
-
+				var extraText = "";
 				@if (i < Model.Pizzas.Ingredients.Count - 1)
 				{
-					<text>,&nbsp;</text>
+					extraText = ",";
 				}
+				<span class="span">@(Model.Pizzas.Ingredients[i].Name + extraText)</span>
 			}
-
-
-
 		</div>
 
 		<div class="comment-box">
@@ -85,28 +76,27 @@
 				<span class="text-danger">@Html.ValidationMessageFor(m => m.Text)</span>
 				<textarea class="comment-text-area" name="commentText"></textarea>
 
-				
 
-			
+				@if(Model.UserRatingCheck == false){
+					<h4>Rating</h4>
+					@*<input type="hidden" name="pizzaObject" value="@Model.PizzaObject" />*@
+					<input type="number" name="rating" />
+				}
 
 				<button class="submit-buttons" type="submit">Submit</button>
-
 			</form>
 		</div>
 
 		@foreach (var comment in Model.Pizzas.Comments)
 		{
-
 			<div class="comment-display-box">
 				<h5 class="comment-username">@comment.UserName @comment.DateTime</h5>
-
 				<spa class="comment-text" classn>@comment.Comment</spa>
 			</div>
 		}
 
 		<button class="training" onclick="TrainingTips()">Training tips</button>
 	</div>
-
 
 	<script type="text/javascript">
 		function TrainingTips() {
