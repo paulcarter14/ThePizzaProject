@@ -201,6 +201,8 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 					User = _context.Accounts.FirstOrDefault(p => p.AccountID == loggedUser)
 				};
 				_context.Add(newRating);
+				_context.SaveChanges();
+
 			}
 			return Page();
 		}
@@ -210,36 +212,50 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 			var accessControl = new AccessControl(_context, _contextAccessor);
 			int loggedUser = accessControl.LoggedInAccountID;
 
-			if (string.IsNullOrEmpty(commentText))
+			//om båda är null,
+
+			//Om en av dem är null,
+
+			// om den andre är null,
+
+			if (string.IsNullOrEmpty(commentText) && rating == 0)
 			{
 				ModelState.AddModelError("Text", "This field can not be empty");
 			}
 
-			if (!ModelState.IsValid)
+			else if (string.IsNullOrEmpty(commentText) && rating > 0)
 			{
-				OnGet(id);
-				return Page();
+				ModelState.AddModelError("Text", "This field can not be empty");
+				UpdateRatingPizza(id, rating);
 			}
 
-			Comment newComment = new Comment
+			else if (!string.IsNullOrEmpty(commentText) && rating == 0)
 			{
-				CommentText = commentText,
-				DateTime = DateTime.Now,
-				CommentPizzas = new List<CommentPizza>
+				Comment newComment = new Comment
+				{
+					CommentText = commentText,
+					DateTime = DateTime.Now,
+					CommentPizzas = new List<CommentPizza>
 				{
 					new CommentPizza
 					{
 						Pizza = _context.Pizzas.FirstOrDefault(p => p.PizzaID == id)
 					}
 				},
-				User = _context.Accounts.FirstOrDefault(p => p.AccountID == loggedUser)
+					User = _context.Accounts.FirstOrDefault(p => p.AccountID == loggedUser)
 
+				};
+				_context.Add(newComment);
 
-			};
-			UpdateRatingPizza(id, rating);
-			_context.Add(newComment);
+				_context.SaveChanges();
 
-			_context.SaveChanges();
+			}
+			if (!ModelState.IsValid)
+			{
+				OnGet(id);
+				return Page();
+			}
+
 
 			OnGet(id);
 			return Page();
