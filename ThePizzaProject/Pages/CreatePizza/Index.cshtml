@@ -10,9 +10,12 @@
 	<span class="text-danger">@Html.ValidationMessageFor(m => m.Name)</span>
 
 	<div class="file-input-wrapper">
-		<input type="file" name="photo" id="file-input" class="file-input">
+		<input type="file" asp-for="Name" name="photo" id="file-input" class="file-input">
 		<label for="file-input" class="custom-file-input">Choose File</label>
+		<span class="text-danger">@Html.ValidationMessageFor(m => m.photo)</span>
 	</div>
+	
+	
 	<div class="container">
 		<div class="dough" id="ingredient">
 			<div class="list-container">

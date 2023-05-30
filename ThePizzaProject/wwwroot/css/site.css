@@ -203,6 +203,11 @@ h4 {
     cursor: pointer;
 }
 
+/*.field-validation-error {
+    visibility: hidden;
+}*/
+
+
 
 @media (max-width: 768px) {
     /* Adjust the layout for smaller screens */
@@ -239,7 +244,7 @@ h4 {
         height: 100px;
     }
 
-    #green, #red, #white ,#home{
+    #green, #red, #white, #home {
         margin: 5px;
     }
 
@@ -247,6 +252,7 @@ h4 {
         width: 200px;
     }
 
+  
 
 
 

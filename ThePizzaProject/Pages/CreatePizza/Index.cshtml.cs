@@ -32,10 +32,13 @@ namespace ThePizzaProject.Pages.CreatePizza
 
 		public string Name { get; set; }
 
+		[BindProperty]
+		public IFormFile photo { get; set; }
+
 		public void OnGet()
 		{
 			Ingredients = _context.Ingredients.ToList();
-
+			photo = null;
 		}
 
 		public IActionResult OnPost(int[] ingredients, string pizzaName, IFormFile? photo)
@@ -47,6 +50,13 @@ namespace ThePizzaProject.Pages.CreatePizza
 			{
 				ModelState.AddModelError("Name", "Name is required.");
 			}
+
+			if (photo == null || photo.Length == 0)
+			{
+				ModelState.AddModelError("photo", "Please choose a photo.");
+			}
+
+		
 
 			if (!ModelState.IsValid)
 			{

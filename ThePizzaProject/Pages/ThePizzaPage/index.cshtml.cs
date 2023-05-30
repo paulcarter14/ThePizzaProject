@@ -101,7 +101,8 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 				{
 					DateTime = c.Comment.DateTime,
 					Comment = c.Comment.CommentText,
-					UserName = c.Comment.User.Name
+					UserName = c.Comment.User.Name,
+					  
 				}).ToList(),
 				Ingredients = myPizza.PizzaIngredients.Select(i => new IngredientViewModel
 				{
@@ -110,7 +111,8 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 					Category = i.Ingredient.Category,
 					Kcal = i.Ingredient.Calories
 
-				}).ToList()
+				}).ToList(),
+				
 			};
 
 			GetPhotos();
