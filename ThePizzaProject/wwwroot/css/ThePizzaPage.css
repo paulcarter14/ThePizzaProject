@@ -1,1 +1,101 @@
-﻿
+﻿.pizza-rating {
+    position: relative;
+    width: 40px;
+    height: 200px;
+    margin-left: 150px;
+    margin-bottom: 100px;
+    margin-top: -100px;
+    transform: rotate(54deg);
+}
+
+.pizza-rating input[type="radio"] {
+    display: none;
+}
+
+.pizza-submit {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    margin-bottom:20px;
+}
+
+.pizza-rating label {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -40px 0 0 -40px;
+    background-image: url('https://www.svgrepo.com/show/425861/pizza.svg');
+    background-size: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.pizza-rating input[type="radio"]:checked + label {
+    background-image: url('https://www.svgrepo.com/show/425861/pizza.svg');
+}
+
+#slice1 + label {
+    transform: translateX(100px) rotate(-72deg) translateY(-50px);
+}
+
+#slice2 + label {
+    transform: translateX(100px) rotate(-360deg) translateY(-50px);
+}
+
+#slice3 + label {
+    transform: translateX(100px) rotate(-288deg) translateY(-50px);
+}
+
+#slice4 + label {
+    transform: translateX(100px) rotate(-216deg) translateY(-50px);
+}
+
+#slice5 + label {
+    transform: translateX(100px) rotate(-144deg) translateY(-50px);
+}
+
+#slice1:hover + label {
+    transform: translateX(100px) rotate(-72deg) translateY(-30px);
+}
+
+#slice2:hover + label {
+    transform: translateX(100px) rotate(-360deg) translateY(-30px);
+}
+
+#slice3:hover + label {
+    transform: translateX(100px) rotate(-288deg) translateY(-30px);
+}
+
+#slice4:hover + label {
+    transform: translateX(100px) rotate(-216deg) translateY(-30px);
+}
+
+#slice5:hover + label {
+    transform: translateX(100px) rotate(-144deg) translateY(-30px);
+}
+
+#slice1.clicked + label {
+    transform: translateX(100px) rotate(-72deg) translateY(-30px);
+}
+
+#slice2.clicked + label {
+    transform: translateX(100px) rotate(-360deg) translateY(-30px);
+}
+
+#slice3.clicked + label {
+    transform: translateX(100px) rotate(-288deg) translateY(-30px);
+}
+
+#slice4.clicked + label {
+    transform: translateX(100px) rotate(-216deg) translateY(-30px);
+}
+
+#slice5.clicked + label {
+    transform: translateX(100px) rotate(-144deg) translateY(-30px);
+}
