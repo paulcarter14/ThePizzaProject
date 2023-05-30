@@ -212,12 +212,6 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 			var accessControl = new AccessControl(_context, _contextAccessor);
 			int loggedUser = accessControl.LoggedInAccountID;
 
-			//om båda är null,
-
-			//Om en av dem är null,
-
-			// om den andre är null,
-
 			if (string.IsNullOrEmpty(commentText) && rating == 0)
 			{
 				ModelState.AddModelError("Text", "This field can not be empty");
@@ -225,7 +219,6 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 
 			else if (string.IsNullOrEmpty(commentText) && rating > 0)
 			{
-				
 				UpdateRatingPizza(id, rating);
 			}
 
@@ -250,11 +243,11 @@ namespace ThePizzaProject.Pages.ThePizzaPage
 				_context.SaveChanges();
 
 			}
-			//if (!ModelState.IsValid)
-			//{
-			//	OnGet(id);
-			//	return Page();
-			//}
+			if (!ModelState.IsValid)
+			{
+				OnGet(id);
+				return Page();
+			}
 
 
 			OnGet(id);

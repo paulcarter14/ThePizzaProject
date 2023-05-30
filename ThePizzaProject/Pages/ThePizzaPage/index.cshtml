@@ -29,11 +29,11 @@
 			}
 		</div>
 
-			
+
 		@{
-				int pizzaID = Convert.ToInt32(Model.Pizzas.ID);
+			int pizzaID = Convert.ToInt32(Model.Pizzas.ID);
 			string photoUrl = "/uploads/" + Model.Pizzas.UserID + "/" + Model.Pizzas.ID + ".jpeg";
-			}
+		}
 
 		<img src="@photoUrl" class="pizzaImg">
 
@@ -54,23 +54,23 @@
 			{
 				<h2>Rate The Pizza!</h2>
 
-				<form method="post" >
+				<form method="post">
 
 					<div class="pizza-rating">
-					<input type="radio" id="slice1" name="rating" value="1">
-					<label for="slice1"></label>
+						<input type="radio" id="slice1" name="rating" value="1">
+						<label for="slice1"></label>
 
-					<input type="radio" id="slice2" name="rating" value="2">
-					<label for="slice2"></label>
+						<input type="radio" id="slice2" name="rating" value="2">
+						<label for="slice2"></label>
 
-					<input type="radio" id="slice3" name="rating" value="3">
-					<label for="slice3"></label>
+						<input type="radio" id="slice3" name="rating" value="3">
+						<label for="slice3"></label>
 
-					<input type="radio" id="slice4" name="rating" value="4">
-					<label for="slice4"></label>
+						<input type="radio" id="slice4" name="rating" value="4">
+						<label for="slice4"></label>
 
-					<input type="radio" id="slice5" name="rating" value="5">
-					<label for="slice5"></label>
+						<input type="radio" id="slice5" name="rating" value="5">
+						<label for="slice5"></label>
 					</div>
 
 					<div class="rating-button">
@@ -95,44 +95,31 @@
 		}
 
 		<button class="training" onclick="TrainingTips()">Training tips</button>
-
 		<div id="workoutList"></div>
+
 	</div>
-
-	<script type="text/javascript">
-		function TrainingTips() {
-			var calories = @Model.TotalCalories; // Use the TotalCalories property from the model
-			var apiUrl = "https://workoutproject.azurewebsites.net/api?calories=" + calories;
-			fetch(apiUrl)
-				.then(response => response.json())
-				.then(data => {
-					var workoutList = document.getElementById('workoutList');
-					// Clear any previous children from the list
-					while (workoutList.firstChild) {
-						workoutList.removeChild(workoutList.firstChild);
-					}
-
-					data.forEach(item => {
-						var parts = item.split(", ");
-						var p = document.createElement('p');
-						p.textContent = parts;
-
-
-						
-
-						workoutList.appendChild(p);
-						
-					});
-				})
-				.catch((error) => {
-					console.error('Error:', error);
-				});
-		}
-	</script>
 </div>
-
-@*</div>
-
-
-
-</div>*@
+<script type="text/javascript">
+	function TrainingTips() {
+		var calories = @Model.TotalCalories; // Use the TotalCalories property from the model
+		var apiUrl = "https://workoutproject.azurewebsites.net/api?calories=" + calories;
+		fetch(apiUrl)
+			.then(response => response.json())
+			.then(data => {
+				var workoutList = document.getElementById('workoutList');
+				// Clear any previous children from the list
+				while (workoutList.firstChild) {
+					workoutList.removeChild(workoutList.firstChild);
+				}
+				data.forEach(item => {
+					var parts = item.split(", ");
+					var p = document.createElement('p');
+					p.textContent = parts;
+					workoutList.appendChild(p);
+				});
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+	}
+</script>
