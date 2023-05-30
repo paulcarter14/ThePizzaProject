@@ -2,7 +2,45 @@
 @model IndexModel
 @inject ThePizzaProject.Data.AccessControl accessControl
 @{
-    ViewData["Title"] = "Home page";
+	ViewData["Title"] = "Home page";
 }
+<audio controls>
+	<source src="/sound/Osipov-Kamarinskaya.mp3" type="audio/mp3" />
+</audio>
 
-<h1>Welcome, @accessControl.LoggedInAccountName!</h1>
+<div class="pizza-Content">
+	@foreach (var pizza in Model.MyPizzas ?? Model.Pizzas)
+	{
+		<div class="pizzabox">
+			<div class="pizza-title">
+				<h2>@pizza.PizzaName</h2>
+			</div>
+			@{
+				int pizzaID = Convert.ToInt32(pizza.PizzaID);
+
+				Func<int, string> GetPizzaPhoto = (pizzaID) =>
+				{
+					string formattedPizzaId = pizzaID.ToString();
+					string photo = Model.photoUrl.FirstOrDefault(p => p.EndsWith(+pizzaID + ".jpeg"));
+					return photo;
+				};
+
+				string photoUrl = GetPizzaPhoto(pizzaID);
+			}
+
+			<img src="@photoUrl" class="pizzaImg">
+
+			<div class="ingredient-span">
+				@for (int i = 0; i < pizza.PizzaIngredients.Count; i++)
+				{
+					var extraText = "";
+					@if (i < pizza.PizzaIngredients.Count - 1)
+					{
+						extraText = ",";
+					}
+					<span class="span">@(pizza.PizzaIngredients[i].Ingredient.IngredientName + extraText)</span>
+				}
+			</div>
+		</div>
+	}
+</div>

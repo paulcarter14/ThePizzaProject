@@ -1,4 +1,5 @@
 ﻿@using ThePizzaProject.Pages.Shared.Components.LoginMenu;
+@inject ThePizzaProject.Data.AccessControl accessControl
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,14 +8,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/bakeYourPizza.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/FindMyPizza.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/ThePizzaPage.css" asp-append-version="true">
+
+
     <script src="~/js/site.js" asp-append-version="true" defer></script>
+    <script src="~/js/FindMyPizza.js" asp-append-version="true" defer></script>
+    <script src="~/js/createPizza.js" asp-append-version="true" defer></script>
+    <script src="~/js/ThePizzaPage.js" asp-append-version="true" defer></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </head>
 <body>
+    @*Denna sida appliceras på alla sidor.*@
     <header>
         <environment names="Development">
             @await Component.InvokeAsync(nameof(FakeLoginMenu))
         </environment>
+
+        <div class="menu-buttons">
+            <div class="top-buttons">
+                <button id="home" onclick="window.location.href='/Index'">Home</button>
+                <button id="green" onclick="window.location.href='/CreatePizza'">Bake your Pizza</button>
+                <button id="white" onclick="redirectToRandomPizzaPage()">Feel Lucky</button>
+                <button id="red" onclick="window.location.href='/FindMyPizza'">Find me a pizza</button>
+            </div>
+            <h1 class="greeting">
+                Benvenuto, @accessControl.LoggedInAccountName!
+            </h1>
+        </div>
+
     </header>
     <main>
         @RenderBody()

@@ -1,0 +1,103 @@
+1. detta ska ligga över app.UseRouting(); i Program.cs:
+
+Directory.CreateDirectory(builder.Configuration["Uploads:FolderPath"]);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, builder.Configuration["Uploads:FolderPath"])
+    ),
+    RequestPath = builder.Configuration["Uploads:URLPath"]
+});
+-----------------------------------------------------------------------
+2. detta skall ligga under builder.Services.AddScoped<AccessControl>();:
+
+builder.Services.AddSingleton<FileRepository>();
+-----------------------------------------------------------------------
+3. Kolla filen Data\UploadRepository.cs:
+-----------------------------------------------------------------------
+4. ska implementeras i appsettings.json (sätt rätt folderpath):
+
+"Uploads": {
+    "FolderPath": "..\\..\\UploadedFiles",
+    "URLPath": "/uploads"
+  }
+
+C:\Users\larss\Desktop\OneDrive\Documents\GitHub\ThePizzaProject
+-----------------------------------------------------------------------
+5. Ex i index.cshtml:
+
+﻿@page
+@model IndexModel
+@inject ImageGallery.Data.AccessControl accessControl
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1>Welcome, @accessControl.LoggedInAccountName!</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="photo">
+    <button type="submit">Upload Photo</button>
+</form>
+
+<h2>Your Photos</h2>
+@foreach (var url in Model.PhotoURLs)
+{
+    <img src="@url" style="width: 250px">
+}
+
+@if (Model.PhotoURLs.Count == 0)
+{
+    <p>You have not uploaded any photos yet.</p>
+}
+
+------------------------------------------------------------------------
+6. Tillhörande index.cshtml.cs fil:
+
+﻿using ImageGallery.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace ImageGallery.Pages
+{
+    public class IndexModel : PageModel
+    {
+        private readonly AppDbContext database;
+        private readonly AccessControl accessControl;
+        private readonly FileRepository uploads;
+
+        public IndexModel(AppDbContext database, AccessControl accessControl, FileRepository uploads)
+        {
+            this.database = database;
+            this.accessControl = accessControl;
+            this.uploads = uploads;
+        }
+
+        public List<string> PhotoURLs { get; set; } = new List<string>();
+
+        public void OnGet()
+        {
+            string userFolderPath = Path.Combine(
+                uploads.FolderPath,
+                accessControl.LoggedInAccountID.ToString()
+            );
+            Directory.CreateDirectory(userFolderPath);
+            string[] files = Directory.GetFiles(userFolderPath);
+            foreach (string file in files)
+            {
+                string url = uploads.GetFileURL(file);
+                PhotoURLs.Add(url);
+            }
+        }
+        
+        public async Task<IActionResult> OnPost(IFormFile photo)
+        {
+            string path = Path.Combine(
+                accessControl.LoggedInAccountID.ToString(),
+                Guid.NewGuid().ToString() + "-" + photo.FileName
+            );
+            await uploads.SaveFileAsync(photo, path);
+            return RedirectToPage();
+        }
+    }
+}

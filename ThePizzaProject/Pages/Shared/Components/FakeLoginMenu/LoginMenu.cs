@@ -6,10 +6,10 @@ namespace ThePizzaProject.Pages.Shared.Components.LoginMenu
 {
 	public class FakeLoginMenu : ViewComponent
 	{
-		private readonly AppDbContext database;
+		private readonly ThePizzaProjectContext database;
 		private readonly AccessControl accessControl;
 
-		public FakeLoginMenu(AppDbContext database, AccessControl accessControl)
+		public FakeLoginMenu(ThePizzaProjectContext database, AccessControl accessControl)
 		{
 			this.database = database;
 			this.accessControl = accessControl;
@@ -20,9 +20,9 @@ namespace ThePizzaProject.Pages.Shared.Components.LoginMenu
 			var accounts = database.Accounts.OrderBy(a => a.Name);
 			var selectList = accounts.Select(p => new SelectListItem
 			{
-				Value = p.ID.ToString(),
+				Value = p.AccountID.ToString(),
 				Text = p.Name,
-				Selected = p.ID == accessControl.LoggedInAccountID
+				Selected = p.AccountID == accessControl.LoggedInAccountID
 			});
 			return View(selectList);
 		}

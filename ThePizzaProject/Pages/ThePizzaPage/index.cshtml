@@ -1,0 +1,125 @@
+﻿@page
+@model ThePizzaProject.Pages.ThePizzaPage.IndexModel
+@{
+}
+
+<h1>@Model.Pizzas.UserName</h1>
+
+<div class="The-pizzapage-Content">
+	<div class="pizzabox">
+		<div class="pizza-title">
+			<h2>@Model.Pizzas.Name</h2>
+		</div>
+
+		<div class="rating-line-container">
+			@if (Model.Rating == 0)
+			{
+
+			}
+			else
+			{
+				<h3>
+					Rating:
+				</h3>
+
+				for (var i = 0; i < Model.Rating; i++)
+				{
+					<span class="pizza-slice-display">🍕</span>
+				}
+			}
+		</div>
+
+
+		@{
+			int pizzaID = Convert.ToInt32(Model.Pizzas.ID);
+			string photoUrl = "/uploads/" + Model.Pizzas.UserID + "/" + Model.Pizzas.ID + ".jpeg";
+		}
+
+		<img src="@photoUrl" class="pizzaImg">
+
+		<div class="ingredient-span">
+			@for (int i = 0; i < Model.Pizzas.Ingredients.Count; i++)
+			{
+				var extraText = "";
+				@if (i < Model.Pizzas.Ingredients.Count - 1)
+				{
+					extraText = ",";
+				}
+				<span class="span">@(Model.Pizzas.Ingredients[i].Name + extraText)</span>
+			}
+		</div>
+
+		<div class="comment-box">
+			@if (Model.UserRatingCheck == false)
+			{
+				<h2>Rate The Pizza!</h2>
+
+				<form method="post">
+
+					<div class="pizza-rating">
+						<input type="radio" id="slice1" name="rating" value="1">
+						<label for="slice1"></label>
+
+						<input type="radio" id="slice2" name="rating" value="2">
+						<label for="slice2"></label>
+
+						<input type="radio" id="slice3" name="rating" value="3">
+						<label for="slice3"></label>
+
+						<input type="radio" id="slice4" name="rating" value="4">
+						<label for="slice4"></label>
+
+						<input type="radio" id="slice5" name="rating" value="5">
+						<label for="slice5"></label>
+					</div>
+
+					<div class="rating-button">
+						<button class="pizza-submit" type="submit">Rate</button>
+					</div>
+				</form>
+			}
+			<h4>Leave a comment</h4>
+			<form method="post">
+				<span class="text-danger">@Html.ValidationMessageFor(m => m.Text)</span>
+				<textarea class="comment-text-area" name="commentText"></textarea>
+				<button class="submit-buttons" type="submit">Submit</button>
+			</form>
+		</div>
+
+		@foreach (var comment in Model.Pizzas.Comments)
+		{
+			<div class="comment-display-box">
+				<h5 class="comment-username">@comment.UserName @comment.DateTime</h5>
+				<spa class="comment-text" classn>@comment.Comment</spa>
+			</div>
+		}
+
+		<button class="training" onclick="TrainingTips()">Training tips</button>
+		<div id="workoutList"></div>
+
+	</div>
+</div>
+<script type="text/javascript">
+	function TrainingTips() {
+		var calories = @Model.TotalCalories; // Use the TotalCalories property from the model
+		var apiUrl = "https://workoutproject.azurewebsites.net/api?calories=" + calories;
+		fetch(apiUrl)
+			.then(response => response.json())
+			.then(data => {
+				var workoutList = document.getElementById('workoutList');
+				// Clear any previous children from the list
+				while (workoutList.firstChild) {
+					workoutList.removeChild(workoutList.firstChild);
+				}
+				data.forEach(item => {
+					var parts = item.split(", ");
+					var p = document.createElement('p');
+					p.textContent = parts;
+					workoutList.appendChild(p);
+				});
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+	}
+</script>

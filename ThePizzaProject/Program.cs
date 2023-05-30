@@ -1,10 +1,12 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Security.Claims;
 using ThePizzaProject.Data;
 using ThePizzaProject.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +21,7 @@ builder.Services.AddAuthentication(options =>
 	options.Events.OnValidatePrincipal += async context =>
 	{
 		var serviceProvider = context.HttpContext.RequestServices;
-		using var db = new AppDbContext(serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>());
+		using var db = new ThePizzaProjectContext(serviceProvider.GetRequiredService<DbContextOptions<ThePizzaProjectContext>>());
 
 		string subject = context.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
 		string issuer = context.Principal.FindFirst(ClaimTypes.NameIdentifier).Issuer;
@@ -82,7 +84,9 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ThePizzaProjectContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ThePizzaProjectContext") ?? throw new InvalidOperationException("Connection string 'ThePizzaProjectContext' not found.")));
+builder.Services.AddDbContext<ThePizzaProjectContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -90,6 +94,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AccessControl>();
+
+// Steg 2 för att ladda upp bilder.
+builder.Services.AddSingleton<FileRepository>();
 
 var app = builder.Build();
 
@@ -107,10 +114,23 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// Steg 1 för att ladda upp bilder.
+Directory.CreateDirectory(builder.Configuration["Uploads:FolderPath"]);
+app.UseStaticFiles(new StaticFileOptions
+{
+	FileProvider = new PhysicalFileProvider(
+		Path.Combine(builder.Environment.ContentRootPath, builder.Configuration["Uploads:FolderPath"])
+	),
+	RequestPath = builder.Configuration["Uploads:URLPath"]
+});
+
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.MapRazorPages();
 app.MapControllers();
@@ -118,7 +138,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
-	var context = services.GetRequiredService<AppDbContext>();
+	var context = services.GetRequiredService<ThePizzaProjectContext>();
 	SampleData.Create(context);
 }
 
