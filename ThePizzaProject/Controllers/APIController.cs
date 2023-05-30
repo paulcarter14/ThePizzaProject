@@ -128,7 +128,7 @@ namespace ThePizzaProject.Controllers
 
 			}
 
-			else if (categoryname == "Desert")
+			else if (categoryname == "Dessert")
             {
                 List<string> list = new List<string>()
                 {
