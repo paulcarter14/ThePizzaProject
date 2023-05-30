@@ -1,25 +1,31 @@
-﻿.pizza-rating {
+﻿
+.pizza-rating input[type="radio"] {
+    display: none;
+}
+.pizza-rating {
     position: relative;
     width: 40px;
     height: 200px;
     margin-left: 150px;
-    margin-bottom: 100px;
-    margin-top: -100px;
+    margin-bottom: 80px;
+    margin-top: -80px; /* Adjust this value as needed */
     transform: rotate(54deg);
-}
-
-.pizza-rating input[type="radio"] {
-    display: none;
 }
 
 .pizza-submit {
     height: 80px;
     width: 80px;
     border-radius: 50%;
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
-    margin-bottom:20px;
+    display: block;
+}
+
+.rating-line-container {
+    display: flex;
+    align-items: center;
+}
+
+.pizza-slice-display {
+    margin-right: 5px; /* Adjust spacing between pizza slices if needed */
 }
 
 .pizza-rating label {
