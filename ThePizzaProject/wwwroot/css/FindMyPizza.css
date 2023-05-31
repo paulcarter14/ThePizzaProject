@@ -1,4 +1,12 @@
 ﻿
+*{
+
+    font-family:'Bodoni MT';
+    font-weight: bold;
+}
+    
+    
+
 .filter-buttons {
     justify-content:center;
     display: flex;
@@ -148,6 +156,8 @@
 
 .ingredient-span {
    max-width: 400px;
+   margin-top: 20px;
+   margin-bottom: 20px;
 }
 
 .span{
