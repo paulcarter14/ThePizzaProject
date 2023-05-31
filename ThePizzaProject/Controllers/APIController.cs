@@ -22,7 +22,6 @@ namespace ThePizzaProject.Controllers
             _context = context;
         }
 
-
         [HttpGet]
         public async Task<ActionResult<Pizza>> GetPizzaByCategory(string categoryname)
         {
@@ -49,11 +48,9 @@ namespace ThePizzaProject.Controllers
                 var random = new Random();
                 var randomPizza = matchingPizzas[random.Next(matchingPizzas.Count)];
 
-
                 returnPizza.Name = randomPizza.Name;
                 returnPizza.Ingredients = randomPizza.Ingredients;
                 returnPizza.photo = "https://pizzaproject3.azurewebsites.net/uploads/" + randomPizza.accountID + "/" + randomPizza.pizzaID + ".jpeg";
-
             }
             else if (categoryname == "Meat")
             {
@@ -73,11 +70,9 @@ namespace ThePizzaProject.Controllers
                 var random = new Random();
                 var randomPizza = matchingPizzas[random.Next(matchingPizzas.Count)];
 
-
                 returnPizza.Name = randomPizza.Name;
                 returnPizza.Ingredients = randomPizza.Ingredients;
                 returnPizza.photo = "https://pizzaproject3.azurewebsites.net/uploads/" + randomPizza.accountID + "/" + randomPizza.pizzaID + ".jpeg";
-
             }
 
             else if (categoryname == "Fish")
@@ -101,9 +96,7 @@ namespace ThePizzaProject.Controllers
                 returnPizza.Name = randomPizza.Name;
                 returnPizza.Ingredients = randomPizza.Ingredients;
                 returnPizza.photo = "https://pizzaproject3.azurewebsites.net/uploads/" + randomPizza.accountID + "/" + randomPizza.pizzaID + ".jpeg";
-
             }
-
 
             else if (categoryname == "Vegetarian")
             {
@@ -119,13 +112,13 @@ namespace ThePizzaProject.Controllers
                 })
                 .ToList();
 
-                var random = new Random();
+				//Slumpar en pizza
+				var random = new Random();
                 var randomPizza = matchingPizzas[random.Next(matchingPizzas.Count)];
 
                 returnPizza.Name = randomPizza.Name;
                 returnPizza.Ingredients = randomPizza.Ingredients;
                 returnPizza.photo = "https://pizzaproject3.azurewebsites.net/uploads/" + randomPizza.accountID + "/" + randomPizza.pizzaID + ".jpeg";
-
             }
 
             else if (categoryname == "Dessert")
@@ -137,14 +130,11 @@ namespace ThePizzaProject.Controllers
                     "Banana",
                     "Strawberry",
                     "Blueberry"
-
                 };
                 returnPizza.Name = "Nutella Pizza";
                 returnPizza.Ingredients = list;
                 returnPizza.photo = "https://res.cloudinary.com/coopsverige/image/upload/h_1200,w_1200/v1674023395/cloud/271734.jpg";
-
             }
-
             return Ok(returnPizza);
         }
 
@@ -157,6 +147,3 @@ namespace ThePizzaProject.Controllers
 		}
 	}
 }
-
-
-

@@ -48,7 +48,6 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			GetPhotos();
 			try
 			{
-				// Check if any filters are applied
 				if (unwantedIngredients.Count == 0 && !veggie && (wantedIngredients == null || wantedIngredients.Count == 0))
 				{
 					throw new Exception("Please select at least one filter option.");
@@ -60,7 +59,6 @@ namespace ThePizzaProject.Pages.FindMyPizza
 			}
 			catch (Exception ex)
 			{
-				//Vill man ha meddelande så lägger man det här etc
 				return Page();
 			}
 

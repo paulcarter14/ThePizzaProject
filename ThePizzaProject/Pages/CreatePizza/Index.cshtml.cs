@@ -25,13 +25,9 @@ namespace ThePizzaProject.Pages.CreatePizza
 		}
 
 		public List<Ingredient> Ingredients { get; set; }
-
 		public string photoUrl { get; set; }
-
 		public List<string> PhotoURLs { get; set; } = new List<string>();
-
 		public string Name { get; set; }
-
 		[BindProperty]
 		public IFormFile photo { get; set; }
 
@@ -55,8 +51,6 @@ namespace ThePizzaProject.Pages.CreatePizza
 			{
 				ModelState.AddModelError("photo", "Please choose a photo.");
 			}
-
-		
 
 			if (!ModelState.IsValid)
 			{

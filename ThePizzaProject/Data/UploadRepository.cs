@@ -26,18 +26,12 @@ namespace ThePizzaProject.Data
 
 		public string FolderPath { get; set; }
 		
-
-		/// <summary>
-		/// Save the specified file in the uploads folder of the website. The path of this folder is defined in the configuration file.
-		/// </summary>
-		public async Task SaveFileAsync(IFormFile formFile, string path)    //  string fileName
+		public async Task SaveFileAsync(IFormFile formFile, string path)
 		{
-			// First get the absolute path of the uploaded file and make sure that it's in the uploads folder.
-			string relativeFilePath = Path.Combine(FolderPath, path);       // fileName
+			string relativeFilePath = Path.Combine(FolderPath, path);
 			string absoluteFilePath = Path.GetFullPath(relativeFilePath);
 			if (!absoluteFilePath.StartsWith(FolderPath))
 			{
-				// Throw an exception if the file is not in the uploads folder, because that's a security risk.
 				throw new Exception(
 					"File cannot be uploaded to path outside of the uploads folder."
 					+ Environment.NewLine
@@ -47,17 +41,12 @@ namespace ThePizzaProject.Data
 					);
 			}
 
-			// Create all the directories in the path if they don't already exist.
 			Directory.CreateDirectory(Path.GetDirectoryName(absoluteFilePath));
 
-			// Save the file in the uploads folder.
 			using var stream = new FileStream(absoluteFilePath, FileMode.Create);
 			await formFile.CopyToAsync(stream);
 		}
 
-		/// <summary>
-		/// Given the path to a file in the uploads folder, return the relative URL to that file, for use in (for example) HTML code to link to the file.
-		/// </summary>
 		public string GetFileURL(string path)
 		{
 			string fileSystemPath = configuration["Uploads:URLPath"]

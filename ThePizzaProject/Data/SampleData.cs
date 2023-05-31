@@ -7,7 +7,6 @@ namespace ThePizzaProject.Data
 	{
 		public static void Create(ThePizzaProjectContext database)
 		{
-			// If there are no fake accounts, add some.
 			string fakeIssuer = "https://example.com";
 			if (!database.Accounts.Any(a => a.OpenIDIssuer == fakeIssuer))
 			{
@@ -57,8 +56,6 @@ namespace ThePizzaProject.Data
                     Category = "Dough",
                     Calories = 508
                 });
-
-
                 database.Ingredients.Add(new Ingredient
 				{
 					IngredientName = "Tomato Sauce",
@@ -77,8 +74,6 @@ namespace ThePizzaProject.Data
 					Category = "Bottom-sauce",
                     Calories = 50
                 });
-
-
 				database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Mozzarella",
@@ -91,7 +86,6 @@ namespace ThePizzaProject.Data
                     Category = "Cheese",
                     Calories = 254
                 });
-               
                 database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Brie",
@@ -128,10 +122,6 @@ namespace ThePizzaProject.Data
 					Category = "Cheese",
                     Calories = 125
                 });
-
-
-
-
 				database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Chicken",
@@ -150,7 +140,6 @@ namespace ThePizzaProject.Data
                     Category = "Fish",
                     Calories = 121
                 });
-
                 database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Ham",
@@ -205,9 +194,6 @@ namespace ThePizzaProject.Data
 					Category = "Meat",
                     Calories = 258
                 });
-
-
-
 				database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Black Olives",
@@ -280,7 +266,6 @@ namespace ThePizzaProject.Data
                     Category = "Vegetables",
                     Calories = 12
                 });
-                
                 database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Red peppers",
@@ -305,9 +290,6 @@ namespace ThePizzaProject.Data
 					Category = "Vegetables",
                     Calories = 12
                 });
-				
-
-
 				database.Ingredients.Add(new Ingredient
                 {
                     IngredientName = "Kebab sauce",
@@ -327,7 +309,6 @@ namespace ThePizzaProject.Data
                     Calories = 87
                 });
             }
-
                 database.SaveChanges();
 		}
 	}

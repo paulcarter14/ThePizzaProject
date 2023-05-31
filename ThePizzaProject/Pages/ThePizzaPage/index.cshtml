@@ -29,7 +29,6 @@
 			}
 		</div>
 
-
 		@{
 			int pizzaID = Convert.ToInt32(Model.Pizzas.ID);
 			string photoUrl = "/uploads/" + Model.Pizzas.UserID + "/" + Model.Pizzas.ID + ".jpeg";
@@ -90,7 +89,7 @@
 		{
 			<div class="comment-display-box">
 				<h5 class="comment-username">@comment.UserName @comment.DateTime</h5>
-				<span class="comment-text" >@comment.Comment</span>
+				<span class="comment-text">@comment.Comment</span>
 			</div>
 		}
 
@@ -101,13 +100,12 @@
 </div>
 <script type="text/javascript">
 	function TrainingTips() {
-		var calories = @Model.TotalCalories; // Use the TotalCalories property from the model
+		var calories = @Model.TotalCalories;
 		var apiUrl = "https://workoutproject.azurewebsites.net/api?calories=" + calories;
 		fetch(apiUrl)
 			.then(response => response.json())
 			.then(data => {
 				var workoutList = document.getElementById('workoutList');
-				// Clear any previous children from the list
 				while (workoutList.firstChild) {
 					workoutList.removeChild(workoutList.firstChild);
 				}
