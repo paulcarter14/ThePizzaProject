@@ -52,7 +52,7 @@
 			@if (Model.UserRatingCheck == false)
 			{
 				<h2>Rate The Pizza!</h2>
-
+				<div class="rating-form-div">
 				<form method="post">
 
 					<div class="pizza-rating">
@@ -76,6 +76,7 @@
 						<button id="rating-button" class="submit-buttons" type="submit">Rate</button>
 					</div>
 				</form>
+				</div>
 			}
 			<h4>Leave a comment</h4>
 			<form method="post">
@@ -94,7 +95,10 @@
 		}
 
 		<button id="training-button" class="submit-buttons" onclick="TrainingTips()">Training tips</button>
-		<div id="workoutList"></div>
+		
+		<div id="workoutList">
+			
+		</div>
 
 	</div>
 </div>
