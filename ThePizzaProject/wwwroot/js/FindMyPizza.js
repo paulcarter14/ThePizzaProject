@@ -5,8 +5,6 @@ const leftsidebar = document.querySelector('.left-bar');
 const rightsidebar = document.querySelector('.right-bar');
 const topbar = document.querySelector('.top-bar')
 
-
-//Öppna båda
 function toggleFilter() {
     var leftBar = document.getElementById('leftBar');
     var rightBar = document.getElementById('rightBar');
@@ -29,7 +27,7 @@ function toggleFilter() {
     }
 }
 
-//orkade inte skriva om dessa så de säger att man kan toggla men egentligen stänger man dem bara.
+// Missvisande funktionsnamn här, den togglar inte, men stänger baren.
 function toggleLeftBar() {
     event.preventDefault();
     var leftBar = document.getElementById('leftBar');
@@ -38,13 +36,12 @@ function toggleLeftBar() {
 
     leftBar.classList.toggle('open');
 
-    // If both sidebars are closed, toggle the topbar
     if (!leftBar.classList.contains('open') && !rightBar.classList.contains('open')) {
         topbar.classList.toggle('open');
     }
 }
 
-
+// Missvisande funktionsnamn här, den togglar inte, men stänger baren.
 function toggleRightBar() {
     event.preventDefault();
     var leftBar = document.getElementById('leftBar');
@@ -53,7 +50,6 @@ function toggleRightBar() {
 
     rightBar.classList.toggle('open');
 
-    // If both sidebars are closed, toggle the topbar
     if (!leftBar.classList.contains('open') && !rightBar.classList.contains('open')) {
         topbar.classList.toggle('open');
     }

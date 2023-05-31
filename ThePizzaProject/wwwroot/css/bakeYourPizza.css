@@ -17,14 +17,6 @@ ul {
     margin: 0px;
 }
 
-#ingredient {
-   /* flex-basis: calc(100% / 3 - 10px);*/
-
-    /*margin: 5px;
-    padding: 10px;
-    box-sizing: border-box;*/
-}
-
 .dough {
     flex-basis: calc(100% / 3 - 10px);
     position: relative;

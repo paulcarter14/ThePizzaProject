@@ -1,11 +1,8 @@
-﻿
 *{
 
     font-family:'Bodoni MT';
     font-weight: bold;
 }
-    
-    
 
 .filter-buttons {
     justify-content:center;
@@ -27,7 +24,6 @@
         transform: scale(135%);
     }
 
-
 .left-bar {
     position: fixed;
     left: -135%;
@@ -45,7 +41,6 @@
         left: 0;
 }
 
-/* Right Filter Bar */
 .right-bar {
     position: fixed;
     right: -135%;
@@ -120,11 +115,9 @@
     list-style: none;
     width: calc(100% / 4);
     box-sizing: border-box;
-    /* padding: 5px;*/
     margin: 0;
     float: left;
     margin-top: 0px;
-    /* margin: 5px;*/
 }
 
 .sidebar-lable {
@@ -137,7 +130,6 @@
     width: 50px;
 }
 
-
 .top-bar {
     position: fixed;
     left: 50%;
@@ -147,7 +139,6 @@
     background-color: #f2f2f2;
     transition: top 0.3s ease;
     bottom: 1000000px;
-
 }
 
 .top-bar.open {
@@ -182,7 +173,7 @@
 @media only screen and (max-width: 767px) and (-webkit-min-device-pixel-ratio: 2) {
     .top-bar {
         position: fixed;
-        bottom: -100px; /* Change the value to -20px to hide the top bar initially */
+        bottom: -100px;
         width: 100%;
         height: 5%;
         background-color: black;
@@ -209,7 +200,6 @@
         height: 95%
     }
 
-
     .right-bar {
         position: fixed;
         right: -115%;
@@ -218,8 +208,6 @@
         height: 95%
     }
 
-   
-
     .pizza-content {
         display: grid !important;
         grid-template-columns: repeat(1, 1fr) !important;
@@ -227,11 +215,11 @@
     }
 
     .pizza-title {
-        font-size: 16px; /* adjust font size */
+        font-size: 16px;
     }
 
     .pizza-ingredients {
-        margin-top: 10px; /* adjust margin */
+        margin-top: 10px;
     }
 
     .sidebar {

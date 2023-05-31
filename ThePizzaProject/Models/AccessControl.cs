@@ -9,7 +9,6 @@ namespace ThePizzaProject.Data
 	{
 		public int LoggedInAccountID { get; set; }
 		public string LoggedInAccountName { get; set; }
-
 		public AccessControl(ThePizzaProjectContext db, IHttpContextAccessor httpContextAccessor)
 		{
 			var user = httpContextAccessor.HttpContext.User;

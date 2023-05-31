@@ -7,11 +7,7 @@ namespace ThePizzaProject.Models
 	{
 		[Key]
 		public int PizzaIngredientID { get; set; }
-
 		public Pizza Pizza { get; set; }
-
 		public Ingredient Ingredient { get; set; }
-
-
 	}
 }
