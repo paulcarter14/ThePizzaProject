@@ -90,7 +90,7 @@ builder.Services.AddDbContext<ThePizzaProjectContext>(options => options.UseSqlS
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AccessControl>();
@@ -108,8 +108,8 @@ if (!app.Environment.IsDevelopment())
 
 if (app.Environment.IsDevelopment())
 {
-	app.UseSwagger();
-	app.UseSwaggerUI();
+	//app.UseSwagger();
+	//app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
