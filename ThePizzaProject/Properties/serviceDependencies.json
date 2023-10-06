@@ -5,6 +5,9 @@
       "connectionId": "ConnectionStrings:DefaultConnection",
       "dynamicId": null
     },
+    "apis1": {
+      "type": "apis"
+    },
     "mssql2": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:ThePizzaProjectContext",
