@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/ThePizzaProjectApi2/apis/ThePizzaProject",
+      "type": "apis.azure"
+    },
+    "mssql2": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/ThePizzaProject20231006132940/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsThePizzaProjectContext_88198DC03E",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/thepizzaprojectdbserver/databases/ThePizzaProject_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:ThePizzaProjectContext",
+      "dynamicId": null
+    }
+  }
+}
